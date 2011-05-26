@@ -1,0 +1,34 @@
+<phpunit bootstrap="init.php" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true">
+
+    <testsuite name="OSITIL Test Suite">
+        <directory>cases/</directory>
+    </testsuite>
+
+    <filter>
+        <whitelist>
+        <!--
+            <directory>/path/to/ositil/root</directory>
+        -->
+            <directory>./../www/models</directory>
+            <directory>./../lib</directory>
+            <exclude>
+                <!-- File Exclusion -->
+                <file>./../lib/bootstrap.php</file>
+                <!--
+                <file>/path/to/some/file.php</file>
+                -->
+                <!-- Directory Excludions -->
+                <!--
+                <directory>/path/to/some/directory</directory>
+                -->
+            </exclude>
+
+        </whitelist>
+    </filter>
+<!--
+    <selenium>
+        <browser name="Firefox" browser="*firefox" host="" port="4460" timeout="15000"/>
+    </selenium>
+-->
+</phpunit>
+

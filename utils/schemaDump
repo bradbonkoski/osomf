@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# echo $1
+
+/usr/bin/mysqldump --no_data --dump_date --add_drop_table --add_drop_database -u root -p $1 > ./../schema/$1.sql

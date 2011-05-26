@@ -1,0 +1,85 @@
+#!/usr/bin/php
+
+<?php
+
+define('PATH', getcwd());
+echo "PATH is: ".PATH."\n";
+$ar = explode("/", PATH);
+
+//print_r($ar);
+if($ar[count($ar)-1] != 'www') {
+	echo "Please run this from the www directory in your application project space\n";
+	exit;
+}
+$args = getopt("p:c:a:");
+
+print_r($args);
+
+if(!isset($args['p'])) {
+	useage();
+} 
+
+switch($args['p']) {
+	case 'addAction':
+		if(!isset($args['c']) || !isset($args['a'])) {
+			useage();
+		}
+		//first check for the controller
+		if(!file_exists(PATH."/controllers/{$args['c']}.php")) {
+			//need to create the controller
+			echo "\t*creating the {$args['c']} controller...\n";
+			defaultController($args['c'], $args['a']);			
+			defaultActionView($args['c'], $args['a']);
+		} else {
+			echo "\t*Controller ({$args['c']}) already exists\n";
+			defaultActionView($args['c'], $args['a']);
+		}		
+		echo "\t**Add Action Complete, please review the files and remove default place holder text\n";
+		break;
+	default:
+		useage();
+}
+
+function useage() {
+
+	echo "bmvc -p <command>  <options>\n";
+	echo "\tValid Commands are: addAction with options of -c <controller> and -a <action>\n";
+	exit;
+}
+
+function defaultActionView($controller, $action) {
+
+	if(!file_exists("views/$controller")) {
+		mkdir("views/$controller");
+	}
+	
+	$fileName = "views/$controller/$action.phtml";
+	if(!file_exists($fileName)) {
+		$contents = "<h1>Default View for Controller: $controller and Action: $action</h1>";
+		file_put_contents($fileName, $contents);
+		echo "\t*Created Action ($action) view, filenamed: $fileName\n";
+	} else {
+		echo "\t*Default Action View already exists\n";
+	}
+}
+
+function defaultController($name, $action) {
+
+	$fileName = "controllers/$name.php";
+	$contents = "<?php
+	class $name extends ControllerBase {
+		public function __construct(\$controller = '', \$action = '') { 
+			parent::__construct(\"$name\", \$action);
+		}
+
+		public function $action( \$params ) {
+			\$this->setAction(\"$action\");
+			\$parms = \$this->parseParams(\$params);
+			
+			
+		}
+	}";
+
+	file_put_contents($fileName, $contents);
+	echo "\t*Created Controller ($name) file named: $fileName\n";
+}
