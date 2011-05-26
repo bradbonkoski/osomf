@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="ositil" default="build" basedir="/var/lib/jenkins/jobs/OSOMF/workspace">
-    <property name="sourceDir" value="${basedir}/source/" />
+    <property name="sourceDir" value="${basedir}" />
 
  <target name="clean"
          description="Clean up and create artifact directories">
