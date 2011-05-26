@@ -1,0 +1,4 @@
+In order to build for testing:
+cd deploy
+phing 
+and you should be good to go
