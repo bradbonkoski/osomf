@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="ositil" default="build" basedir="/home/bradb/osomf">
+<project name="ositil" default="build" basedir="/var/lib/jenkins/jobs/OSOMF/workspace">
 
-    <import file="./db.xml"/>
+    <import file="./db-jenkins.xml"/>
 
     <property name="sourceDir" value="${basedir}" />
 
 
- <target name="build" depends="clean, db, parallelTasks,phpunit,phpcs" />
+    <target name="build" depends="clean, db, parallelTasks,phpunit,phpcs" />
 
  <target name="clean"
          description="Clean up and create artifact directories">
@@ -115,5 +115,6 @@
               --output ${basedir}/build/code-browser" />
   </exec>
  </target>
+
 
 </project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="database" basedir="/var/lib/jenkins/jobs/OSOMF/workspace" default="db">
+    <property name="schemaDir" value="${basedir}/schema" />
+    <property name="seedDir" value="${basedir}/tests/seeds"/>
+
+
+    <target name="db" depends="db:reload, db:seeds" />
+    <target name="db:reload" depends="db:reload-user"/>
+    <target name="db:seeds" depends="db:seed-user"/>
+
+    <target name="db:reload-user" description="Reload the Schema Document">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/omf_users"
+            userid="test"
+            password=""
+            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar"
+            src="${schemaDir}/omf_users.sql"
+        />
+    </target>
+
+    <target name="db:seed-user" description="Seed User Table">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/omf_users"
+            userid="test"
+            password=""
+            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar"
+            src="${seedDir}/users.sql"
+        />
+    </target>
+
+    <target name="db:test">
+        <echo message="testing..."/>
+    </target>
+
+
+</project>
