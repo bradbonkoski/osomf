@@ -66,6 +66,19 @@ class User extends DB
         $this->pager = $row['pager'];
     }
 
+    public function fetchUserByUserName($username)
+    {
+        if(strlen($username) <= 0) {
+            throw new Exception("Invalid UserName - ".__FILE__." : ".__LINE__);
+        }
+        $sql = "select userId from users where uname = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($username));
+        $row = $stmt->fetch();
+        //print_r($row);
+        return $this->fetchUserInfo($row['userId']);
+    }
+
     public function __toString()
     {
         $ret = "
