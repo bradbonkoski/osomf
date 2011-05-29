@@ -22,31 +22,55 @@ class UserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * FetchUserInfo Test
+     *
      * @test
-    */
-    public function initial()
+     */
+    public function fetchUserInfoTestOne()
     {
-        $c = new User(User::RO);
+        $u = new User(USER::RO);
+        $u->fetchUserInfo(3);
+        $this->assertEquals('brad2', $u->uname);
+        $this->assertEquals('727-698-5555', $u->phone);
     }
 
     /**
+     * FetchUserInfo Test - Base User Id
      * @test
-    */
-    public function usersGroupsOne()
+     */
+    public function fetchUserInfoBadeUserId()
     {
-        $c = new User(User::RO);
-        $ret = $c->getGroupMembers(2);
-        $this->assertEquals(1, count($ret));
-    }
-
-    /**
-     * @test
-    */
-    public function usersGroupsBadGroupId()
-    {
-        $c = new User(User::RO);
+        $u = new User(USER::RO);
         try {
-            $ret = $c->getGroupMembers("string");
+            $u->fetchUserInfo("string");
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+
+    /**
+     * @test
+     */
+    public function getUserInfoFromUserName()
+    {
+        $u = new User(USER::RO);
+        $u->fetchUserByUserName('bradb');
+        $this->assertEquals('bradb', $u->uname);
+        $this->assertEquals('Bonkoski', $u->lname); 
+    }
+
+    /**
+     * Invalid UserName for getUserInfoFromuserName
+     * @test
+     */
+    public function getuserInfoFromUserNameBadUserName()
+    {
+        $u = new User(User::RO);
+        try {
+            $u->fetchUserByUserName('');
         } catch (Exception $e) {
             $this->assertTrue(true);
             return;
@@ -55,122 +79,15 @@ class UserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
+     * GetUserByUserName Test with a valid, but not found username
      * @test
+     * @group UserNotFound
      */
-    public function usersGroupAdminsOne()
+    public function getUserByUserNameNoSuchUser()
     {
-        $c = new User(User::RO);
-        $ret = $c->getGroupAdmins(2);
-        $this->assertEquals(1, count($ret));
-    }
-
-     /**
-     * @return void
-     * @test
-     */
-    public function usersGroupAdminsBadGroupId()
-    {
-        $c = new User(User::RO);
+        $u = new User(USER::RO);
         try {
-            $ret = $c->getGroupAdmins("string");
-        } catch (Exception $e) {
-            $this->assertTrue(true);
-            return;
-        }
-        $this->fail("Missed Expected Exception");
-    }
-
-     /**
-     * @return void
-     * @test
-     */
-    public function usersGroupAllOne()
-    {
-        $c = new User(User::RO);
-        $ret = $c->getGroupAll(2);
-        $this->assertEquals(2, count($ret));
-    }
-
-     /**
-     * @return void
-     * @test
-     */
-    public function usersGroupAllBadGroupId()
-    {
-        $c = new User(User::RO);
-        try {
-            $ret = $c->getGroupAll("string");
-        } catch (Exception $e) {
-            $this->assertTrue(true);
-            return;
-        }
-        $this->fail("Missed Expected Exception");
-    }
-
-    /**
-     * @test
-     */
-    public function userGroupDetailsOne()
-    {
-        $c = new User(User::RO);
-        $ret = $c->getUserGroupDetails(1);
-        //print_r($ret);
-        $this->assertEquals(1, count($ret));
-        $this->assertEquals('group1', $ret[0]['groupName']);
-    }
-
-
-    /**
-     * @test
-     */
-    public function userGroupDetailsBadGroupID()
-    {
-        $c = new User(User::RO);
-        try {
-            $ret = $c->getUserGroupDetails("string");
-        } catch (Exception $e) {
-            $this->assertTrue(true);
-            return;
-        }
-        $this->fail("Missed Expected Exception");
-    }
-
-    /**
-     * @test
-     */
-    public function userDetailsOne()
-    {
-        $c = new User(User::RO);
-        $ret = $c->getUserInfo(array(1));
-        $this->assertEquals(1, count($ret));
-        $this->assertEquals('bradb', $ret[0]['uname']);
-        $this->assertEquals('Brad', $ret[0]['fname']);
-    }
-
-    /**
-    * @test
-    */
-    public function userDetailsBadUserId()
-    {
-        $c = new User(User::RO);
-        try {
-            $ret = $c->getUserInfo(1);
-        } catch (Exception $e) {
-            $this->assertTrue(true);
-            return;
-        }
-        $this->fail("Missed Expected Exception");
-    }
-
-    /**
-    * @test
-    */
-    public function userDetailsBadUserIds()
-    {
-        $c = new User(User::RO);
-        try {
-            $ret = $c->getUserInfo(array(1,'string'));
+            $u->fetchUserByUserName("samIamHere");
         } catch (Exception $e) {
             $this->assertTrue(true);
             return;

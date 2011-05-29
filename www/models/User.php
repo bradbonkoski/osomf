@@ -75,7 +75,9 @@ class User extends DB
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($username));
         $row = $stmt->fetch();
-        //print_r($row);
+        if(count($row) <= 0 || $row === false) {
+            throw new Exception("No Such User");
+        }
         return $this->fetchUserInfo($row['userId']);
     }
 
@@ -98,25 +100,6 @@ class User extends DB
      * @param int $groupId
      * @return array
      */
-    public function getGroupMembers($groupId = 0) 
-    {
-        //echo "Group Id is: $groupId\n";
-        if( $groupId <= 0 || !is_numeric($groupId) ) {
-            throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
-        }
-
-        $sql = "select * from users_groups where ugid = ? and status = ?";
-        $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($groupId, 'member'));
-        $rows = $stmt->fetchAll();
-        return $rows;
-    }
-
-    /**
-     * @throws Exception
-     * @param int $groupId
-     * @return array
-     */
     public function getGroupAdmins($groupId = 0)
     {
         if( $groupId <= 0 || !is_numeric($groupId) ) {
@@ -128,68 +111,5 @@ class User extends DB
         $stmt->execute(array($groupId, 'admin'));
         $rows = $stmt->fetchAll();
         return $rows;
-    }
-
-    /**
-     * @throws Exception
-     * @param int $groupId
-     * @return array
-     */
-    public function getGroupAll($groupId = 0)
-    {
-        if( $groupId <= 0 || !is_numeric($groupId) ) {
-            throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
-        }
-
-        $sql = "select * from users_groups where ugid = ?";
-        $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($groupId));
-        $rows = $stmt->fetchAll();
-        return $rows;
-    }
-
-    /**
-     * @throws Exception
-     * @param  $groupId
-     * @return array
-     */
-    public function getUserGroupDetails($groupId)
-    {
-        if( $groupId <= 0 || !is_numeric($groupId) ) {
-            throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
-        }
-
-        $sql = "select * from userGroup where ugid = ?";
-        $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($groupId));
-        return $stmt->fetchAll();
-    }
-
-
-    /**
-     * @throws Exception
-     * @param array $users
-     * @return array
-     */
-    public function getUserInfo($users = array())
-    {
-        if(count($users) <= 0 || !is_array($users)) {
-            throw new Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
-        }
-        foreach($users as $u) {
-            if(!is_numeric($u)) {
-                throw new Exception("User: $u is non numeric - ".__FILE.__." : ".__LINE__);
-            }
-        }
-
-        $sql = "select * from users where userId in (?)";
-        $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array(implode(',', $users)));
-        return $stmt->fetchAll();
-    }
-
-    public function addUser($uname, $fname, $lname, $email, $phone = null, $pager = null)
-    {
-
     }
 }
