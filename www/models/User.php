@@ -46,6 +46,11 @@ class User extends DB
         $this->status = '';
     }
 
+    /**
+     * @throws Exception
+     * @param  $userId
+     * @return void
+     */
     public function fetchUserInfo($userId)
     {
         if( ($userId <= 0 ) || !is_numeric($userId)) {
@@ -66,6 +71,11 @@ class User extends DB
         $this->pager = $row['pager'];
     }
 
+    /**
+     * @throws Exception
+     * @param  $username
+     * @return void
+     */
     public function fetchUserByUserName($username)
     {
         if(strlen($username) <= 0) {
@@ -81,6 +91,9 @@ class User extends DB
         return $this->fetchUserInfo($row['userId']);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $ret = "

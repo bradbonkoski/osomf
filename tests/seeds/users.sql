@@ -2,9 +2,9 @@
 -- seeds for the user table
 delete from users;
 
-insert into users set userId = 1, uname='bradb', fname='Brad', lname='Bonkoski', email='brad.bonkoski@yahoo.com', phone='727-698-5555';
-insert into users set userId = 2, uname='bradb1', fname='Brad', lname='Bonkoski', email='brad.bonkoski@yahoo.com', phone='727-698-5555';
-insert into users set userId = 3, uname='brad2', fname='Brad', lname='Bonkoski', email='brad.bonkoski@yahoo.com', phone='727-698-5555';
+insert into users set userId = 1, uname='bradb', fname='Brad', lname='Bonkoski', email='bradley@ymail.com', phone='800-698-5555';
+insert into users set userId = 2, uname='bradb1', fname='Brad', lname='Bonkoski', email='bradb@ymail.com', phone='800-555-5555';
+insert into users set userId = 3, uname='brad2', fname='Brad', lname='Bonkoski', email='bradleyo@gmail.com', phone='800-332-5555';
 
 
 -- seeds for userGroup

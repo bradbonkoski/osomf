@@ -31,7 +31,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $u = new User(USER::RO);
         $u->fetchUserInfo(3);
         $this->assertEquals('brad2', $u->uname);
-        $this->assertEquals('727-698-5555', $u->phone);
+        $this->assertEquals('800-332-5555', $u->phone);
     }
 
     /**
@@ -59,7 +59,8 @@ class UserTest extends PHPUnit_Framework_TestCase
         $u = new User(USER::RO);
         $u->fetchUserByUserName('bradb');
         $this->assertEquals('bradb', $u->uname);
-        $this->assertEquals('Bonkoski', $u->lname); 
+        $this->assertEquals('Bonkoski', $u->lname);
+        echo $u;
     }
 
     /**
