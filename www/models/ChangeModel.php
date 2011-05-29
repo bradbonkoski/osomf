@@ -1,13 +1,14 @@
 <?php
 
-require_once('lib/DB.php');
+//require_once('lib/DB.php');
+use osomf\DB;
 
 class ChangeModel extends DB
 {
-    const RO = "ro";
-    const RW = "rw";
+    //const RO = "ro";
+    //const RW = "rw";
         
-    private $_validConn = array(self::RO, self::RW);
+    //private $_validConn = array(self::RO, self::RW);
 
     public function __construct($conn)
     {

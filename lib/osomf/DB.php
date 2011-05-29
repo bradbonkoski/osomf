@@ -1,9 +1,16 @@
+<?php
 
-<?php 
+namespace osomf;
 
-require_once('lib/Conf.php');
-class DB extends PDO
+//require_once('lib/Conf.php');
+use \osomf\Conf;
+use \osomf\ConfDB;
+
+class DB extends \PDO
 {
+
+    const RO = "ro";
+    const RW = "rw";
 
     const TYPE_CHANGE = "change";
     const TYPE_USER = "omf_users";
@@ -18,6 +25,8 @@ class DB extends PDO
         self::TYPE_ASSET,
         self::TYPE_USER,
     );
+
+    protected $_validConn = array(self::RO, self::RW);
     
     protected $_db;
    
@@ -33,7 +42,8 @@ class DB extends PDO
         if (!in_array($type, $this->_validTypes)) {
             throw new Exception("Invalid DB Type");
         }
-        $c = new ConfDb();
+
+        $c = new ConfDB();
 
         $dsn = "";
         $user = "";
@@ -68,7 +78,8 @@ class DB extends PDO
                 $pass = $conf[$conn."_pass"];
                 break;
         }
-        $this->_db = new PDO($dsn, $user, $pass);
+        $this->_db = new \PDO($dsn, $user, $pass);
+        $this->_db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     }
     
 }
