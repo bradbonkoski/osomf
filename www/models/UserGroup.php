@@ -11,8 +11,8 @@
 use osomf\DB;
 require_once('www/models/User.php');
 
-class UserGroup extends DB {
-
+class UserGroup extends DB
+{
     private $_ugid;
     public $groupName;
     public $groupDesc;
@@ -58,7 +58,7 @@ class UserGroup extends DB {
         $stmt->execute(array($groupId));
         $rows = $stmt->fetchAll();
         //print_r($rows);
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             //echo "User Info for: {$row['userid']}\n";
             $u = new User(User::RO);
             $u->fetchUserInfo($row['userid']);
@@ -70,7 +70,7 @@ class UserGroup extends DB {
 
     public function fetchUserGroup($groupId)
     {
-        if( $groupId <= 0 || !is_numeric($groupId) ) {
+        if ($groupId <= 0 || !is_numeric($groupId)) {
             throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
         }
 

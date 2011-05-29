@@ -1,16 +1,14 @@
 <phpunit bootstrap="init.php" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true">
 
-    <testsuite name="OSITIL Test Suite">
+    <testsuite name="OSOMF Test Suite">
         <directory>cases/</directory>
     </testsuite>
 
     <filter>
         <whitelist>
-        <!--
-            <directory>/path/to/ositil/root</directory>
-        -->
             <directory>./../www/models</directory>
             <directory>./../lib</directory>
+
             <exclude>
                 <!-- File Exclusion -->
                 <file>./../lib/bootstrap.php</file>

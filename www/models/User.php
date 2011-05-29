@@ -1,7 +1,5 @@
 <?php
 
-
-//require_once('lib/DB.php');
 use osomf\DB;
 
 /**
@@ -53,7 +51,7 @@ class User extends DB
      */
     public function fetchUserInfo($userId)
     {
-        if( ($userId <= 0 ) || !is_numeric($userId)) {
+        if (($userId <= 0 ) || !is_numeric($userId)) {
             throw new Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
         }
 
@@ -78,14 +76,14 @@ class User extends DB
      */
     public function fetchUserByUserName($username)
     {
-        if(strlen($username) <= 0) {
+        if (strlen($username) <= 0) {
             throw new Exception("Invalid UserName - ".__FILE__." : ".__LINE__);
         }
         $sql = "select userId from users where uname = ?";
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($username));
         $row = $stmt->fetch();
-        if(count($row) <= 0 || $row === false) {
+        if (count($row) <= 0 || $row === false) {
             throw new Exception("No Such User");
         }
         return $this->fetchUserInfo($row['userId']);
@@ -115,7 +113,7 @@ class User extends DB
      */
     public function getGroupAdmins($groupId = 0)
     {
-        if( $groupId <= 0 || !is_numeric($groupId) ) {
+        if ($groupId <= 0 || !is_numeric($groupId)) {
             throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
         }
 

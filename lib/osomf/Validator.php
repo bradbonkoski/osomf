@@ -1,6 +1,6 @@
 <?php
 
-namespace osomf\Validators;
+namespace osomf;
 
 /**
  * User: bradb
@@ -8,10 +8,9 @@ namespace osomf\Validators;
  * Time: 8:20 PM
  */
  
-class Validator {
+class Validator
+{
 
     const IS_STRING = isString;
     const STRLEN = stringLength;
-
-
 }
