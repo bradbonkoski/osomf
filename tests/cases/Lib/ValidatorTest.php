@@ -85,4 +85,26 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $v->validate("");
         $this->assertEquals(1, $v->errNo);
     }
+
+    /**
+     * @test
+     */
+    public function NumGroupTest()
+    {
+        $v = new Validator(array(
+                Validator::IS_NUM => true,
+                Validator::NUM_RANGE => array('min' => 10, 'max' => 100)
+                           ));
+        $v->validate(10);
+        $this->assertEquals(0, $v->errNo);
+
+        $v->validate(100);
+        $this->assertEquals(0, $v->errNo);
+        
+        $v->validate(9);
+        $this->assertEquals(1, $v->errNo);
+
+        $v->validate(101);
+        $this->assertEquals(2, $v->errNo);
+    }
 }
