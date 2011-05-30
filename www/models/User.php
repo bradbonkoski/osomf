@@ -111,16 +111,23 @@ class User extends DB
      * @param int $groupId
      * @return array
      */
-    public function getGroupAdmins($groupId = 0)
-    {
-        if ($groupId <= 0 || !is_numeric($groupId)) {
-            throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
-        }
+    //TODO Move this out of the User Model Class!
 
-        $sql = "select * from users_groups where ugid = ? and status = ?";
-        $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($groupId, 'admin'));
-        $rows = $stmt->fetchAll();
-        return $rows;
+//    public function getGroupAdmins($groupId = 0)
+//    {
+//        if ($groupId <= 0 || !is_numeric($groupId)) {
+//            throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
+//        }
+//
+//        $sql = "select * from users_groups where ugid = ? and status = ?";
+//        $stmt = $this->_db->prepare($sql);
+//        $stmt->execute(array($groupId, 'admin'));
+//        $rows = $stmt->fetchAll();
+//        return $rows;
+//    }
+
+    public function save()
+    {
+
     }
 }

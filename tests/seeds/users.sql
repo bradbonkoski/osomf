@@ -6,6 +6,9 @@ insert into users set userId = 1, uname='bradb', fname='Brad', lname='Bonkoski',
 insert into users set userId = 2, uname='bradb1', fname='Brad', lname='Bonkoski', email='bradb@ymail.com', phone='800-555-5555';
 insert into users set userId = 3, uname='brad2', fname='Brad', lname='Bonkoski', email='bradleyo@gmail.com', phone='800-332-5555';
 
+-- a few for test updates
+insert into users set userId = 10, uname='fitzer', fname='Fitzgerald', lname='Bonkoski', email='fitzy@yahoo.com', phone='800-555-2123';
+
 
 -- seeds for userGroup
 delete from userGroup;
