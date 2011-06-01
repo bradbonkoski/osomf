@@ -15,12 +15,14 @@ class Validator
     const STRLEN = "_stringLength";
     const IS_NUM = "_isNumeric";
     const NUM_RANGE = "_numRange";
+    const IS_PHONE = "_isPhone";
 
     private $_validFuncs = array(
         self::IS_STRING,
         self::STRLEN,
         self::IS_NUM,
         self::NUM_RANGE,
+        self::IS_PHONE,
     );
 
     private $_var;
@@ -114,6 +116,15 @@ class Validator
         }
         if ($this->_var < $min) {
             throw new \Exception("Validation Error: {$this->_var} is Less than Min");
+        }
+    }
+
+    private function _isPhone($params)
+    {
+        $pattern = "/(\d)?(\s|-)?(\()?(\d){3}(\))?(\s|-){1}(\d){3}(\s|-){1}(\d){4}/";
+        preg_match_all($pattern, $this->_var, $phone);
+        if(count($phone[0]) != 1) {
+            throw new \Exception("Validation Error: {$this->_var} is not a valid phone number");
         }
     }
 }

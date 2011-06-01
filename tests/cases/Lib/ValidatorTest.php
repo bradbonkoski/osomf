@@ -107,4 +107,19 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $v->validate(101);
         $this->assertEquals(2, $v->errNo);
     }
+
+    /**
+     * @test
+     */
+    public function phoneTest()
+    {
+        $v = new Validator(array(Validator::IS_PHONE => true));
+        $v->validate("(800) 333-4443");
+        print_r($v->getErrors());
+        $this->assertEquals(0, $v->errNo);
+
+        $v = new Validator(array(Validator::IS_PHONE => true));
+        $v->validate("+1 800-333-4443");
+        $this->assertEquals(0, $v->errNo);
+    }
 }
