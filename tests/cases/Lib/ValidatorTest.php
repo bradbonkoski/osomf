@@ -106,6 +106,14 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
         $v->validate(101);
         $this->assertEquals(2, $v->errNo);
+
+        $v = new Validator(array(Validator::IS_NUM => true));
+        $v->validate("string");
+        $this->assertEquals(1, $v->errNo);
+
+        $v = new Validator(array(Validator::NUM_RANGE => array()));
+        $v->validate(10);
+        $this->assertEquals(1, $v->errNo);
     }
 
     /**
@@ -121,5 +129,9 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $v = new Validator(array(Validator::IS_PHONE => true));
         $v->validate("+1 800-333-4443");
         $this->assertEquals(0, $v->errNo);
+
+        $v = new Validator(array(Validator::IS_PHONE => true));
+        $v->validate("444-3223-2123");
+        $this->assertEquals(1, $v->errNo);
     }
 }
