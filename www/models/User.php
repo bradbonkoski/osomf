@@ -1,6 +1,7 @@
 <?php
 
 use osomf\DB;
+use osomf\Validator;
 
 /**
 * User/UserGroup Model Class
@@ -42,6 +43,49 @@ class User extends DB
         $this->phone = "";
         $this->pager = "";
         $this->status = '';
+    }
+
+    private function _validate()
+    {
+        $validators = array(
+            'uname' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 1, 'max' => 32),
+            ),
+            'fname' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 1, 'max' => 32),
+            ),
+            'lname' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 1, 'max' => 64),
+            ),
+            'email' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 1, 'max' => 128),
+                //Validator::IS_EMAIL => true,
+            ),
+            'phone' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 1, 'max' => 32),
+                Validator::IS_PHONE => true,
+            ),
+            'pager' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 0, 'max' => 32),
+                Validator::IS_PHONE => true,
+            )
+        );
+
+        foreach($validators as $key => $val) {
+            //echo "Validating: $key [{$this->$key}]\n";
+            $v = new Validator($val);
+            $v->validate($this->$key);
+            if($v->errNo > 0 ) {
+                $errs = $v->getErrors();
+                throw new Exception($errs[0]);
+            }
+        }
     }
 
     /**
@@ -129,5 +173,29 @@ class User extends DB
     public function save()
     {
 
+        try {
+            $this->_validate();
+        } catch (Exception $e) {
+            //echo "Validation Exception!\n";
+            throw $e;
+        }
+            
+        if ($this->_userId < 0 ) {
+            // new record
+            $sql = "insert into users (uname, fname, lname, email, phone, pager)
+                values (?,?,?,?,?,?)";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(
+                array(
+                    $this->uname,
+                    $this->fname,
+                    $this->lname,
+                    $this->email,
+                    $this->phone,
+                    $this->pager,
+                )
+            );
+
+        }
     }
 }

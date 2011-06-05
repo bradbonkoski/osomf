@@ -67,7 +67,7 @@ class Validator
 
     private function _isString($params)
     {
-        if (!ctype_alpha($this->_var)) {
+        if (!is_string($this->_var)) {
             throw new \Exception("Validation Error: {$this->_var} is not a string");
         }
     }
@@ -121,6 +121,15 @@ class Validator
 
     private function _isPhone($params)
     {
+        //echo "Validating phone number: {$this->_var}\n";
+        /**
+         * Need to Check to see if it is filled in
+         * as it could be blank, and allowed based on
+         * other validators
+         */
+        if(strlen($this->_var) <= 0 ) {
+            return;
+        }
         $pattern = "/(\d)?(\s|-)?(\()?(\d){3}(\))?(\s|-){1}(\d){3}(\s|-){1}(\d){4}/";
         preg_match_all($pattern, $this->_var, $phone);
         if(count($phone[0]) != 1) {

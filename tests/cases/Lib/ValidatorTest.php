@@ -134,4 +134,15 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $v->validate("444-3223-2123");
         $this->assertEquals(1, $v->errNo);
     }
+
+    /**
+     * Test for String which has a number in it.  (should be valid!)
+     * @test
+     */
+    public function stringWithNumber()
+    {
+        $v = new Validator(array(Validator::IS_STRING => true));
+        $v->validate("Hello1");
+        $this->assertEquals(0, $v->errNo);
+    }
 }

@@ -95,4 +95,38 @@ class UserTest extends PHPUnit_Framework_TestCase
         }
         $this->fail("Missed Expected Exception");
     }
+
+    /**
+     * @test
+     */
+    public function newUser1()
+    {
+        $u = new User(USER::RW);
+        $u->uname = "fitzer1";
+        $u->fname = "Fitzgerald";
+        $u->lname = "Beth";
+        $u->email = "fitzer@yahoo.com";
+        $u->phone = "800-323-4432";
+        $u->save();
+    }
+
+    /**
+     * @test
+     */
+    public function newUserBadPhone()
+    {
+        $u = new User(USER::RW);
+        $u->uname = "fitzer1";
+        $u->fname = "Fitzgerald";
+        $u->lname = "Beth";
+        $u->email = "fitzer@yahoo.com";
+        $u->phone = "800-fd323-4432";
+        try {
+            $u->save();
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
 }
