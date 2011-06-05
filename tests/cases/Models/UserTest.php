@@ -129,4 +129,23 @@ class UserTest extends PHPUnit_Framework_TestCase
         }
         $this->fail("Missed Expected Exception");
     }
+
+
+    /**
+     * Test for Updating a user (id: 10 in seeded set)
+     * @test
+     */
+    public function UpdateTestOne()
+    {
+        $u = new User(USER::RW);
+        $u->fetchUserInfo(10);
+        $this->assertEquals("fitzy@yahoo.com", $u->email);
+        $u->email = "fitz@yahoo.com";
+        $this->assertEquals("fitz@yahoo.com", $u->email);
+        $u->save();
+
+        $nu = new User(User::RO);
+        $nu->fetchUserInfo(10);
+        $this->assertEquals("fitz@yahoo.com", $nu->email);
+    }
 }

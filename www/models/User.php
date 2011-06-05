@@ -195,6 +195,21 @@ class User extends DB
                     $this->pager,
                 )
             );
+        } else {
+            // Update to an existing User
+            $sql = "update users set uname = ?, fname = ?,
+                email = ?, phone = ?, pager = ? where userId = ?";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(
+                array(
+                    $this->uname,
+                    $this->fname,
+                    $this->email,
+                    $this->phone,
+                    $this->pager,
+                    $this->_userId,
+                )
+            );
 
         }
     }

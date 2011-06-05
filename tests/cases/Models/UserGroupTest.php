@@ -43,4 +43,5 @@ class UserGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('admin', $u->users[0]->status);
         $this->assertEquals('member', $u->users[1]->status);
     }
+ 
 }

@@ -67,7 +67,7 @@ class Validator
 
     private function _isString($params)
     {
-        if (!is_string($this->_var)) {
+        if (!is_string($this->_var) && $this->_var != null) {
             throw new \Exception("Validation Error: {$this->_var} is not a string");
         }
     }
