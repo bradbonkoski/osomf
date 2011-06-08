@@ -1,5 +1,7 @@
 <?php
 
+namespace osomf\models;
+
 use osomf\DB;
 use osomf\Validator;
 
@@ -31,7 +33,7 @@ class User extends DB
     public function __construct($conn)
     {
         if (!in_array($conn, $this->_validConn)) {
-            throw new Exception("Invalid Connection");
+            throw new \Exception("Invalid Connection");
         }
 
         parent::__construct("omf_users", $conn);
@@ -83,7 +85,7 @@ class User extends DB
             $v->validate($this->$key);
             if($v->errNo > 0 ) {
                 $errs = $v->getErrors();
-                throw new Exception($errs[0]);
+                throw new \Exception($errs[0]);
             }
         }
     }
@@ -96,7 +98,7 @@ class User extends DB
     public function fetchUserInfo($userId)
     {
         if (($userId <= 0 ) || !is_numeric($userId)) {
-            throw new Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
+            throw new \Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
         }
 
         $sql = "select * from users where userId = ?";
@@ -121,14 +123,14 @@ class User extends DB
     public function fetchUserByUserName($username)
     {
         if (strlen($username) <= 0) {
-            throw new Exception("Invalid UserName - ".__FILE__." : ".__LINE__);
+            throw new \Exception("Invalid UserName - ".__FILE__." : ".__LINE__);
         }
         $sql = "select userId from users where uname = ?";
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($username));
         $row = $stmt->fetch();
         if (count($row) <= 0 || $row === false) {
-            throw new Exception("No Such User");
+            throw new \Exception("No Such User");
         }
         return $this->fetchUserInfo($row['userId']);
     }
@@ -175,7 +177,7 @@ class User extends DB
 
         try {
             $this->_validate();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             //echo "Validation Exception!\n";
             throw $e;
         }

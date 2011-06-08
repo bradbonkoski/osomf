@@ -1,8 +1,8 @@
 <?php
 
 require_once 'PHPUnit/Framework/TestCase.php';
-
-require_once 'www/models/User.php';
+use \osomf\models\User;
+//require_once 'www/models/User.php';
 
 /**
  * @group User

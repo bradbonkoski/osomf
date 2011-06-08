@@ -10,7 +10,8 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once 'www/models/UserGroup.php';
+//require_once 'www/models/UserGroup.php';
+use osomf\models\UserGroup;
 
 /**
  * @group UserGroup

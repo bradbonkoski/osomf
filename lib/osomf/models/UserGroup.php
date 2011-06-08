@@ -1,5 +1,5 @@
 <?php
-
+namespace osomf\models;
 
 /**
  * User: bradb
@@ -9,7 +9,9 @@
  */
 
 use osomf\DB;
-require_once('www/models/User.php');
+use osomf\models\User;
+
+//require_once('www/models/User.php');
 
 class UserGroup extends DB
 {
