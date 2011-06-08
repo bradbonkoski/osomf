@@ -3,7 +3,7 @@
 define('BASE_PATH', dirname(dirname(__FILE__)));
 
 spl_autoload_register(
-   function($class) {
+    function($class) {
         $file = BASE_PATH . "/lib/".strtr($class, '\\', '/') . '.php';
         //echo "File is: $file\n";
         if (file_exists($file)) {

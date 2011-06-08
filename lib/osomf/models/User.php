@@ -79,11 +79,11 @@ class User extends DB
             )
         );
 
-        foreach($validators as $key => $val) {
+        foreach ($validators as $key => $val) {
             //echo "Validating: $key [{$this->$key}]\n";
             $v = new Validator($val);
             $v->validate($this->$key);
-            if($v->errNo > 0 ) {
+            if ($v->errNo > 0 ) {
                 $errs = $v->getErrors();
                 throw new \Exception($errs[0]);
             }
@@ -162,7 +162,9 @@ class User extends DB
 //    public function getGroupAdmins($groupId = 0)
 //    {
 //        if ($groupId <= 0 || !is_numeric($groupId)) {
-//            throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
+//            throw new Exception(
+//              "Invalid Group Id - ".__FILE__." : ".__LINE__
+//              );
 //        }
 //
 //        $sql = "select * from users_groups where ugid = ? and status = ?";
