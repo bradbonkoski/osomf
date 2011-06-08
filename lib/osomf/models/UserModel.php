@@ -14,7 +14,7 @@ use osomf\Validator;
 * @copyright Copyright (c) 2011
 */
 
-class User extends DB
+class UserModel extends DB
 {
 
     private $_userId;

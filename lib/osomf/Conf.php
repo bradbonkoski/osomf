@@ -22,7 +22,7 @@ class Conf
             );
         }
         //echo "Path is: ".PATH."\n";
-        $configPath = PATH."/../conf/";
+        $configPath = PATH."/conf/";
         $this->_data = parse_ini_file($configPath.$file, true);
     }
 }

@@ -69,6 +69,7 @@ class DB extends \PDO
                 break;    
             case self::TYPE_USER:
                 $conf = $c->getAllUser();
+                    //print_r($conf);
                 $dsn = $this->_buildDSN(
                     $conf['db_name'], 
                     $conf[$hostIdx],

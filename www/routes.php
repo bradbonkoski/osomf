@@ -13,6 +13,7 @@ require('lib/bootstrap.php');
 
 //construct our route
 $route = new Routes($_SERVER['REQUEST_URI']);
+//var_dump($route);
 
 //debug
 //echo "Controller is: {$route->getController()}<br/>";

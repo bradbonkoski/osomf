@@ -9,9 +9,8 @@ namespace osomf\models;
  */
 
 use osomf\DB;
-use osomf\models\User;
+use osomf\models\UserModel;
 
-//require_once('www/models/User.php');
 
 class UserGroup extends DB
 {
@@ -62,7 +61,7 @@ class UserGroup extends DB
         //print_r($rows);
         foreach ($rows as $row) {
             //echo "User Info for: {$row['userid']}\n";
-            $u = new User(User::RO);
+            $u = new UserModel(UserModel::RO);
             $u->fetchUserInfo($row['userid']);
             $u->status = $row['status'];
             //echo $u;

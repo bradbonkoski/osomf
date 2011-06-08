@@ -1,9 +1,9 @@
 <?php
 
-namespace osomf;
+//namespace osomf;
 
 //require_once('lib/Template.php');
-use \osomf\Template;
+use \Template;
 
 class ControllerBase
 {

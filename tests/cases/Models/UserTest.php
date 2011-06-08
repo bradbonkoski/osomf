@@ -1,8 +1,8 @@
 <?php
 
 require_once 'PHPUnit/Framework/TestCase.php';
-use \osomf\models\User;
-//require_once 'www/models/User.php';
+use \osomf\models\UserModel;
+//require_once 'www/models/UserModel.php';
 
 /**
  * @group User
@@ -28,7 +28,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function fetchUserInfoTestOne()
     {
-        $u = new User(USER::RO);
+        $u = new UserModel(UserModel::RO);
         $u->fetchUserInfo(3);
         $this->assertEquals('brad2', $u->uname);
         $this->assertEquals('800-332-5555', $u->phone);
@@ -40,7 +40,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function fetchUserInfoBadeUserId()
     {
-        $u = new User(USER::RO);
+        $u = new UserModel(UserModel::RO);
         try {
             $u->fetchUserInfo("string");
         } catch (Exception $e) {
@@ -56,7 +56,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function getUserInfoFromUserName()
     {
-        $u = new User(USER::RO);
+        $u = new UserModel(UserModel::RO);
         $u->fetchUserByUserName('bradb');
         $this->assertEquals('bradb', $u->uname);
         $this->assertEquals('Bonkoski', $u->lname);
@@ -69,7 +69,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function getuserInfoFromUserNameBadUserName()
     {
-        $u = new User(User::RO);
+        $u = new UserModel(UserModel::RO);
         try {
             $u->fetchUserByUserName('');
         } catch (Exception $e) {
@@ -86,7 +86,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function getUserByUserNameNoSuchUser()
     {
-        $u = new User(USER::RO);
+        $u = new UserModel(UserModel::RO);
         try {
             $u->fetchUserByUserName("samIamHere");
         } catch (Exception $e) {
@@ -101,7 +101,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function newUser1()
     {
-        $u = new User(USER::RW);
+        $u = new Usermodel(UserModel::RW);
         $u->uname = "fitzer1";
         $u->fname = "Fitzgerald";
         $u->lname = "Beth";
@@ -115,7 +115,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function newUserBadPhone()
     {
-        $u = new User(USER::RW);
+        $u = new UserModel(UserModel::RW);
         $u->uname = "fitzer1";
         $u->fname = "Fitzgerald";
         $u->lname = "Beth";
@@ -137,14 +137,14 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function UpdateTestOne()
     {
-        $u = new User(USER::RW);
+        $u = new UserModel(UserModel::RW);
         $u->fetchUserInfo(10);
         $this->assertEquals("fitzy@yahoo.com", $u->email);
         $u->email = "fitz@yahoo.com";
         $this->assertEquals("fitz@yahoo.com", $u->email);
         $u->save();
 
-        $nu = new User(User::RO);
+        $nu = new UserModel(UserModel::RO);
         $nu->fetchUserInfo(10);
         $this->assertEquals("fitz@yahoo.com", $nu->email);
     }

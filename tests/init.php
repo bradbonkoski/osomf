@@ -12,6 +12,7 @@
 // Set up our Default include path
 $path = dirname(dirname(__FILE__));
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+define('PATH', $path);
 
 $logfile = dirname(__FILE__) . '/phpunit.log';
 system('cat /dev/null > ' . $logfile);
