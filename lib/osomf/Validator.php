@@ -34,7 +34,7 @@ class Validator
     {
         $this->_errors = array();
         $this->errNo = 0;
-        foreach($validators as $v => $p) {
+        foreach ($validators as $v => $p) {
             if (in_array($v, $this->_validFuncs)) {
                 $this->_validators[$v] = $p;
             }
@@ -45,7 +45,7 @@ class Validator
     {
         $this->_var = $value;
         //print_r($this->_validators);
-        foreach( $this->_validators as $func => $params) {
+        foreach ($this->_validators as $func => $params) {
             try {
                 //echo "Calling User Function: $func\n";
                 call_user_func(array($this, $func), $params);
@@ -58,7 +58,7 @@ class Validator
 
     public function getErrors()
     {
-        if(count($this->_errors) > 0 ) {
+        if (count($this->_errors) > 0 ) {
             return $this->_errors;
         } else {
             return -1;
@@ -68,7 +68,9 @@ class Validator
     private function _isString($params)
     {
         if (!is_string($this->_var) && $this->_var != null) {
-            throw new \Exception("Validation Error: {$this->_var} is not a string");
+            throw new \Exception(
+                "Validation Error: {$this->_var} is not a string"
+            );
         }
     }
 
@@ -81,21 +83,29 @@ class Validator
         }
 
         if (!isset($params['max'])) {
-            throw new \Exception("Validation Error: Cannot have undefined Max for Strlen Validator");
+            throw new \Exception(
+                "Validation Error: Cannot have undefined Max for Strlen Validator"
+            );
         }
         $max = $params['max'];
         if (strlen($this->_var) > $max) {
-            throw new \Exception("Validation Error: {$this->_var} is Longer than Max Length");
+            throw new \Exception(
+                "Validation Error: {$this->_var} is Longer than Max Length"
+            );
         }
         if (strlen($this->_var) < $min) {
-            throw new \Exception("Validation Error: {$this->_var} is Less than Min Length");
+            throw new \Exception(
+                "Validation Error: {$this->_var} is Less than Min Length"
+            );
         }
     }
 
     private function _isNumeric($params)
     {
         if (!is_numeric($this->_var)) {
-            throw new \Exception("Validation Error: {$this->_var} is not a number");
+            throw new \Exception(
+                "Validation Error: {$this->_var} is not a number"
+            );
         }
     }
 
@@ -108,14 +118,20 @@ class Validator
         }
 
         if (!isset($params['max'])) {
-            throw new \Exception("Validation Error: Cannot have undefined Max for NumRange Validator");
+            throw new \Exception(
+                "Validation Error: Cannot have undef Max for NumRange Validator"
+            );
         }
         $max = $params['max'];
         if ($this->_var > $max) {
-            throw new \Exception("Validation Error: {$this->_var} is Greater than Max");
+            throw new \Exception(
+                "Validation Error: {$this->_var} is Greater than Max"
+            );
         }
         if ($this->_var < $min) {
-            throw new \Exception("Validation Error: {$this->_var} is Less than Min");
+            throw new \Exception(
+                "Validation Error: {$this->_var} is Less than Min"
+            );
         }
     }
 
@@ -127,13 +143,15 @@ class Validator
          * as it could be blank, and allowed based on
          * other validators
          */
-        if(strlen($this->_var) <= 0 ) {
+        if (strlen($this->_var) <= 0 ) {
             return;
         }
         $pattern = "/(\d)?(\s|-)?(\()?(\d){3}(\))?(\s|-){1}(\d){3}(\s|-){1}(\d){4}/";
         preg_match_all($pattern, $this->_var, $phone);
-        if(count($phone[0]) != 1) {
-            throw new \Exception("Validation Error: {$this->_var} is not a valid phone number");
+        if (count($phone[0]) != 1) {
+            throw new \Exception(
+                "Validation Error: {$this->_var} is not a valid phone number"
+            );
         }
     }
 }
