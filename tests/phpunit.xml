@@ -6,7 +6,6 @@
 
     <filter>
         <whitelist>
-            <directory>./../www/models</directory>
             <directory>./../lib</directory>
 
             <exclude>
