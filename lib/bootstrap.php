@@ -15,7 +15,7 @@ spl_autoload_register(
 
 
 //echo "Base Path is: ".BASE_PATH."\n";
-require('lib/RoutingLib.php');
-require('lib/ControllerBase.php');
+//require_once('lib/Routes.php');
+//require('lib/ControllerBase.php');
 
 

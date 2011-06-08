@@ -1,4 +1,5 @@
 <?php
+namespace osomf\models;
 
 //require_once('lib/DB.php');
 use osomf\DB;

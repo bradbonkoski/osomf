@@ -2,7 +2,8 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once 'lib/RoutingLib.php';
+//require_once 'lib/Routes.php';
+use \Routes;
 
 /**
  * Test the Routing Library Class
@@ -11,7 +12,7 @@ require_once 'lib/RoutingLib.php';
  * @package     lib
  * @group       route 
  * @author      Brad Bonkoski
- * @copyright   Copyright (c) 2011 Fitzers House of Code
+ * @copyright   Copyright (c) 2011 Fitzer's House of Code
  */
 class RoutingLbTest extends PHPUnit_Framework_TestCase
 {
@@ -31,7 +32,7 @@ class RoutingLbTest extends PHPUnit_Framework_TestCase
     */
     public function base()
     {
-        $rl = new Routes("www.ositil.com/itil/controller/action/params/something");
+        $rl = new Routes("www.osomf.com/osomf/controller/action/params/something");
         $cont = $rl->getController();
         $this->assertEquals("controller", $cont);
         $this->assertEquals("action", $rl->getAction());

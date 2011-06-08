@@ -1,5 +1,7 @@
 <?php
 
+//namespace osomf;
+
 class Routes
 {
 

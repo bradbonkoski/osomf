@@ -2,7 +2,8 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once 'www/models/ChangeModel.php';
+//require_once 'www/models/ChangeModel.php';
+use \osomf\models\ChangeModel;
 
 class ChangeTest extends PHPUnit_Framework_TestCase
 {
