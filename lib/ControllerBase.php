@@ -8,6 +8,7 @@ use \Template;
 class ControllerBase
 {
 
+    protected $_test;
     protected $_controller;
     protected $_action;
     protected $_template;
@@ -15,8 +16,14 @@ class ControllerBase
 
     public function __construct($controller, $action = "") 
     {
+        $this->_test = false;
         $this->_controller = $controller;
         $this->_action = $action;
+    }
+
+    public function setTest()
+    {
+        $this->_test = true;
     }
 
     public function setAction($action) 
@@ -47,10 +54,14 @@ class ControllerBase
 
     public function __destruct() 
     {
-        $this->_template = new Template($this->_controller, $this->_action);
-        foreach ($this->data as $k => $v) {
-            $this->_template->set($k, $v);
+        // need to short circuit auto redirect to the view
+        // in the instance where we are unit testing controllers
+        if (!$this->_test) {
+            $this->_template = new Template($this->_controller, $this->_action);
+            foreach ($this->data as $k => $v) {
+                $this->_template->set($k, $v);
+            }
+            $this->_template->render();
         }
-        $this->_template->render();    
     }
 }    

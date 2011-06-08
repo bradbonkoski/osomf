@@ -20,7 +20,7 @@ class user extends ControllerBase
     public function view( $params )
     {
         $this->setAction("view");
-        //echo "I'm in the User View!<br/>";
+        //echo "Params are: $params\n";
         $parms = $this->parseParams($params);
         //echo "<pre>".print_r($this->parseParams($params), true)."</pre>";
         if (array_key_exists("format", $parms)) {
@@ -32,11 +32,13 @@ class user extends ControllerBase
         $u = new UserModel(UserModel::RO);
         //echo "Fetching user id: {$params[0]}\n";
         $u->fetchUserInfo($params[0]);
-        echo "User: $u\n";
+        //echo "User: $u\n";
         $this->data['title'] = "User Data for: {$u->fname} {$u->lname} ({$u->uname})";
-
-
-        $this->data['testArray'] = array('some', 'one', 'is','here');
+        $this->data['username'] = $u->uname;
+        $this->data['fullname'] = $u->fname ." ". $u->lname;
+        $this->data['email'] = $u->email;
+        $this->data['phone'] = $u->phone;
+        $this->data['pager'] = $u->pager;
 
     }
 
