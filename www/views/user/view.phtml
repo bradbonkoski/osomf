@@ -8,3 +8,12 @@
     <li>Email: <?php echo $email; ?></li>
     <li>Phone: <?php echo $phone; ?></li>
     <li>Pager: <?php echo $pager; ?></li>
+</ul>
+
+        <hr>
+    <ul>Groups
+        <?foreach ($groups as $gid => $group) : ?>
+        <li><a href ="#">View <?php echo $gid;?></a></li>
+        <li><?php echo $group['GroupName']; ?></li>
+        <? endforeach ?>
+    <u/>

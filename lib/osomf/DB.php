@@ -40,7 +40,7 @@ class DB extends \PDO
     public function __construct($type, $conn)
     {
         if (!in_array($type, $this->_validTypes)) {
-            throw new Exception("Invalid DB Type");
+            throw new \Exception("Invalid DB Type");
         }
 
         $c = new ConfDB();

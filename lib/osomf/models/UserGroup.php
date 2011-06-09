@@ -25,7 +25,7 @@ class UserGroup extends DB
     public function __construct($conn)
     {
         if (!in_array($conn, $this->_validConn)) {
-            throw new Exception("Invalid Connection");
+            throw new \Exception("Invalid Connection");
         }
 
         parent::__construct("omf_users", $conn);
@@ -72,13 +72,38 @@ class UserGroup extends DB
     public function fetchUserGroup($groupId)
     {
         if ($groupId <= 0 || !is_numeric($groupId)) {
-            throw new Exception("Invalid Group Id - ".__FILE__." : ".__LINE__);
+            throw new \Exception(
+                "Invalid Group Id - ".__FILE__." : ".__LINE__
+            );
         }
 
         $this->_fetchGroupInfo($groupId);
 
         $this->_loadUsers($groupId);
+    }
 
-
+    public function getGroupsForUser($userId)
+    {
+        if ($userId <= 0 || !is_numeric($userId)) {
+            throw new \Exception(
+                "Invalid User Id - ".__FILE__." : ".__LINE__
+            );
+        }
+        $sql = "select ugid from users_groups where userid = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($userId));
+        $rows = $stmt->fetchAll();
+        $ret = array();
+        foreach ($rows as $r) {
+            $gid = $r['ugid'];
+            $this-> _fetchGroupInfo($gid);
+            $ret[$gid] = array(
+                'GroupName' => $this->groupName,
+                'GroupDesc' => $this->groupDesc,
+                'GroupPhone' => $this->phone,
+                'GroupPager' => $this->pager,
+            );
+        }
+        return $ret;
     }
 }

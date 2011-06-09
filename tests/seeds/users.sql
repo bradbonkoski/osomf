@@ -21,4 +21,5 @@ delete from users_groups;
 
 insert into users_groups set userid = 1, ugid=2, status = 'admin';
 insert into users_groups set userid = 2, ugid=2, status='member';
+insert into users_groups set userId = 1, ugid=1, status='member';
 

@@ -8,6 +8,7 @@
  */
 
 use \osomf\models\UserModel;
+use \osomf\models\UserGroup;
 
 class user extends ControllerBase
 {
@@ -28,10 +29,14 @@ class user extends ControllerBase
                 //swap out the view for an XML one...
             }
         }
+        $userId = $params[0];
+        if (!is_numeric($userId)) {
+            echo "ERROR";
+        }
 
         $u = new UserModel(UserModel::RO);
         //echo "Fetching user id: {$params[0]}\n";
-        $u->fetchUserInfo($params[0]);
+        $u->fetchUserInfo($userId);
         //echo "User: $u\n";
         $this->data['title'] = "User Data for: {$u->fname} {$u->lname} ({$u->uname})";
         $this->data['username'] = $u->uname;
@@ -40,11 +45,25 @@ class user extends ControllerBase
         $this->data['phone'] = $u->phone;
         $this->data['pager'] = $u->pager;
 
-    }
+        //Get the User's User Group
+        $ug = new UserGroup(UserGroup::RO);
+        $ret = $ug->getGroupsForUser($userId);
+        //print_r($ret);
+        foreach ($ret as $gid => $group) {
+            $this->data['groups'][$gid] = $group;
+        }
+//        foreach ($ug as $group) {
+//            $g = new UserGroup(UserGroup::REUSE);
+//            $g->fetchUserGroup($group);
+//            $this->data['groups'][] = array(
+//                'GroupName' => $g->groupName,
+//                'GroupDesc' => $g->groupDesc,
+//                'GroupPager' => $g->pager,
+//                'GroupPhone' => $g->phone,
+//            );
+//        }
+//
+//        print_r($this->data);
 
-    public function add( $params )
-    {
-        echo "I'm in the User add action<br/>";
-        echo "<pre>".print_r($params, true)."</pre>";
     }
 }
