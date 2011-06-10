@@ -49,14 +49,16 @@ class UserGroupTest extends PHPUnit_Framework_TestCase
     /**
      * Test for Pulling All Groups a user is a member of
      * @test
+     * @group UsersGroups
      */
     public function getUsersUsersGroups()
     {
         $u = new UserGroup(UserGroup::RO);
         $ret = $u->getGroupsForUser(1);
-        $this->assertEquals(2, count($ret));
-        $this->assertEquals(2, $ret[0]);
-        $this->assertEquals(1, $ret[1]);
         //print_r($ret);
+        $this->assertEquals(2, count($ret));
+        $this->assertEquals(4, count($ret[2]));
+        $this->assertEquals(4, count($ret[1]));
+
     }
 }
