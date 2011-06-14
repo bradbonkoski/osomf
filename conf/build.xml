@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="ositil" default="build" basedir="/home/bradb/osomf">
+<project name="osomf" default="build" basedir="/home/bradb/osomf">
 
     <import file="./db.xml"/>
 

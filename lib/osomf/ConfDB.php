@@ -40,6 +40,11 @@ class ConfDB extends Conf
         return $this->_data['omf_users'];
     }
 
+    public function getAllAsset()
+    {
+        return $this->_data['omf_assets'];
+    }
+
     public function getChangeValue($key)
     {
         return $this->_data['change'][$key];

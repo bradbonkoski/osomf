@@ -16,7 +16,7 @@ class DB extends \PDO
     const TYPE_USER = "omf_users";
     const TYPE_PROBLEM = "problem";
     const TYPE_INCIDENT = "incident";
-    const TYPE_ASSET = "asset";
+    const TYPE_ASSET = "omf_assets";
     
     private $_validTypes = array(
         self::TYPE_CHANGE,
@@ -66,6 +66,14 @@ class DB extends \PDO
             case self::TYPE_INCIDENT:
                 break;
             case self::TYPE_ASSET:
+                $conf = $c->getAllAsset();
+                $dsn = $this->_buildDSN(
+                    $conf['db_name'],
+                    $conf[$hostIdx],
+                    $conf[$portIdx]
+                );
+                $user = $conf[$conn."_user"];
+                $pass = $conf[$conn."_pass"];
                 break;    
             case self::TYPE_USER:
                 $conf = $c->getAllUser();
