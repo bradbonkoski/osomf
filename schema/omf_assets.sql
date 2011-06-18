@@ -15,6 +15,10 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+drop database if exists omf_assets;
+create database if not exists omf_assets;
+use omf_assets;
+
 --
 -- Table structure for table `Attributes`
 --
@@ -41,6 +45,7 @@ CREATE TABLE `ci` (
   `ciid` int(11) NOT NULL AUTO_INCREMENT,
   `ciName` varchar(64) NOT NULL,
   `ciDesc` text,
+  `ownerType` enum('USER','GROUP') not null default 'USER',
   `ownerId` int(11) NOT NULL,
   `projectId` int(11) NOT NULL,
   `statusId` int(11) NOT NULL,
@@ -178,6 +183,7 @@ CREATE TABLE `location` (
   `locId` int(11) NOT NULL AUTO_INCREMENT,
   `locName` varchar(128) NOT NULL,
   `locDesc` text,
+  `locOwnerType` enum('USER','GROUP') not null default 'USER',
   `locOwner` int(11) NOT NULL,
   `locAddr` text,
   PRIMARY KEY (`locId`)

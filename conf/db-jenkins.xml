@@ -7,7 +7,7 @@
 
     <target name="db" depends="db:reload, db:seeds, db:testSeeds" />
     <target name="db:reload" depends="db:reload-user, db:reload-asset"/>
-    <target name="db:testSeeds" depends="db:seed-user"/>
+    <target name="db:testSeeds" depends="db:seed-user, db:seed-assets"/>
     <target name="db:seeds" depends="db:seed-ciStatus"/>
 
     <target name="db:reload-user" description="Reload the Schema User Document">
@@ -44,7 +44,7 @@
         </sql>
     </target>
 
-        <target name="db:seed-user" description="Seed User Table">
+        <target name="db:seed-user" description="Seed User Database">
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost:3306/omf_users"
@@ -55,6 +55,16 @@
         </sql>
     </target>
 
+    <target name="db:seed-assets" description="Seed Assets Database">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/omf_assets"
+            userid="test"
+            password=""
+            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar">
+            <transaction src="${seedDir}/assets.sql" />
+        </sql>
+    </target>
 
 
 </project>

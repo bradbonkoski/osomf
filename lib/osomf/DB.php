@@ -12,6 +12,9 @@ class DB extends \PDO
     const RO = "ro";
     const RW = "rw";
 
+    const OWNER_USER = 'USER';
+    const OWNER_GROUP = 'GROUP';
+
     const TYPE_CHANGE = "change";
     const TYPE_USER = "omf_users";
     const TYPE_PROBLEM = "problem";
