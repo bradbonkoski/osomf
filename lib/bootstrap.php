@@ -1,6 +1,6 @@
 <?php
 
-
+error_reporting(-1);
 
 define('BASE_PATH', dirname(dirname(__FILE__)));
 
@@ -16,8 +16,5 @@ spl_autoload_register(
 );
 
 use \osomf\ControllerBase;
-//echo "Base Path is: ".BASE_PATH."\n";
-//require_once('lib/Routes.php');
-//require('lib/ControllerBase.php');
 
 

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="author" content="Brad Bonkoski">
+    {# Default CSS to be loaded for all #}
+    <link rel="stylesheet" href="/osomf/www/css/main.css" />
+    {% block css %}
+    {% endblock %}
+
+    <title>OSOMF - {% block title %}Default Title{% endblock %}</title>
+</head>
+<body>
+    {% include "navigation.phtml" %}
+  <div id="content">{% block content %}Default Content{% endblock %}</div>
+  <div id="footer">
+    {% include "footer.phtml" %}
+  </div>
+</body>
+</html>

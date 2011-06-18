@@ -1,19 +1,48 @@
+{% extends "layout.phtml" %}
+
+        {% block title %} {{ title }} {% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+
+    <fieldset>
+        <legend>user data</legend>
 
 
-<h1><?php echo $title; ?></h1>
+        <dl>
+            <dt><label>User Name</label></dt>
+            <dd>{{ username }}</dd>
+        </dl>
 
- <ul
-    <li>User Name: <?php echo $username; ?></li>
-    <li>Full Name: <?php echo $fullname; ?></li>
-    <li>Email: <?php echo $email; ?></li>
-    <li>Phone: <?php echo $phone; ?></li>
-    <li>Pager: <?php echo $pager; ?></li>
-</ul>
+        <dl>
+            <dt><label>Full Name</label></dt>
+            <dd>{{ fullname }}</dd>
+        </dl>
 
-        <hr>
-    <ul>Groups
-        <?foreach ($groups as $gid => $group) : ?>
-        <li><a href ="#">View <?php echo $gid;?></a></li>
-        <li><?php echo $group['GroupName']; ?></li>
-        <? endforeach ?>
-    <u/>
+        <dl>
+            <dt><label>Email</label></dt>
+            <dd><a href="mailto:{{ email }}">{{ email }}</a></dd>
+        </dl>
+
+        <dl>
+            <dt><label>phone</label></dt>
+            <dd>{{ phone }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>pager</label></dt>
+            <dd>{{ pager }}</dd>
+        </dl>
+
+</fieldset>
+
+    <fieldset>
+    <legend>group membership</legend>
+    <ul>Groups<br/>
+        {% for gid, group in groups %}
+        <a href="#">{{ group.GroupName }} ({{ gid }})</a><br/>
+        {% endfor %}
+    <ul/>
+        </fieldset>
+
+{% endblock %}
+

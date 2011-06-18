@@ -1,35 +1,57 @@
 <?php
 
-//namespace osomf;
+require_once 'Twig/Autoloader.php';
+use \Navigation;
 
 class Template
 {
 
     protected $_variables = array();
-    private $_contoller;
+    private $_controller;
     private $_action;
+    private $_twig;
+
 
     function __construct($controller, $action) 
     {
         $this->_controller = $controller;
         $this->_action = $action;
+        Twig_Autoloader::register();
+        error_log(BASE_PATH."/www/views");
+        $loader = new Twig_Loader_Filesystem(BASE_PATH."/www/views");
+        $this->_twig = new Twig_Environment($loader, array(
+            'cache' => '/tmp/compilation_cache',
+            'auto_reload' => true,
+            'debug' => true,
+        ));
+
     }
 
     
     public function render() 
     {
+//
+//        extract($this->_variables);
+//
+//        if (file_exists(PATH."/www/views/header.phtml")) {
+//            include(PATH."/www/views/header.phtml");
+//        }
+//
+//        include("www/views/{$this->_controller}/{$this->_action}.phtml");
+//
+//        if (file_exists(PATH."/www/views/footer.phtml")) {
+//            include(PATH."/www/views/footer.phtml");
+//        }
+        $nav = new Navigation();
+        $this->_variables['nav'] = $nav->getMenu();
 
-        extract($this->_variables);
-    
-        if (file_exists(PATH."/www/views/header.phtml")) {
-            include(PATH."/www/views/header.phtml");
-        }
+        //echo "<pre>".print_r($this->_variables, true)."</pre>";
+        $template = $this->_twig->loadTemplate(
+            $this->_controller."/".$this->_action.".phtml"
+        );
 
-        include("www/views/{$this->_controller}/{$this->_action}.phtml");
+        $template->display($this->_variables);
 
-        if (file_exists(PATH."/www/views/footer.phtml")) {
-            include(PATH."/www/views/footer.phtml");
-        }
     }
 
     public function set($name, $value) 
