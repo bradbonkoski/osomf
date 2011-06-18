@@ -1,0 +1,55 @@
+
+hr.footer {
+	margin-top: 2em;
+}
+
+
+p.footer {
+	text-align:right;
+	color:blue;
+	font-family: Monospace;
+}
+
+fieldset {
+    margin-right: 5em;
+    margin-left: 2em;
+}
+
+fieldset legend {
+    color: blue;
+    font-size: 10px;
+    font-family: Monospace;
+}
+
+dl dt, dl dd {
+float: left;
+margin: 0 .5em 0 .5em;
+}
+dl dt {clear: left; width: 8em;}
+
+dt label {
+    text-transform:lowercase;
+    color: blue;
+    font-weight: bold;
+}
+
+/* Base Nagivation Styles */
+ul.nav {
+    background-color: #d3d3d3;
+    width: 100%;
+    padding:  8px;
+}
+ul.nav li {
+    display: inline;
+}
+
+ul.nav li:hover {
+    background-color: gray;
+}
+
+ul.nav a {
+    padding:  5px, 15px, 5px, 15px;
+    margin-right: 5px;
+    text-decoration: none;
+    color: black;
+}
