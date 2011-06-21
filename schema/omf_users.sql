@@ -56,6 +56,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDb AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+create table user_pass(userId int not null primary key, pass varchar(64) null)Engine=Innodb;
+
 --
 -- Table structure for table `users_groups`
 --

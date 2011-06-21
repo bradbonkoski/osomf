@@ -10,6 +10,13 @@ p.footer {
 	font-family: Monospace;
 }
 
+span.error {
+    background-color: #f08080;
+    color: black;
+    font-weight: bold;
+    // padding: 3px;
+}
+
 fieldset {
     margin-right: 5em;
     margin-left: 2em;

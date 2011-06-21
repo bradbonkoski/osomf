@@ -90,6 +90,30 @@ class UserModel extends DB
         }
     }
 
+    public function getUserId()
+    {
+        return $this->_userId;
+    }
+
+    public function checkPassword($userId)
+    {
+        if (($userId <= 0 ) || !is_numeric($userId)) {
+            throw new \Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
+        }
+        $sql = "select pass from user_pass where userId = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($userId));
+        $row = $stmt->fetchAll();
+        return $row[0]['pass'];
+    }
+
+    public function setPassword($pass)
+    {
+        $sql = "insert into user_pass set userId = ?, pass=?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($this->_userId, $pass));
+    }
+
     /**
      * @throws Exception
      * @param  $userId
