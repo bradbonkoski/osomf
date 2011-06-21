@@ -16,6 +16,7 @@ class user extends ControllerBase
     public function __construct( $controller = "", $action = "")
     {
         parent::__construct("user", $action);
+
     }
 
     public function view( $params )
@@ -36,7 +37,6 @@ class user extends ControllerBase
         }
 
         $u = new UserModel(UserModel::RO);
-        //echo "Fetching user id: {$params[0]}\n";
         $u->fetchUserInfo($userId);
         //echo "User: $u\n";
         $this->data['title'] = "User Data for: {$u->fname} {$u->lname} ({$u->uname})";
