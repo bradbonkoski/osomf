@@ -10,11 +10,31 @@ p.footer {
 	font-family: Monospace;
 }
 
+img.appIcon {
+    height: 80px;
+    width: auto;
+    vertical-align: middle;
+}
+
+h4.appHeading {
+    display: inline;
+    padding-left: 50px;
+}
+
+div.userInfo {
+    display: inline;
+    width: 240px;
+    float: right;
+    font-family: monospace;
+}
+div.userInfo a {
+    text-decoration: none;
+}
+
 span.error {
     background-color: #f08080;
     color: black;
     font-weight: bold;
-    // padding: 3px;
 }
 
 fieldset {

@@ -20,6 +20,7 @@ class user extends ControllerBase
 
     public function view( $params )
     {
+        //echo "<pre>".print_r($_COOKIE, true)."</pre>";
         $this->setAction("view");
         //echo "Params are: $params\n";
         $parms = $this->parseParams($params);

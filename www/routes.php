@@ -21,6 +21,7 @@ $route = new Routes($_SERVER['REQUEST_URI']);
 //echo "Params are: ".print_r($route->getParams(), true)."<br/>";
 
 //Load the controller class and get the party started!
+
 $cont = $route->getController();
 if (file_exists(PATH."/www/controllers/{$cont}.php")) {
     require("www/controllers/{$cont}.php");

@@ -16,6 +16,8 @@ class ControllerBase
         $this->_test = false;
         $this->_controller = $controller;
         $this->_action = $action;
+        $this->data = array();
+        $this->data['loggedinUsername'] = $_COOKIE['username'];
     }
 
     public function setTest()
