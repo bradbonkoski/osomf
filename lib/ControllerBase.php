@@ -20,6 +20,7 @@ class ControllerBase
         if (isset($_COOKIE['username'])) {
             $this->data['loggedinUsername'] = $_COOKIE['username'];
         }
+        $this->data['baseuri'] = $_SERVER['HTTP_HOST'];
     }
 
     public function setTest()

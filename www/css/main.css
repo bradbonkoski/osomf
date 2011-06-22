@@ -40,12 +40,16 @@ span.error {
 fieldset {
     margin-right: 5em;
     margin-left: 2em;
+    width: 85%;
 }
 
 fieldset legend {
     color: blue;
     font-size: 10px;
     font-family: Monospace;
+}
+h2.pageHeading {
+    margin-left: 2em;
 }
 
 dl dt, dl dd {
@@ -62,8 +66,15 @@ dt label {
 
 /* Base Nagivation Styles */
 ul.nav {
+    margin-left: 2em;
+    -moz-border-radius-topRight: 20px;
+    -moz-border-radius-topLeft: 20px;
+    -webkit-border-radis-top-right: 20px;
+    -webkit-border-radis-top-left: 20px;
+    border-radius-top-right: 20px;
+    border-radius-top-left: 20px;
     background-color: #d3d3d3;
-    width: 100%;
+    width: 85%;
     padding:  8px;
 }
 ul.nav li {

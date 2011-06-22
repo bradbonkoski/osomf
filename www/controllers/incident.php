@@ -11,6 +11,6 @@ class incident extends ControllerBase
     {
         $this->setAction("view");
         $parms = $this->parseParams($params);
-        print_r($parms);
+        //print_r($parms);
     }
 }

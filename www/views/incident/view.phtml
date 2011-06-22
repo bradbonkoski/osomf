@@ -1,3 +1,6 @@
+{% extends "layout.phtml" %}
+
+{% block content %}
 <h1>I am in the Incident-->View Template</h1>
 
 
@@ -7,4 +10,6 @@
 <?php foreach($testArray as $a) : ?>
 <li><?php echo $a; ?></li>
 <?php endforeach; ?>
+
+{% endblock %}
 

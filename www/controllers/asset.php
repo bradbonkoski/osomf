@@ -7,9 +7,15 @@ class asset extends ControllerBase
         parent::__construct("asset", $action);
     }
 
+    public function view($params)
+    {
+        $this->setAction("view");
+        $params = $this->parseParams($params);
+    }
+
     public function add( $params )
     { 
         $this->setAction("add");
-        $parms = $this->parseParams($params);
+        $params = $this->parseParams($params);
     }
 }

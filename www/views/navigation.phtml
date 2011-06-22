@@ -1,7 +1,7 @@
 
 <ul class="nav">
     {% for topLevel in nav %}
-    <li><a href="#">{{ topLevel.label }}</a></li>
+    <li><a href="http://{{ baseuri }}/osomf/{{ topLevel.controller }}/{{ topLevel.action }}">{{ topLevel.label }}</a></li>
     {% endfor %}
 </ul>
 
