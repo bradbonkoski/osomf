@@ -19,11 +19,13 @@ class Template
         Twig_Autoloader::register();
         error_log(BASE_PATH."/www/views");
         $loader = new Twig_Loader_Filesystem(BASE_PATH."/www/views");
-        $this->_twig = new Twig_Environment($loader, array(
-            'cache' => '/tmp/compilation_cache',
-            'auto_reload' => true,
-            'debug' => true,
-        ));
+        $this->_twig = new Twig_Environment(
+            $loader, array(
+                'cache' => '/tmp/compilation_cache',
+                'auto_reload' => true,
+                'debug' => true,
+            )
+        );
 
     }
 

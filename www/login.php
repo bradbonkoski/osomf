@@ -19,7 +19,7 @@ require('lib/bootstrap.php');
 
 use \osomf\models\UserModel;
 
-if($_SERVER['SERVER_PORT'] != '443') {
+if ($_SERVER['SERVER_PORT'] != '443') {
     header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
     exit();
 }
@@ -46,7 +46,7 @@ if (isset($_POST['frmSubmit'])) {
                 $u->setPassword($_POST['loginPassword']);
             } else {
                 // if password, compare
-                if($p != $_POST['loginPassword']) {
+                if ($p != $_POST['loginPassword']) {
                     $err =  "Bad Username/Password!";
                     $userName = $_POST['loginUserName'];
                 }
@@ -84,12 +84,17 @@ include 'www/views/header.phtml';
     <span class="error"><?php echo $err; ?></span>
     <dl>
         <dt><label>username</label></dt>
-        <dd><input type="text" name="loginUserName" value="<?php echo $userName; ?>"/></dd>
+        <dd>
+            <input type="text" name="loginUserName"
+                   value="<?php echo $userName; ?>"/>
+        </dd>
     </dl>
 
     <dl>
         <dt><label>password</label></dt>
-        <dd><input id="loginPassword" type="password" name="loginPassword"/></dd>
+        <dd>
+            <input id="loginPassword" type="password" name="loginPassword"/>
+        </dd>
     </dl>
 
     <dl>

@@ -6,7 +6,8 @@
  * Copyright: (c) 2011 FHC
  */
  
-class Navigation {
+class Navigation
+{
 
     protected $_menu = array(
         'home' => array(
