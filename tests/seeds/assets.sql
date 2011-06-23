@@ -15,6 +15,7 @@ insert into ciType set ciTypeId = 3, typeName="Virtual", typeDesc="Virtual Serve
 insert into location set locId = 1, locName="DCC1", locDesc="First Data Center", locOwner=1, locAddr="123 Main Street";
 insert into location set locId = 2, locName="DC2", locDesc="Second Data Center", locOwner=1, locAddr="255 Main Street";
 insert into location set locId=3, locName="DC3", locDesc="Thrid Data Center", locOwner=2, locAddr="4303 Campbell Road";
+-- This is for Update Test #1
 insert into location set locId=4, locName="DC4", locOwner=3, locAddr="111 Home Street";
 
 --base/test assets

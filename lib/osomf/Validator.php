@@ -43,6 +43,7 @@ class Validator
 
     public function validate($value)
     {
+        //echo "Validating Value: $value\n";
         $this->_var = $value;
         //print_r($this->_validators);
         foreach ($this->_validators as $func => $params) {

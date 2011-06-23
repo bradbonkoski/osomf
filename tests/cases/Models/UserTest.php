@@ -148,4 +148,42 @@ class UserTest extends PHPUnit_Framework_TestCase
         $nu->fetchUserInfo(10);
         $this->assertEquals("fitz@yahoo.com", $nu->email);
     }
+
+    /**
+     * @test
+     * Test for non existent User
+     */
+    public function fetchNonExistentUser()
+    {
+        try {
+            $u = new UserModel(UserModel::RO);
+            $u->fetchUserInfo(10000000);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * Test Verify User
+     */
+    public function testVerifyUser()
+    {
+        $u = new UserModel(UserModel::RO);
+        $ret = $u->verifyUser(100000000);
+        $this->assertTrue(!$ret);
+    }
+
+    /**
+     * @test
+     * Test Verify User 2
+     */
+    public function testVerifyUserGood()
+    {
+        $u = new UserModel(UserModel::RO);
+        $ret = $u->verifyUser(1);
+        $this->assertTrue($ret);
+    }
 }

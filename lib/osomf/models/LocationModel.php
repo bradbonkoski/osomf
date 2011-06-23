@@ -22,6 +22,7 @@ class LocationModel extends DB
     public $locDesc;
     private $_ownerType;
     public $locOwner; //maps to the UserModel Class
+    private $_locOwnerId;
     public $locAddr;
 
     public function __construct($conn)
@@ -43,7 +44,7 @@ class LocationModel extends DB
     {
         $validators = array(
             '_locId' => array(
-                Validator::IS_NUMERIC => true,
+                Validator::IS_NUM => true,
             ),
             'locName' => array(
                 Validator::IS_STRING => true,
@@ -51,7 +52,10 @@ class LocationModel extends DB
             ),
             'locDesc' => array(
                 Validator::IS_STRING => true,
-                Validator::STRLEN => array('min' => 1, 'max' => 2056),
+                Validator::STRLEN => array('min' => 0, 'max' => 2056),
+            ),
+            '_locOwnerId' => array(
+                Validator::IS_NUM => true,
             ),
             'locAddr' => array(
                 Validator::IS_STRING => true,
@@ -71,6 +75,52 @@ class LocationModel extends DB
         }
     }
 
+    public function updateOwner($type, $ownerId)
+    {
+        if (!is_numeric($this->_locId) || $this->_locId <= 0 ) {
+            throw new \Exception("Need to Fetch a Location First");
+        }
+
+        if ($type != self::OWNER_GROUP && $type != self::OWNER_USER) {
+            throw new \Exception("Owner Type not known");
+        }
+
+        switch($type)
+        {
+            case self::OWNER_GROUP:
+                $ug = new UserGroup(UserGroup::RO);
+                $valid = $ug->verifyUserGroup($ownerId);
+                if (!$valid) {
+                    throw new \Exception("Unknown User Group");
+                }
+                $this->_ownerType = self::OWNER_GROUP;
+                $this->_locOwnerIdr = $ownerId;
+                break;
+            case self::OWNER_USER:
+                $u = new UserModel(UserModel::RO);
+                $valid = $u->verifyUser($ownerId);
+                if (!$valid) {
+                    throw new \Exception("Unknown User");
+                }
+                    $this->_ownerType = self::OWNER_USER;
+                    $this->_locOwnerId = $ownerId;
+                break;
+        }
+        $this->_loadLocOwner();
+    }
+
+    private function _loadLocOwner()
+    {
+        //echo "Owner Type: ".$this->_ownerType."\n";
+        if ($this->_ownerType == self::OWNER_USER) {
+            $this->locOwner = new UserModel(UserModel::RO);
+            $this->locOwner->fetchUserInfo($this->_locOwnerId);
+        } else {
+            $this->locOwner = new UserGroup(UserGroup::RO);
+            $this->locOwner->fetchUserGroup($this->_locOwnerId);
+        }
+    }
+
     public function fetchLocInfo($locId)
     {
         if (($locId <= 0 ) || !is_numeric($locId)) {
@@ -87,13 +137,49 @@ class LocationModel extends DB
         $this->locDesc = $row['locDesc'];
         $this->_ownerType = $row['locOwnerType'];
         $this->locAddr = $row['locAddr'];
-        //echo "Owner Type: ".$this->_ownerType."\n";
-        if ($this->_ownerType == self::OWNER_USER) {
-            $this->locOwner = new UserModel(UserModel::RO);
-            $this->locOwner->fetchUserInfo($row['locOwner']);
+        $this->_locOwnerId = $row['locOwner'];
+        $this->_loadLocOwner();
+    }
+
+    public function save()
+    {
+        try {
+            $this->_validate();
+        } catch (\Exception $e) {
+            //echo "Validation Exception!\n";
+            throw $e;
+        }
+
+        if ($this->_locId < 0 ) {
+            // new record
+            $sql = "insert into location (locName, locDesc, locOwnerType, locOwner, locAddr)
+                values (?,?,?,?,?)";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(
+                array(
+                    $this->locName,
+                    $this->locDesc,
+                    $this->_ownerType,
+                    $this->_locOwnerId,
+                    $this->locAddr,
+                )
+            );
         } else {
-            $this->locOwner = new UserGroup(UserGroup::RO);
-            $this->locOwner->fetchUserGroup($row['locOwner']);
+            // Update to an existing User
+            $sql = "update location set locName = ?, locDesc = ?,
+                locOwnerType = ?, locOwner = ?, locAddr = ? where locId = ?";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(
+                array(
+                    $this->locName,
+                    $this->locDesc,
+                    $this->_ownerType,
+                    $this->_locOwnerId,
+                    $this->locAddr,
+                    $this->_locId,
+                )
+            );
+
         }
     }
 

@@ -130,6 +130,9 @@ class UserModel extends DB
         $stmt->execute(array($userId));
         $row = $stmt->fetch();
         //print_r($row);
+        if ($row === false) {
+            throw new \Exception("User {$userId} does not exist");
+        }
         $this->_userId = $row['userId'];
         $this->uname = $row['uname'];
         $this->fname = $row['fname'];
@@ -137,6 +140,22 @@ class UserModel extends DB
         $this->email = $row['email'];
         $this->phone = $row['phone'];
         $this->pager = $row['pager'];
+    }
+
+    public function verifyUser($userId)
+    {
+        if (($userId <= 0 ) || !is_numeric($userId)) {
+            throw new \Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
+        }
+
+        $sql = "select count(*) as cnt from users where userId = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($userId));
+        $row = $stmt->fetch();
+        if ($row['cnt'] <= 0 ) {
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -44,6 +44,9 @@ class UserGroup extends DB
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($groupId));
         $row = $stmt->fetch();
+        if ($row === false) {
+            throw new \Exception("UserGroup {$groupId} does not exist");
+        }
         $this->_ugid = $row['ugid'];
         $this->groupName = $row['groupName'];
         $this->groupDesc = $row['groupDesc'];
@@ -58,9 +61,7 @@ class UserGroup extends DB
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($groupId));
         $rows = $stmt->fetchAll();
-        //print_r($rows);
         foreach ($rows as $row) {
-            //echo "User Info for: {$row['userid']}\n";
             $u = new UserModel(UserModel::RO);
             $u->fetchUserInfo($row['userid']);
             $u->status = $row['status'];
@@ -77,9 +78,31 @@ class UserGroup extends DB
             );
         }
 
-        $this->_fetchGroupInfo($groupId);
+        try {
+            $this->_fetchGroupInfo($groupId);
 
-        $this->_loadUsers($groupId);
+            $this->_loadUsers($groupId);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function verifyUserGroup($groupId)
+    {
+        if ($groupId <= 0 || !is_numeric($groupId)) {
+            throw new \Exception(
+                "Invalid Group Id - ".__FILE__." : ".__LINE__
+            );
+        }
+
+        $sql = "select count(*) as cnt from userGroup where ugid = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($groupId));
+        $row = $stmt->fetch();
+        if ($row['cnt'] == 0 ) {
+            return false;
+        }
+        return true;
     }
 
     public function getGroupsForUser($userId)

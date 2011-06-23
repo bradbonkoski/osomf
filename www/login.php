@@ -59,19 +59,18 @@ if (isset($_POST['frmSubmit'])) {
     }
 
     if (strlen($err) <= 0 ) {
-        //echo "Setting Cookies!<br/>";
         // set cookie with username and userid
         setcookie("userId", $u->getUserId(), time()+3600, '/');
         setcookie("username", $u->uname, time()+3600, '/');
 
-        //redirect to the home page!
+        //redirect to the home page! TODO store/send back to referrer link
         header("Location: http://{$_SERVER['HTTP_HOST']}/osomf/user/view/1");
     }
 
 }
 /* End of Authentication */
 
-    echo "<pre>".print_r($_COOKIE, true)."</pre>";
+    //echo "<pre>".print_r($_COOKIE, true)."</pre>";
 
 include 'www/views/header.phtml';
 ?>

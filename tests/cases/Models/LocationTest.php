@@ -32,5 +32,24 @@ class LocationTest extends PHPUnit_Framework_TestCase
         //print_r($l->locOwner);
         $this->assertEquals("bradb", $l->locOwner->uname);
     }
+
+    /**
+     * @test
+     * Test Update.. using seed id #4
+     */
+    public function generalUpdate()
+    {
+        $l = new LocationModel(LocationModel::RW);
+        $l->fetchLocInfo(4);
+        $this->assertEquals("DC4", $l->locName);
+        $l->locName = "DC4-Update";
+        $l->locDesc = "New Test Description";
+        $l->save();
+
+        $ltwo = new LocationModel(LocationModel::RO);
+        $ltwo->fetchLocInfo(4);
+        $this->assertEquals("New Test Description", $ltwo->locDesc);
+        $this->assertEquals("DC4-Update", $ltwo->locName);
+    }
 }
  

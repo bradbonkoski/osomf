@@ -61,4 +61,31 @@ class UserGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(4, count($ret[1]));
 
     }
+
+    /**
+     * @test
+     * Try to fetch a non existant user group
+     */
+    public function getNonExistantUserGroup()
+    {
+        $u = new UserGroup(UserGroup::RO);
+        try {
+            $u->fetchUserGroup(1000000);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * Test the VerifyUserGroup Method
+     */
+    public function verifyUserGroup()
+    {
+        $u = new UserGroup(UserGroup::RO);
+        $ret = $u->verifyUserGroup(1000000);
+        $this->assertTrue(!$ret);
+    }
 }
