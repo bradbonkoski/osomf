@@ -164,9 +164,43 @@ class LocationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("oncall1", $l->locOwner->groupName);
         $l->save();
 
-//        $ltwo = new LocationModel(LocationModel::RO);
-//        $ltwo->fetchLocInfo(5);
-//        $this->assertEquals("oncall1", $ltwo->locOwner->groupName);
+        $ltwo = new LocationModel(LocationModel::RO);
+       $ltwo->fetchLocInfo(5);
+        $this->assertEquals("oncall1", $ltwo->locOwner->groupName);
+    }
+
+    /**
+     * @test
+     * Bad Updates for Owner Group
+     */
+    public function badOwnerUpdateGroup()
+    {
+        $l = new LocationModel(LocationModel::RW);
+        $l->fetchLocInfo(1);
+        try {
+            $l->updateOwner(LocationModel::OWNER_GROUP, 100000000);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+     /**
+     * @test
+     * Bad Updates for Owner Group
+     */
+    public function badOwnerUpdateUser()
+    {
+        $l = new LocationModel(LocationModel::RW);
+        $l->fetchLocInfo(1);
+        try {
+            $l->updateOwner(LocationModel::OWNER_USER, 100000000);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
     }
 }
  
