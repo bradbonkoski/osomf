@@ -77,10 +77,6 @@ class LocationModel extends DB
 
     public function updateOwner($type, $ownerId)
     {
-        if (!is_numeric($this->_locId) || $this->_locId <= 0 ) {
-            throw new \Exception("Need to Fetch a Location First");
-        }
-
         if ($type != self::OWNER_GROUP && $type != self::OWNER_USER) {
             throw new \Exception("Owner Type not known");
         }
