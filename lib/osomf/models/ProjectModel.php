@@ -7,23 +7,22 @@ use osomf\models\User;
 use osomf\models\UserGroup;
 
 /**
-* Location Model Class
+* Project Model Class
 *
 * @category Model
-* @package Location
+* @package Project
 * @author Brad Bonkoski <brad.bonkoski@yahoo.com>
 * @copyright Copyright (c) 2011
 */
 
-class LocationModel extends DB
+class ProjectModel extends DB
 {
-    private $_locId;
-    public $locName;
-    public $locDesc;
+    private $_projId;
+    public $projName;
+    public $projDesc;
     private $_ownerType;
-    public $locOwner; //maps to the UserModel Class
-    private $_locOwnerId;
-    public $locAddr;
+    public $projOwner; //maps to the User{Group}Model Class
+    private $_projOwnerId;
 
     public function __construct($conn)
     {
@@ -32,35 +31,29 @@ class LocationModel extends DB
         }
         parent::__construct("omf_assets", $conn);
 
-        $this->_locId = -1;
-        $this->locName = '';
-        $this->locDesc = '';
+        $this->_projId = -1;
+        $this->projName = '';
+        $this->projDesc = '';
         $this->_ownerType = self::OWNER_USER;
-        $this->locOwner = null;
-        $this->_locAddr = '';
+        $this->projOwner = null;
     }
 
     private function _validate()
     {
         $validators = array(
-            '_locId' => array(
+            '_projId' => array(
                 Validator::IS_NUM => true,
             ),
-            'locName' => array(
+            'projName' => array(
                 Validator::IS_STRING => true,
                 Validator::STRLEN => array('min' => 1, 'max' => 128),
             ),
-            'locDesc' => array(
+            'projDesc' => array(
                 Validator::IS_STRING => true,
                 Validator::STRLEN => array('min' => 0, 'max' => 2056),
             ),
-            '_locOwnerId' => array(
+            '_projOwnerId' => array(
                 Validator::IS_NUM => true,
-            ),
-            'locAddr' => array(
-                Validator::IS_STRING => true,
-                Validator::STRLEN => array('min' => 1, 'max' => 2056),
-                //Validator::IS_EMAIL => true,
             ),
         );
 
@@ -90,7 +83,7 @@ class LocationModel extends DB
                     throw new \Exception("Unknown User Group");
                 }
                 $this->_ownerType = self::OWNER_GROUP;
-                $this->_locOwnerId = $ownerId;
+                $this->_projOwnerId = $ownerId;
                 break;
             case self::OWNER_USER:
                 $u = new UserModel(UserModel::RO);
@@ -99,42 +92,41 @@ class LocationModel extends DB
                     throw new \Exception("Unknown User");
                 }
                     $this->_ownerType = self::OWNER_USER;
-                    $this->_locOwnerId = $ownerId;
+                    $this->_projOwnerId = $ownerId;
                 break;
         }
-        $this->_loadLocOwner();
+        $this->_loadProjOwner();
     }
 
-    private function _loadLocOwner()
+    private function _loadProjOwner()
     {
         //echo "Owner Type: ".$this->_ownerType."\n";
         if ($this->_ownerType == self::OWNER_USER) {
-            $this->locOwner = new UserModel(UserModel::RO);
-            $this->locOwner->fetchUserInfo($this->_locOwnerId);
+            $this->projOwner = new UserModel(UserModel::RO);
+            $this->projOwner->fetchUserInfo($this->_projOwnerId);
         } else {
-            $this->locOwner = new UserGroup(UserGroup::RO);
-            $this->locOwner->fetchUserGroup($this->_locOwnerId);
+            $this->projOwner = new UserGroup(UserGroup::RO);
+            $this->projOwner->fetchUserGroup($this->_projOwnerId);
         }
     }
 
-    public function fetchLocInfo($locId)
+    public function fetchProjInfo($projId)
     {
-        if (($locId <= 0 ) || !is_numeric($locId)) {
-            throw new \Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
+        if (($projId <= 0 ) || !is_numeric($projId)) {
+            throw new \Exception("Invalid Project Id - ".__FILE__." : ".__LINE__);
         }
 
-        $sql = "select * from location where locId = ?";
+        $sql = "select * from projects where projId = ?";
         $stmt = $this->_db->prepare($sql);
-        $stmt->execute(array($locId));
+        $stmt->execute(array($projId));
         $row = $stmt->fetch();
         //print_r($row);
-        $this->_locId = $row['locId'];
-        $this->locName = $row['locName'];
-        $this->locDesc = $row['locDesc'];
-        $this->_ownerType = $row['locOwnerType'];
-        $this->locAddr = $row['locAddr'];
-        $this->_locOwnerId = $row['locOwner'];
-        $this->_loadLocOwner();
+        $this->_projId = $row['projId'];
+        $this->projName = $row['projName'];
+        $this->projDesc = $row['projDesc'];
+        $this->_ownerType = $row['projOwnerType'];
+        $this->_projOwnerId = $row['projOwner'];
+        $this->_loadProjOwner();
     }
 
     public function save()
@@ -142,37 +134,34 @@ class LocationModel extends DB
         try {
             $this->_validate();
         } catch (\Exception $e) {
-            //echo "Validation Exception!\n";
             throw $e;
         }
 
-        if ($this->_locId < 0 ) {
+        if ($this->_projId < 0 ) {
             // new record
-            $sql = "insert into location (locName, locDesc, locOwnerType, locOwner, locAddr)
-                values (?,?,?,?,?)";
+            $sql = "insert into projects (projName, projDesc, projOwnerType, projOwner)
+                values (?,?,?,?)";
             $stmt = $this->_db->prepare($sql);
             $stmt->execute(
                 array(
-                    $this->locName,
-                    $this->locDesc,
+                    $this->projName,
+                    $this->projDesc,
                     $this->_ownerType,
-                    $this->_locOwnerId,
-                    $this->locAddr,
+                    $this->_projOwnerId,
                 )
             );
         } else {
             // Update to an existing User
-            $sql = "update location set locName = ?, locDesc = ?,
-                locOwnerType = ?, locOwner = ?, locAddr = ? where locId = ?";
+            $sql = "update projects set projName = ?, projDesc = ?,
+                projOwnerType = ?, projOwner = ? where projId = ?";
             $stmt = $this->_db->prepare($sql);
             $stmt->execute(
                 array(
-                    $this->locName,
-                    $this->locDesc,
+                    $this->projName,
+                    $this->projDesc,
                     $this->_ownerType,
-                    $this->_locOwnerId,
-                    $this->locAddr,
-                    $this->_locId,
+                    $this->_projOwnerId,
+                    $this->_projId,
                 )
             );
 

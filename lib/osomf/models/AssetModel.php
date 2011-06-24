@@ -3,6 +3,7 @@ namespace osomf\models;
 
 use osomf\DB;
 use osomf\Validator;
+use osomf\models\LocationModel;
 
 /**
 * Asset Model Class
@@ -21,24 +22,39 @@ class AssetModel extends DB
     public $ciName;
     public $ciDesc;
     private $_ownerType; //User or Group
-    private $_owner; //maps into UserModel Class
+    private $_ownerId;
+    public $owner; //maps into UserModel Class
     private $_project; //maps into the ProjectModel Class
     private $_ciStatus; //maps into the CiStatusModel Class
     private $_ctime;
     private $_mtime;
-    private $_phyParent; //Maps to Parent asset
-    private $_netParent; //Maps to the Network Parent Asset
+    private $_phyParentId;
+    public $phyParent; //Maps to Parent asset
+    private $_netParentId;
+    public $netParent; //Maps to the Network Parent Asset
+
     private $_ciType; //Maps to the CI TypeModel Class
     public $isRetired;
     public $ciSerialNum;
-    private $_loc; //Maps to the LocationModel Class
+    private $_locId;
+    public $loc; //Maps to the LocationModel Class
     public $acquiredDate;
     public $disposalDate;
 
-    public function _construct($assetId = -1)
+    public function __construct($conn)
     {
-        if ($assetId <= 0 ) {
-            
+        if (!in_array($conn, $this->_validConn)) {
+            throw new \Exception("Invalid Connection");
         }
+        parent::__construct("omf_assets", $conn);
+
+        $this->_ciid = -1;
+        $this->ciName = '';
+        $this->ciDesc = '';
+        $this->_ownerType = self::OWNER_USER;
+        $this->_ownerId = -1;
+        $this->owner = null;
+        $this->_project = -1;
+        
     }
 }

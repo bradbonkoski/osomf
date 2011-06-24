@@ -202,6 +202,7 @@ CREATE TABLE `projects` (
   `projName` varchar(128) NOT NULL,
   `projDesc` text,
   `projOwner` int(11) NOT NULL,
+  `projOwnerType` enum('USER','GROUP') not null default 'USER',
   PRIMARY KEY (`projId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

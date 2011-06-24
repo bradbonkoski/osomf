@@ -4,6 +4,7 @@ insert into projects set projId = 1, projName="Game1", projDesc="Game1 Team", pr
 insert into projects set projId = 2, projName="Game2", projDesc="Game 2 Team", projOwner=2;
 insert into projects set projId = 3, projName="Game3", projDesc="Game 3 team", projOwner=1;
 insert into projects set projId = 4, projname="Game4", projDesc="Game 4 team", projOwner=3;
+insert into projects set projId = 5, projName="Game5", projDesc="Game 5 Team", projOwnerType="GROUP", projOwner=1;
 
 -- CI Type Seeds
 insert into ciType set ciTypeId = 1, typeName="Network", typeDesc="Networking Equipment";
