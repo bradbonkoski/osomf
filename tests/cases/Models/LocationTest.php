@@ -83,5 +83,71 @@ class LocationTest extends PHPUnit_Framework_TestCase
         }
         $this->fail("Missed Expected Exception");
     }
+
+    /**
+     * @test
+     * Exception Testing Phase 2 - Update with Bad Validation
+     */
+    public function BadUpdatePhaseTwo()
+    {
+        $l = new LocationModel(LocationModel::RW);
+        $l->fetchLocInfo(1);
+        $l->locDesc = str_repeat('l', 3200);
+        try {
+            $l->save();
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * Passe Invlaid Connector
+     */
+    public function InvalidConn()
+    {
+        try {
+            $l = new LocationModel("Something");
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * Bad Owner Type for update Owner
+     */
+    public function BadOwnerType()
+    {
+        $l = new LocationModel(LocationModel::RO);
+        try {
+            $l->updateOwner("Brad", 1);
+        } Catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * bad Loc id
+     */
+    public function badLocationId()
+    {
+        $l = new LocationModel(LocationModel::RO);
+        try {
+            $l->fetchLocInfo("string");
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+
+    }
 }
  
