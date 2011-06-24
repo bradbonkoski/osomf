@@ -17,6 +17,8 @@ insert into location set locId = 2, locName="DC2", locDesc="Second Data Center",
 insert into location set locId=3, locName="DC3", locDesc="Thrid Data Center", locOwner=2, locAddr="4303 Campbell Road";
 -- This is for Update Test #1
 insert into location set locId=4, locName="DC4", locOwner=3, locAddr="111 Home Street";
+-- This is used for an update test
+insert into location set locId=5, locname="DC5", locOwner=1, locOwnerType='GROUP', locAddr='somewhere';
 
 --base/test assets
 insert into ci set ciid=1, ciName='ci1.home.com', ciDesc='Virtual CI for home.com',

@@ -90,7 +90,7 @@ class LocationModel extends DB
                     throw new \Exception("Unknown User Group");
                 }
                 $this->_ownerType = self::OWNER_GROUP;
-                $this->_locOwnerIdr = $ownerId;
+                $this->_locOwnerId = $ownerId;
                 break;
             case self::OWNER_USER:
                 $u = new UserModel(UserModel::RO);

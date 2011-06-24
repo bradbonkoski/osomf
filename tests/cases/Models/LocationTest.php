@@ -149,5 +149,24 @@ class LocationTest extends PHPUnit_Framework_TestCase
         $this->fail("Missed Expected Exception");
 
     }
+
+    /**
+     * @test
+     * @group UpdateLocGroupOwner
+     * Update Owner Group
+     */
+    public function updateOwnerGroup()
+    {
+        $l = new LocationModel(LocationModel::RW);
+        $l->fetchLocInfo(5);
+        $this->assertEquals("group1", $l->locOwner->groupName);
+        $l->updateOwner(LocationModel::OWNER_GROUP, 2);
+        $this->assertEquals("oncall1", $l->locOwner->groupName);
+        $l->save();
+
+//        $ltwo = new LocationModel(LocationModel::RO);
+//        $ltwo->fetchLocInfo(5);
+//        $this->assertEquals("oncall1", $ltwo->locOwner->groupName);
+    }
 }
  
