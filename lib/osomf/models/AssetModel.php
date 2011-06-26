@@ -81,6 +81,17 @@ class AssetModel extends DB
         
     }
 
+    public function getOwnerId()
+    {
+        return $this->_ownerId;
+    }
+
+    public function getOwnerType()
+    {
+        return $this->_ownerType;
+    }
+
+
     private function _loadOwner($ownerId, $type, $class)
     {
          //echo "Owner Type: ".$this->_ownerType."\n";
@@ -142,6 +153,14 @@ class AssetModel extends DB
         $this->loc->fetchLocInfo($this->_locId);
         $this->acquiredDate = $row['acquiredDate'];
         $this->disposalDate = $row['displosalDate'];
-        //$this->
+    }
+
+    public function listAssets()
+    {
+        $sql = "select ciid, ciName, ciSerialNum from ci";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
     }
 }

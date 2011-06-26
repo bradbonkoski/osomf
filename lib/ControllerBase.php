@@ -9,6 +9,7 @@ class ControllerBase
     protected $_controller;
     protected $_action;
     protected $_template;
+    public $baseuri;
     public $data = array();
 
     public function __construct($controller, $action = "") 
@@ -22,6 +23,7 @@ class ControllerBase
         }
         // needed for CI testing
         if (isset($_SERVER['HTTP_HOST'])) {
+            $this->baseuri = $_SERVER['HTTP_HOST'];
             $this->data['baseuri'] = $_SERVER['HTTP_HOST'];
         } else {
             $this->data['baseuri'] = "localhost";

@@ -1,3 +1,46 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-size: 100%;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    font: 16px/1.4 "Helvetica Nueue",HelveticaNueue,Helvetica,Arial,sans-serif;
+}
+
+body a {
+    text-decoration: none;
+}
+
+div#wrapper {
+    display: -moz-box;
+    display: -o-box;
+    display: -webkit-box;
+    display: box;
+    -moz-box-orient: vertical;
+    -o-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    min-height: 100%;
+    margin: 0 4%;
+    width: 75%;
+}
+
+div#content {
+    -moz-box-flex: 1;
+    -o-box-flex: 1;
+    -webkit-box-flex: 1;
+    box-flex: 1;
+}
 
 hr.footer {
 	margin-top: 2em;
@@ -7,10 +50,20 @@ hr.footer {
 p.footer {
 	text-align:right;
 	color:blue;
+    font-size: 12px;
+    font-weight: bold;
 	font-family: Monospace;
 }
 
+div.heading {
+    /*border: 10px solid purple;*/
+    background:  none repeat scroll 0 0 #b0c4de;
+    border-bottom:  8px double white;
+}
+
 img.appIcon {
+    padding-left: 2em;
+    padding-top: 5px;
     height: 80px;
     width: auto;
     vertical-align: middle;
@@ -26,9 +79,7 @@ div.userInfo {
     width: 240px;
     float: right;
     font-family: monospace;
-}
-div.userInfo a {
-    text-decoration: none;
+    font-size: 12px;
 }
 
 span.error {
@@ -41,14 +92,16 @@ fieldset {
     margin-right: 5em;
     margin-left: 2em;
     width: 85%;
+    border:  1px solid #b0c4de;
 }
 
 fieldset legend {
-    color: blue;
+    color: #b0c4de;
     font-size: 10px;
     font-family: Monospace;
 }
 h2.pageHeading {
+    margin-top: 2em;
     margin-left: 2em;
 }
 
@@ -65,29 +118,48 @@ dt label {
 }
 
 /* Base Nagivation Styles */
-ul.nav {
-    margin-left: 2em;
-    -moz-border-radius-topRight: 20px;
-    -moz-border-radius-topLeft: 20px;
-    -webkit-border-radis-top-right: 20px;
-    -webkit-border-radis-top-left: 20px;
-    border-radius-top-right: 20px;
-    border-radius-top-left: 20px;
-    background-color: #d3d3d3;
-    width: 85%;
-    padding:  8px;
+nav {
+    font-size: 1.125em;
+    position: relative;
+    left: 250px;
+    line-height: 2.55;
+    margin-top: 0.55em;
 }
-ul.nav li {
+nav li {
     display: inline;
+    /*list-style: none outside none;*/
+    text-transform: lowercase;
 }
 
-ul.nav li:hover {
-    background-color: gray;
+nav a {
+    margin-right: 50px;
+    color: gray;
 }
 
-ul.nav a {
-    padding:  5px, 15px, 5px, 15px;
-    margin-right: 5px;
-    text-decoration: none;
-    color: black;
+nav a:hover {
+    color: #f5f5f5;
+}
+
+
+table.baseTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+table.baseTable th {
+    background-color: #b0c4de;
+    padding:  0px;
+    margin: 0px;
+    text-transform:lowercase;
+    text-align: center;
+}
+
+table.baseTable tr:nth-child(odd) {
+    background-color: #d3d3d3;
+}
+
+table.baseTable td {
+    text-align: right;
+    padding-bottom: 2px;
 }

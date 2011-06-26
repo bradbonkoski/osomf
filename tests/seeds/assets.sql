@@ -24,3 +24,15 @@ insert into location set locId=5, locname="DC5", locOwner=1, locOwnerType='GROUP
 --base/test assets
 insert into ci set ciid=1, ciName='ci1.home.com', ciDesc='Virtual CI for home.com',
 ownerId=1, projectId=1, statusId=4, ciTypeId=3, ciSerialNum='abc12345', locId=1;
+
+insert into ci set ciid=2, ciName='bas1.home.com', ciDesc='Top Level Switch',
+ownerId=1, projectId=2, statusId=4, ciTypeId=1, ciSerialNum='1234', locId=1;
+
+insert into ci set ciid=3, ciName='mls.home.com', ciDesc='Mid Level Switch',
+ownerId=1, projectId=2, statusId=4, ciTypeId=1, netParentId=2, ciSerialNum='12345', locId=1;
+
+insert into ci set ciid=4, ciName='phy1.home.com', ciDesc='physical1',
+ownerId=1, projectId=2, statusId=4, ciTypeId=2, netParentId=3, ciSerialNum='1232221', locId=1;
+
+insert into ci set ciid=5, ciName='virt.home.com', ciDesc='virtual',
+ownerId=2, projectId=2, statusId=4, ciTypeId=3, netParentId=3, phyParentId=4, ciSerialNum='11232232', locId=1;

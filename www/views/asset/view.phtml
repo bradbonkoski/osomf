@@ -2,5 +2,9 @@
 
         {% block content %}
 <h1>Default View for Controller: asset and Action: view</h1>
-
+    Asset Name: {{ ciName }}
+    Asset Description: {{ ciDesc }}
+        <p>
+            Owner: <a href="{{ ownerLink }}">{{ ownerName }}</a>
+        </p>
     {% endblock %}

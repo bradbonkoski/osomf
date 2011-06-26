@@ -6,7 +6,7 @@ use osomf\DB;
 use osomf\Validator;
 
 /**
-* User/UserGroup Model Class
+* User Model Class
 *
 * @category Model
 * @package User

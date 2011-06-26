@@ -11,8 +11,9 @@
     <title>OSOMF - {% block title %}Default Title{% endblock %}</title>
 </head>
 <body>
+<div id="wrapper">
 {% block pageHeading %}
-    <div>
+    <div class="heading">
         <img class="appIcon" src="/osomf/www/img/outage-notification-name-tag.jpg"/>
         <h4 class="appHeading">[OS] Operations Management Framework</h4>
 
@@ -20,10 +21,12 @@
             username: {{ loggedinUsername }}<br/>
             <a href="#">logout</a>
         </div>
-    </div>
 
 {% endblock %}
+
     {% include "navigation.phtml" %}
+    </div>
+
   <div id="content">{% block content %}Default Content{% endblock %}</div>
   <div id="footer">
     {% include "footer.phtml" %}
@@ -42,6 +45,6 @@
         checkForLogin();
     });
     </script>
-
+</div>
 </body>
 </html>

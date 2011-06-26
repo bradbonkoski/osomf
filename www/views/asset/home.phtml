@@ -1,0 +1,16 @@
+{% extends 'layout.phtml' %}
+
+        {% block content %}
+<h1>Current Listing of Known Assets</h1>
+    
+    <table class="baseTable" id="assetHome">
+        <tr><th>CI</th><th>ci name</th><th>Serial #</th></tr>
+        {% for ciid, ci in assets %}
+            <tr>
+                <td><a href="/osomf/asset/view/{{ ciid }}">{{ ciid }}</a></td>
+                <td>{{ ci.ciName }}</td>
+                <td>{{ ci.ciSerialNum }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
