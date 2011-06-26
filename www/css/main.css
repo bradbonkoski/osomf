@@ -163,3 +163,12 @@ table.baseTable td {
     text-align: right;
     padding-bottom: 2px;
 }
+
+div.colLeft {
+    float: left;
+    width: 45%;
+}
+div.colRight {
+    float:left;
+    width: 35%;
+}

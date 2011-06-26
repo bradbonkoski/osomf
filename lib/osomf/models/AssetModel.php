@@ -86,12 +86,23 @@ class AssetModel extends DB
         return $this->_ownerId;
     }
 
+    public function getAssetId()
+    {
+        return $this->_ciid;
+    }
+
     public function getOwnerType()
     {
         return $this->_ownerType;
     }
 
-
+    public function getAssetTimes()
+    {
+        return array(
+            'created' => $this->_ctime,
+            'modified' => $this->_mtime,
+        );
+    }
     private function _loadOwner($ownerId, $type, $class)
     {
          //echo "Owner Type: ".$this->_ownerType."\n";
@@ -128,6 +139,7 @@ class AssetModel extends DB
         $this->_projectId = $row['projectId'];
         $this->project = new ProjectModel(ProjectModel::RO);
         $this->project->fetchProjInfo($this->_projectId);
+        //var_dump($this->project);
         $this->_ciStatusId = $row['statusId'];
         $this->ciStatus = new CiStatus(CiStatus::RO);
         $this->ciStatus->loadStatus($this->_ciStatusId);

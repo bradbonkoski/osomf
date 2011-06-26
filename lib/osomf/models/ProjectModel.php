@@ -38,6 +38,11 @@ class ProjectModel extends DB
         $this->projOwner = null;
     }
 
+    public function getProjId()
+    {
+        return $this->_projId;
+    }
+
     private function _validate()
     {
         $validators = array(

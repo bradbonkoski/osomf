@@ -13,4 +13,9 @@ class incident extends ControllerBase
         $parms = $this->parseParams($params);
         //print_r($parms);
     }
+
+    public function search( $params )
+    {
+        $this->setAction("search");
+    }
 }

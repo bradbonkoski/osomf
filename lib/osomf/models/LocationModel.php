@@ -75,6 +75,11 @@ class LocationModel extends DB
         }
     }
 
+    public function getLocId()
+    {
+        return $this->_locId;
+    }
+
     public function updateOwner($type, $ownerId)
     {
         if ($type != self::OWNER_GROUP && $type != self::OWNER_USER) {

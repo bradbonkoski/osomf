@@ -1,10 +1,110 @@
 {% extends 'layout.phtml' %}
 
         {% block content %}
-<h1>Default View for Controller: asset and Action: view</h1>
-    Asset Name: {{ ciName }}
-    Asset Description: {{ ciDesc }}
-        <p>
-            Owner: <a href="{{ ownerLink }}">{{ ownerName }}</a>
-        </p>
+<h2 class="pageHeading">{{ title }}</h2>
+
+    <div class="colLeft">
+    <fieldset>
+        <legend>general info</legend>
+
+        <dl>
+            <dt><label>Asset Name</label></dt>
+            <dd>{{ ciName }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>Asset Description</label></dt>
+            <dd>{{ ciDesc }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>status</label></dt>
+            <dd>{{ status }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>created</label></dt>
+            <dd>{{ ctime }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>last modified</label></dt>
+            <dd>{{ mtime }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>type</label></dt>
+            <dd>{{ type }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>serial #</label></dt>
+            <dd>{{ serial }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>acquired</label></dt>
+            <dd>{{ acquired }}</dd>
+        </dl>
+
+        {% if retired == 1 %}
+        <dl>
+            <dt><label>disposed</label></dt>
+            <dd>{{ disposed }}</dd>
+        </dl>
+        {% endif %}
+    </fieldset>
+    </div>
+
+    <div class="colRight">
+    <fieldset>
+        <legend>associations</legend>
+
+        <dl>
+            <dt><label>Owner</label></dt>
+            <dd><a href="{{ ownerLink }}">{{ ownerName }}</a></dd>
+        </dl>
+
+        <dl>
+            <dt><label>Project</label></dt>
+            {% if proj == 1 %}
+                <dd><a href="{{ projLink }}">{{ projName }}</a></dd>
+            {% endif %}
+        </dl>
+
+        <dl>
+            <dt><label>Location</label></dt>
+            {% if loc == 1 %}
+                <dd><a href="{{ locLink }}">{{ locName }}</a></dd>
+            {% endif %}
+        </dl>
+    </fieldset>
+    </div>
+
+    <div class="colRight">
+    <fieldset>
+        <legend>relations</legend>
+
+
+        <dl>
+            <dt><label>Network Parent</label></dt>
+            {% if netParent == 1 %}
+            <dd><a href="{{ netParentLink }}">{{ netParentName }}</a></dd>
+            {% endif %}
+        </dl>
+
+
+        <dl>
+            <dt><label>Physical Parent</label></dt>
+            {% if phyParent == 1 %}
+            <dd><a href="{{ phyParentLink }}">{{ phyParentName }}</a></dd>
+            {% endif %}
+        </dl>
+
+    </fieldset>
+    </div>
+
+    <fieldset>
+        <legend>Known Errors/Incidents</legend>
+    </fieldset>
     {% endblock %}
