@@ -3,7 +3,8 @@ namespace osomf\models;
 
 use osomf\DB;
  
-class CiStatus extends DB {
+class CiStatus extends DB
+{
 
     private $_ciStatusId;
     public $statusName;

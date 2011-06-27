@@ -3,7 +3,8 @@ namespace osomf\models;
 
 use \osomf\DB;
  
-class CiType extends DB {
+class CiType extends DB
+{
 
     private $_ciTypeId;
     public $typeName;
