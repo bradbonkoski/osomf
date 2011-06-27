@@ -1,0 +1,25 @@
+{% extends "layout.phtml" %}
+
+        {% block title %} {{ title }} {% endblock %}
+{% block content %}
+        <a href="javascript:history.go(-1)">Go Back</a>
+<h2 class="pageHeading">{{ title }}</h2>
+
+    <fieldset>
+        <legend>project data</legend>
+
+
+        <dl>
+            <dt><label>project Name</label></dt>
+            <dd>{{ projName }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>Project Description</label></dt>
+            <dd>{{ projDesc }}</dd>
+        </dl>
+
+</fieldset>
+
+{% endblock %}
+
