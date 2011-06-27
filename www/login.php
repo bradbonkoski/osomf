@@ -64,7 +64,8 @@ if (isset($_POST['frmSubmit'])) {
         setcookie("username", $u->uname, time()+3600, '/');
 
         //redirect to the home page! TODO store/send back to referrer link
-        header("Location: http://{$_SERVER['HTTP_HOST']}/osomf/user/view/1");
+        //header("Location: http://{$_SERVER['HTTP_HOST']}/osomf/user/view/1");
+        header("Location: ".$_POST['ref']);
     }
 
 }
@@ -79,6 +80,7 @@ include 'www/views/header.phtml';
 <link rel="stylesheet" href="/osomf/www/css/main.css" />
 
     <form id='loginForm' method="post">
+        <input type="hidden" name='ref' value="<?php echo $_GET['ref']; ?>"/>
 <fieldset>
     <legend>Login Information </legend>
     <span class="error"><?php echo $err; ?></span>

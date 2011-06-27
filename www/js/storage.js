@@ -17,7 +17,7 @@ function checkForLogin()
         //var cookieUserName = $.cookie.get('username');
         //if (cookieUserId == null || cookieUserName == null) {
             alert("You need to log in![1]");
-            window.location = "/osomf/www/login.php";
+            window.location = "/osomf/www/login.php?ref="+document.URL;
         //} else {
         //    localStorage.setItem('osomf-userId', cookieUserId);
         //    localStroage.setItem('osomf-username', cookieUserName);
