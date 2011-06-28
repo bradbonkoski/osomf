@@ -146,4 +146,36 @@ class UserGroupTest extends PHPUnit_Framework_TestCase
         $ret = $ug->getAllGroups();
         $this->assertTrue(count($ret)> 0 );
     }
+
+    /**
+     * @test
+     * Bad Group Id for Fetch User Group
+     */
+    public function badIdForFetchUserGroup()
+    {
+        $ug = new UserGroup(UserGroup::RO);
+        try {
+            $ug->fetchUserGroup("string");
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * Bad Group Id for User Group Verification
+     */
+    public function badIdForUserGroupVerify()
+    {
+        $ug = new UserGroup(UserGroup::RO);
+        try {
+            $ug->verifyUserGroup("string");
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
 }
