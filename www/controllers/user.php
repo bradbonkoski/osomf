@@ -39,7 +39,8 @@ class user extends ControllerBase
         $u = new UserModel(UserModel::RO);
         $u->fetchUserInfo($userId);
         //echo "User: $u\n";
-        $this->data['title'] = "User Data for: {$u->fname} {$u->lname} ({$u->uname})";
+        $this->data['title'] =
+            "User Data for: {$u->fname} {$u->lname} ({$u->uname})";
         $this->data['username'] = $u->uname;
         $this->data['fullname'] = $u->fname ." ". $u->lname;
         $this->data['email'] = $u->email;

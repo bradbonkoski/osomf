@@ -48,7 +48,8 @@ class asset extends ControllerBase
         if ($a->netParent instanceof AssetModel) {
             $this->data['netParent'] = 1;
             $this->data['netParentName'] = $a->netParent->ciName;
-            $this->data['netParentLink'] = "/osomf/asset/view/".$a->netParent->getAssetId();
+            $this->data['netParentLink'] =
+                "/osomf/asset/view/".$a->netParent->getAssetId();
         } else {
             $this->data['netParent'] = 0;
         }
@@ -56,7 +57,8 @@ class asset extends ControllerBase
         if ($a->phyParent instanceof AssetModel) {
             $this->data['phyParent'] = 1;
             $this->data['phyParentName'] = $a->phyParent->ciName;
-            $this->data['phyParentLink'] = "/osomf/asset/view/".$a->phyParent->getAssetId();
+            $this->data['phyParentLink'] =
+                "/osomf/asset/view/".$a->phyParent->getAssetId();
         } else {
             $this->data['phyParent'] = 0;
         }
@@ -65,7 +67,8 @@ class asset extends ControllerBase
         if ($a->project instanceof \osomf\models\ProjectModel) {
             $this->data['proj'] = 1;
             $this->data['projName'] = $a->project->projName;
-            $this->data['projLink'] = "/osomf/project/view/".$a->project->getProjId();
+            $this->data['projLink'] =
+                "/osomf/project/view/".$a->project->getProjId();
         } else {
             error_log("No Project Defined?");
             $this->data['proj'] = 0;
@@ -75,7 +78,8 @@ class asset extends ControllerBase
         if ($a->loc instanceof \osomf\models\LocationModel) {
             $this->data['loc'] = 1;
             $this->data['locName'] = $a->loc->locName;
-            $this->data['locLink'] = "/osomf/location/view/".$a->loc->getLocId();
+            $this->data['locLink'] =
+                "/osomf/location/view/".$a->loc->getLocId();
         } else {
             $this->data['loc'] = 0;
         }

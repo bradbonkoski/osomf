@@ -378,12 +378,14 @@ class AssetModel extends DB
 
         if ($this->_ciid < 0 ) {
             // new record
-            $sql = "insert into ci (ciName, ciDesc, ownerType, ownerId, projectId,
-                statusId, phyParentId, netParentId, ciTypeId, locId, acquiredDate)
+            $sql = "insert into ci (ciName, ciDesc, ownerType, ownerId,
+                projectId, statusId, phyParentId, netParentId, ciTypeId,
+                locId, acquiredDate)
                 values (?,?,?,?,?,?,?,?,?,?,NOW())";
 
             $stmt = $this->_db->prepare($sql);
-            $stmt->execute(array(
+            $stmt->execute(
+                array(
                     $this->ciName,
                     $this->ciDesc,
                     $this->_ownerType,
@@ -394,7 +396,7 @@ class AssetModel extends DB
                     $this->_netParentId,
                     $this->_ciTypeId,
                     $this->_locId
-              )
+                )
             );
         } else {
             // Update to an existing User

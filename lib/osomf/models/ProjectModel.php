@@ -130,7 +130,9 @@ class ProjectModel extends DB
     public function fetchProjInfo($projId)
     {
         if (($projId <= 0 ) || !is_numeric($projId)) {
-            throw new \Exception("Invalid Project Id - ".__FILE__." : ".__LINE__);
+            throw new \Exception(
+                "Invalid Project Id - ".__FILE__." : ".__LINE__
+            );
         }
 
         $sql = "select * from projects where projId = ?";
@@ -156,7 +158,8 @@ class ProjectModel extends DB
 
         if ($this->_projId < 0 ) {
             // new record
-            $sql = "insert into projects (projName, projDesc, projOwnerType, projOwner)
+            $sql = "insert into projects (projName, projDesc,
+                projOwnerType, projOwner)
                 values (?,?,?,?)";
             $stmt = $this->_db->prepare($sql);
             $stmt->execute(
