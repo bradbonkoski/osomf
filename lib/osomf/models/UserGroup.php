@@ -129,4 +129,13 @@ class UserGroup extends DB
         }
         return $ret;
     }
+
+    public function getAllGroups()
+    {
+        $sql = "select * from userGroup";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
 }

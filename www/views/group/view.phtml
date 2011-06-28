@@ -1,0 +1,35 @@
+{% extends "layout.phtml" %}
+
+        {% block title %} {{ title }} {% endblock %}
+{% block content %}
+        <a href="javascript:history.go(-1)">Go Back</a>
+<h2 class="pageHeading">{{ title }}</h2>
+
+    <fieldset>
+        <legend>user group data</legend>
+
+
+        <dl>
+            <dt><label>Group Name</label></dt>
+            <dd>{{ groupName }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>Group Desc</label></dt>
+            <dd>{{ groupDesc }}</dd>
+        </dl>
+
+        <dl>
+            <dt><label>phone</label></dt>
+            <dd>{{ phone }}</dd>
+        </dl>
+        
+        <dl>
+            <dt><label>pager</label></dt>
+            <dd>{{ pager }}</dd>
+        </dl>
+
+    </fieldset>
+
+{% endblock %}
+
