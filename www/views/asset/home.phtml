@@ -1,7 +1,11 @@
 {% extends 'layout.phtml' %}
 
         {% block content %}
-<h1>Current Listing of Known Assets</h1>
+        <div id="pageTitle">
+   <h1>Current Listing of Known Assets</h1>
+    <a class="editLink" href="/osomf/asset/edit">Add Asset</a>
+</div>
+
     
     <table class="baseTable" id="assetHome">
         <tr><th>CI</th><th>ci name</th><th>Serial #</th></tr>

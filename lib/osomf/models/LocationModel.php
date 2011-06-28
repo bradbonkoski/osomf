@@ -38,6 +38,8 @@ class LocationModel extends DB
         $this->_ownerType = self::OWNER_USER;
         $this->locOwner = null;
         $this->_locAddr = '';
+
+        $this->_table = "location";
     }
 
     private function _validate()
@@ -122,6 +124,18 @@ class LocationModel extends DB
         }
     }
 
+    public function verifyLocation($locId)
+    {
+        $sql = "select count(*) as cnt from location where locId = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($locId));
+        $row = $stmt->fetch();
+        if ($row['cnt'] > 0 ) {
+            return true;
+        }
+        return false; // implicit else
+    }
+
     public function fetchLocInfo($locId)
     {
         if (($locId <= 0 ) || !is_numeric($locId)) {
@@ -183,6 +197,4 @@ class LocationModel extends DB
 
         }
     }
-
-
 }

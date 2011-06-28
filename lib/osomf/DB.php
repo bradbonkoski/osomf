@@ -29,6 +29,8 @@ class DB extends \PDO
         self::TYPE_USER,
     );
 
+    protected $_table;
+
     protected $_validConn = array(self::RO, self::RW);
     
     protected $_db;
@@ -92,6 +94,20 @@ class DB extends \PDO
         }
         $this->_db = new \PDO($dsn, $user, $pass);
         $this->_db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+    }
+
+    public function autocomplete($colName, $queryStr)
+    {
+        $sql = "select $colName from {$this->_table} where upper($colName) like ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array('%'.strtoupper($queryStr).'%'));
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $arr = array();
+        foreach ($rows as $r) {
+            $arr[] = $r[$colName];
+        }
+        return $arr;
     }
     
 }

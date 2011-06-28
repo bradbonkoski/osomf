@@ -1,1 +1,31 @@
+{% extends 'layout.phtml' %}
+
+    {% block content %}
 <h1>Default View for Controller: asset and Action: add</h1>
+
+    <form action="" method="post">
+        <dl>
+            <dt><label>Asset Name</label></dt>
+            <dd><input type="text" required /></dd>
+        </dl>
+
+        <dl>
+            <dt><label>Asset Description</label></dt>
+            <dd><textarea></textarea></dd>
+        </dl>
+
+        <dl>
+            <dt><label>Asset Owner</label></dt>
+            <dd>TBD</dd>
+        </dl>
+
+        <dl>
+            <dt><label>Asset Project</label></dt>
+        </dl>
+
+        <dl>
+            <dt></dt>
+            <dd><input type="submit" value="add"/></dd>
+        </dl>
+    </form>
+    {% endblock %}

@@ -34,5 +34,24 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ci1.home.com', $a->ciName);
         $this->assertEquals('Virtual CI for home.com', $a->ciDesc);
     }
+
+    /**
+     * @test
+     * New Asset Add
+     */
+    public function addNewAssetOne()
+    {
+        $a = new AssetModel(AssetModel::RW);
+        $a->ciName = "test1.home.com";
+        $a->ciDesc = "Automated Test Asset";
+        $a->updateOwner(AssetModel::OWNER_GROUP, 1);
+        $a->updateProject(3);
+        $a->updateStatus(6);
+        $a->updateType(3);
+        $a->updatePhyParent(1);
+        $a->updateNetParent(2);
+        $a->updateLoc(4);
+        $a->save();
+    }
 }
  

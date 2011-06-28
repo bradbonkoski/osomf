@@ -20,6 +20,20 @@ class CiStatus extends DB
         $this->_ciStatus = -1;
         $this->statusName = '';
         $this->statusDesc = '';
+
+        $this->_table = "ciStatus";
+    }
+
+    public function verifyStatusId($statusId)
+    {
+        $sql = "select count(*) as cnt from ciStatus where ciStatusId = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($statusId));
+        $row = $stmt->fetch();
+        if ($row['cnt'] > 0 ) {
+            return true;
+        }
+        return false; //implicit else
     }
 
     public function loadStatus($statusId)

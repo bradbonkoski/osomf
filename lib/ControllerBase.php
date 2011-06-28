@@ -11,6 +11,7 @@ class ControllerBase
     protected $_template;
     public $baseuri;
     public $data = array();
+    public $ac;
 
     public function __construct($controller, $action = "") 
     {
@@ -28,6 +29,7 @@ class ControllerBase
         } else {
             $this->data['baseuri'] = "localhost";
         }
+        $this->ac = false;
     }
 
     public function setTest()
@@ -66,11 +68,13 @@ class ControllerBase
         // need to short circuit auto redirect to the view
         // in the instance where we are unit testing controllers
         if (!$this->_test) {
-            $this->_template = new Template($this->_controller, $this->_action);
-            foreach ($this->data as $k => $v) {
-                $this->_template->set($k, $v);
+            if (!$this->ac) {
+                $this->_template = new Template($this->_controller, $this->_action);
+                foreach ($this->data as $k => $v) {
+                    $this->_template->set($k, $v);
+                }
+                $this->_template->render();
             }
-            $this->_template->render();
         }
     }
 }    

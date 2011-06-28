@@ -41,4 +41,21 @@ class RoutingLbTest extends PHPUnit_Framework_TestCase
         $pArr = explode("/", $p);
         $this->assertEquals(2, count($pArr));
     }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function ac()
+    {
+        $rl = new Routes("www.home.com/osomf/status/autocomplete?term=12343");
+        $cont = $rl->getController();
+        $this->assertEquals("status", $cont);
+        //echo "Controller is: $cont\n";
+        $action = $rl->getAction();
+        $this->assertEquals("autocomplete", $action);
+//        echo "Action is: $action\n";
+//        print_r($rl->getParams());
+        
+    }
 }

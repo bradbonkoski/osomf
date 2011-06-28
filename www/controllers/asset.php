@@ -92,9 +92,23 @@ class asset extends ControllerBase
         }
     }
 
-    public function add( $params )
+    public function edit( $params )
     { 
-        $this->setAction("add");
+        $this->setAction("edit");
         $params = $this->parseParams($params);
+        $assetId = -1;
+        if (is_numeric($params[0])) {
+            $assetId = $params[0];
+        }
+
+        if ($assetId <= 0 ) {
+            return $this->add();
+        }
+    }
+
+    public function add()
+    {
+        $this->setAction("edit");
+        $this->data['pageTitle'] = "Add New CI to the system";
     }
 }

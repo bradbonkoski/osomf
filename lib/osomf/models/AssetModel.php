@@ -68,9 +68,9 @@ class AssetModel extends DB
         $this->ciType = null;
         $this->_ctime = null;
         $this->_mtime = null;
-        $this->_phyParentId = -1;
+        $this->_phyParentId = 0;
         $this->phYParent = null;
-        $this->_netParentId = -1;
+        $this->_netParentId = 0;
         $this->netParent = null;
         $this->isRetired = 0;
         $this->ciSerialNum = '';
@@ -103,6 +103,159 @@ class AssetModel extends DB
             'modified' => $this->_mtime,
         );
     }
+
+    public function verifyCi($ciid)
+    {
+        $sql = "select count(*) as cnt from ci where ciid = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($ciid));
+        $row = $stmt->fetch();
+        if ($row['cnt'] > 0 ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function updateProject($projectId)
+    {
+        if (!is_numeric($projectId)) {
+            throw new \Exception("Invalid Project Id");
+        }
+
+        if (!$this->project instanceof ProjectModel) {
+            $this->project = new ProjectModel(ProjectModel::RO);
+        }
+        if ($this->project->verifyProjectId($projectId)) {
+            $this->_projectId = $projectId;
+            $this->project->fetchProjInfo($this->_projectId);
+        } else {
+            throw new \Exception("Project Does not Exist");
+        }
+    }
+
+    public function updateStatus($statusId)
+    {
+        if (!is_numeric($statusId)) {
+            throw new \Exception("Invalid Status Id");
+        }
+
+        if (!$this->ciStatus instanceof CiStatus) {
+            $this->ciStatus = new CiStatus(CiStatus::RO);
+        }
+        if ($this->ciStatus->verifyStatusId($statusId)) {
+            $this->_ciStatusId = $statusId;
+            $this->ciStatus->loadStatus($statusId);
+        } else {
+            throw new \Exception("Status Not Known");
+        }
+    }
+
+    public function updateType($typeId)
+    {
+        if (!is_numeric($typeId)) {
+            throw new \Exception("Invalid Type Id");
+        }
+
+        if (!$this->ciType instanceof CiType) {
+            $this->ciType = new CiType(CiType::RO);
+        }
+        if ($this->ciType->verifyType($typeId)) {
+            $this->_ciTypeId = $typeId;
+            $this->ciType->loadType($typeId);
+        } else {
+            throw new \Exception("Unknown Type");
+        }
+    }
+
+    public function updatePhyParent($ciid)
+    {
+        if (!is_numeric($ciid)) {
+            throw new \Exception("Invalid CI ID");
+        }
+
+        if ($this->_ciid == $ciid) {
+            throw new \Exception("Cannot be a Parent of self");
+        }
+
+        if (!$this->phyParent instanceof AssetModel) {
+            $this->phyParent = new AssetModel(AssetModel::RO);
+        }
+        if ($this->verifyCi($ciid)) {
+            $this->_phyParentId = $ciid;
+            $this->phyParent->loadAsset($ciid);
+        } else {
+            throw new \Exception("Invalid CI");
+        }
+    }
+
+    public function updateNetParent($ciid)
+    {
+        if (!is_numeric($ciid)) {
+            throw new \Exception("Invalid CI ID");
+        }
+
+        if ($this->_ciid == $ciid) {
+            throw new \Exception("Cannot be a Parent of self");
+        }
+
+        if (!$this->netParent instanceof AssetModel) {
+            $this->netParent = new AssetModel(self::RO);
+        }
+        if ($this->verifyCi($ciid)) {
+            $this->_netParentId = $ciid;
+            $this->netParent->loadAsset($ciid);
+        } else {
+            throw new \Exception("Invalid CI");
+        }
+    }
+
+    public function updateLoc($locId)
+    {
+        if (!is_numeric($locId)) {
+            throw new \Exception("Invalid Location Id");
+        }
+
+        if (!$this->loc instanceof LocationModel) {
+            $this->loc = new LocationModel(LocationModel::RO);
+        }
+        if ($this->loc->verifyLocation($locId)) {
+            $this->_locId = $locId;
+            $this->loc->fetchLocInfo($locId);
+        } else {
+            throw new \Exception("Unknown Location");
+        }
+    }
+
+    public function updateOwner($type, $ownerId)
+    {
+        if ($type != self::OWNER_GROUP && $type != self::OWNER_USER) {
+            throw new \Exception("Owner Type not known");
+        }
+
+        switch($type)
+        {
+            case self::OWNER_GROUP:
+                $ug = new UserGroup(UserGroup::RO);
+                $valid = $ug->verifyUserGroup($ownerId);
+                if (!$valid) {
+                    throw new \Exception("Unknown User Group");
+                }
+                $this->_ownerType = self::OWNER_GROUP;
+                $this->_ownerId = $ownerId;
+                break;
+            case self::OWNER_USER:
+                $u = new UserModel(UserModel::RO);
+                $valid = $u->verifyUser($ownerId);
+                if (!$valid) {
+                    throw new \Exception("Unknown User");
+                }
+                    $this->_ownerType = self::OWNER_USER;
+                    $this->_ownerId = $ownerId;
+                break;
+        }
+        $this->_loadOwner($this->_ownerId, $this->_ownerType, "owner");
+    }
+
     private function _loadOwner($ownerId, $type, $class)
     {
          //echo "Owner Type: ".$this->_ownerType."\n";
@@ -113,6 +266,48 @@ class AssetModel extends DB
         } else {
             $this->$class = new UserGroup(UserGroup::RO);
             $this->$class->fetchUserGroup($ownerId);
+        }
+    }
+
+    private function _validate()
+    {
+        $validators = array(
+            '_ciid' => array(
+                Validator::IS_NUM => true,
+            ),
+            'ciName' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 1, 'max' => 128),
+            ),
+            'ciDesc' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 0, 'max' => 2056),
+            ),
+            '_ownerId' => array(
+                Validator::IS_NUM => true,
+            ),
+            '_projectId' => array(
+                Validator::IS_NUM => true,
+            ),
+            '_ciStatusId' => array(
+                Validator::IS_NUM => true,
+            ),
+            '_ciTypeId' => array(
+                Validator::IS_NUM => true,
+            ),
+            '_locId' => array(
+                Validator::IS_NUM => true,
+            ),
+        );
+
+        foreach ($validators as $key => $val) {
+            //echo "Validating: $key [{$this->$key}]\n";
+            $v = new Validator($val);
+            $v->validate($this->$key);
+            if ($v->errNo > 0 ) {
+                $errs = $v->getErrors();
+                throw new \Exception($errs[0]);
+            }
         }
     }
 
@@ -164,7 +359,70 @@ class AssetModel extends DB
         $this->loc = new LocationModel(LocationModel::RO);
         $this->loc->fetchLocInfo($this->_locId);
         $this->acquiredDate = $row['acquiredDate'];
-        $this->disposalDate = $row['displosalDate'];
+        $this->disposalDate = $row['disposalDate'];
+    }
+
+    public function setOwner($ownerId)
+    {
+        
+    }
+
+    public function save()
+    {
+        try {
+            $this->_validate();
+        } catch (\Exception $e) {
+            //echo "Validation Exception!\n";
+            throw $e;
+        }
+
+        if ($this->_ciid < 0 ) {
+            // new record
+            $sql = "insert into ci (ciName, ciDesc, ownerType, ownerId, projectId,
+                statusId, phyParentId, netParentId, ciTypeId, locId, acquiredDate)
+                values (?,?,?,?,?,?,?,?,?,?,NOW())";
+
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(array(
+                    $this->ciName,
+                    $this->ciDesc,
+                    $this->_ownerType,
+                    $this->_ownerId,
+                    $this->_projectId,
+                    $this->_ciStatusId,
+                    $this->_phyParentId,
+                    $this->_netParentId,
+                    $this->_ciTypeId,
+                    $this->_locId
+              )
+            );
+        } else {
+            // Update to an existing User
+            $sql = "update ci set ciName = ?, ciDesc = ?,
+                ownerType = ?, owner = ?, projectId = ?,
+                statusId = ?, phyParentId = ?, netParentId = ?,
+                ciTypeId = ?, locId = ?, acquiredDate = ?,
+                displosalDate = ?, mtime=NOW() where ciid = ?";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(
+                array(
+                    $this->ciName,
+                    $this->ciDesc,
+                    $this->_ownerType,
+                    $this->_ownerId,
+                    $this->_projectId,
+                    $this->_ciStatusId,
+                    $this->_phyParentId,
+                    $this->_netParentId,
+                    $this->_ciTypeId,
+                    $this->_locId,
+                    $this->acquiredDate,
+                    $this->disposalDate,
+                    $this->_locId,
+                )
+            );
+
+        }
     }
 
     public function listAssets()

@@ -119,15 +119,17 @@ dt label {
 
 /* Base Nagivation Styles */
 nav {
+    float: left;
+    padding-left: 20%;
     font-size: 1.125em;
-    position: relative;
+    /*position: relative;*/
     left: 250px;
     line-height: 2.55;
     margin-top: 0.55em;
+    width: 50%;
 }
 nav li {
     display: inline;
-    /*list-style: none outside none;*/
     text-transform: lowercase;
 }
 
@@ -140,6 +142,19 @@ nav a:hover {
     color: #f5f5f5;
 }
 
+div#mainNav form#topSearch {
+    padding-top: 20px;
+    float: right;
+    padding-bottom: 5px;
+}
+
+form#topSearch input[type='text'] {
+    width: 8em;
+    -moz-border-radius: 10px;
+    -webkit-border-radis: 10px;
+    border-radius: 10px;
+    color: gray;
+}
 
 table.baseTable {
     width: 100%;
@@ -171,4 +186,12 @@ div.colLeft {
 div.colRight {
     float:left;
     width: 35%;
+}
+
+div#pageTitle h1,h2,h3,h4 {
+    display: inline;
+}
+div#pageTitle a {
+    float: right;
+     text-transform:lowercase;
 }

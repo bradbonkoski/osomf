@@ -1,7 +1,10 @@
 {% extends 'layout.phtml' %}
 
-        {% block content %}
-<h2 class="pageHeading">{{ title }}</h2>
+{% block content %}
+<div id="pageTitle">
+    <h2 class="pageHeading">{{ title }}</h2>
+    <a class="editLink" href="">Edit</a>
+</div>
 
     <div class="colLeft">
     <fieldset>

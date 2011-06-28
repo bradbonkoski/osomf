@@ -19,11 +19,19 @@ class Routes
         if (strlen($url) > 0 ) {
             $routeUri = rtrim($url, '/');
             $data = explode('/', $routeUri);
+            //print_r($data);
             if (isset($data[2])) {
                 $this->_controller = $data[2];
             }
             if (isset($data[3])) {
-                $this->_action = $data[3];
+                // For autocomplete, catch here!
+                if (strpos($data[3], "?") !== false) {
+                    $dataNew = explode('?', $data[3]);
+                    $this->_action = $dataNew[0];
+                    $this->_params[] = $dataNew[1];
+                } else {
+                    $this->_action = $data[3];
+                }
             }
             if (count($data) >= 5) {
                     for ($i=4; $i<count($data); $i++) {

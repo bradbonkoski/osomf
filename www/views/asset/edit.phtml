@@ -1,0 +1,147 @@
+{% extends 'layout.phtml' %}
+
+{% block css %}
+        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
+{% endblock %}
+    {% block content %}
+<h1>{{ pageTitle }}</h1>
+
+    <form action="" method="post">
+    <fieldset>
+        <legend>CI Attributes</legend>
+
+        <dl>
+            <dt><label>CI Name</label></dt>
+            <dd><input type="text" required /></dd>
+        </dl>
+
+        <dl>
+            <dt><label>Asset Description</label></dt>
+            <dd><textarea></textarea></dd>
+        </dl>
+
+        <dl>
+            <dt><label>CI Status</label></dt>
+            <dd id="statusBox">
+                <input id="ciStatus"/>
+                <span style="display:none" id="clearStatusBox"><img src="/osomf/www/img/cross.png"/></span>
+            </dd>
+            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+        </dl>
+
+        <dl>
+            <dt><label>CI Type</label></dt>
+            <dd>
+                <input id="ciType" type="text" />
+                <span style="display:none" id="clearTypeBox"><img src="/osomf/www/img/cross.png"/></span></dd>
+            </dd>
+            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+        </dl>
+
+        <dl>
+            <dt><label>Serial Number</label></dt>
+            <dd><input type="text" required/></dd>
+        </dl>
+
+        <dl>
+            <dt><label>CI Location</label></dt>
+            <dd>
+                    <input id="ciLoc" type="text" />
+                    <span style="display:none" id="clearLocBox"><img src="/osomf/www/img/cross.png"/></span></dd>
+                </dd>
+                <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+
+        </dl>
+        </fieldset>
+
+        <fieldset>
+            <legend>CI Associations</legend>
+            <dl>
+                <dt><label>Asset Owner</label></dt>
+                <dd>TBD</dd>
+            </dl>
+            
+            <dl>
+                <dt><label>Asset Project</label></dt>
+                <dd>TBD</dd>
+            </dl>
+
+            <dl>
+                <dt><label>CI Physical Parent</label></dt>
+                <dd>TBD</dd>
+            </dl>
+
+            <dl>
+                <dt><label>CI Net Parent</label></dt>
+                <dd>TBD</dd>
+            </dl>
+        </fieldset>
+        <dl>
+            <dt></dt>
+            <dd><input type="submit" value="add"/></dd>
+        </dl>
+
+
+    </form>
+    {% endblock %}
+
+
+{% block js %}
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.core.min.js"></script>
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.widget.min.js"></script>
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
+        <script>
+            $(function() {
+
+                function disableBox(input, box) {
+                    $("#"+input).attr('disabled', true);
+                    $("#"+box).show();
+                }
+
+                $("#ciStatus").autocomplete({
+                    source: "/osomf/status/autocomplete",
+                    minLength: 2,
+                    select: function( event, ui ) {
+                        disableBox("ciStatus", "clearStatusBox");
+                    }
+                });
+
+                $("#ciType").autocomplete({
+                    source: "/osomf/type/autocomplete",
+                    minLength: 1,
+                    select: function( event, ui) {
+                        disableBox("ciType","clearTypeBox");
+                    }
+                });
+
+                $("#ciLoc").autocomplete({
+                    source: "/osomf/location/autocomplete",
+                    minLength: 2,
+                    select: function( event, ui) {
+                        disableBox("ciLoc", "clearLocBox");
+                    }
+                });
+
+                $("#clearStatusBox").click(function() {
+                    $("#ciStatus").attr('disabled', false);
+                    $("#ciStatus").val('');
+                    $("#clearStatusBox").hide();
+                });
+
+                $("#clearTypeBox").click(function() {
+                    $("#ciType").attr('disabled', false);
+                    $('#ciType').val('');
+                    $("#clearTypeBox").hide();
+                });
+
+                $("#clearLocBox").click(function() {
+                    $("#ciLoc").attr('disabled', false);
+                    $('#ciLoc').val('');
+                    $("#clearLocBox").hide();
+                });
+            });
+
+
+        </script>
+{% endblock %}

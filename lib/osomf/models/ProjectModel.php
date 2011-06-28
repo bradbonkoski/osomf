@@ -115,6 +115,18 @@ class ProjectModel extends DB
         }
     }
 
+    public function verifyProjectId($projId)
+    {
+        $sql = "select count(*) as cnt from projects where projId = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($projId));
+        $row = $stmt->fetch();
+        if ($row['cnt'] > 0 ) {
+            return true;
+        }
+        return false; //implicit else
+    }
+
     public function fetchProjInfo($projId)
     {
         if (($projId <= 0 ) || !is_numeric($projId)) {

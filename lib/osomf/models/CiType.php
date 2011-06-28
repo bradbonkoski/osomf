@@ -20,6 +20,20 @@ class CiType extends DB
         $this->_ciType = -1;
         $this->typeName = '';
         $this->typeDesc = '';
+
+        $this->_table = "ciType";
+    }
+
+    public function verifyType($typeId)
+    {
+        $sql = "select count(*) as cnt from ciType where ciTypeId = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($typeId));
+        $row = $stmt->fetch();
+        if ($row['cnt'] > 0 ) {
+            return true;
+        }
+        return false; //implicit else
     }
 
     public function loadType($typeId)
@@ -40,5 +54,6 @@ class CiType extends DB
         $this->typeName = $row['typeName'];
         $this->typeDesc = $row['typeDesc'];
     }
+
 
 }
