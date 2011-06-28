@@ -37,6 +37,37 @@ class AssetTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * Bad Connection Descriptior
+     */
+    public function badConnector()
+    {
+        try {
+            $a = new AssetModel("connection");
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * Test Bulk of the Getter Methods
+     */
+    public function getterTestsOne()
+    {
+        $a = new AssetModel(AssetModel::RO);
+        $a->loadAsset(1);
+        $this->assertEquals(1, $a->getAssetId());
+
+        $this->assertEquals("USER", $a->getOwnerType());
+        $this->assertEquals(1, $a->getOwnerId());
+        $times = $a->getAssetTimes();
+        $this->assertTrue(count($times)> 0 );
+    }
+
+    /**
+     * @test
      * New Asset Add
      */
     public function addNewAssetOne()
@@ -52,6 +83,62 @@ class AssetTest extends PHPUnit_Framework_TestCase
         $a->updateNetParent(2);
         $a->updateLoc(4);
         $a->save();
+    }
+
+    /**
+     * @test
+     * Verify CI with Bad ciid
+     */
+    public function VerifyWithBadCIIID()
+    {
+        $a = new AssetModel(AssetModel::RO);
+        $this->assertTrue(!$a->verifyCi(11304932023));
+        $this->assertTrue($a->verifyCi(1));
+    }
+
+    /**
+     * @test
+     * Test Update Project Exceptions - 1
+     */
+    public function projUpdateExceptions()
+    {
+        $a = new AssetModel(AssetModel::RO);
+        $a->loadAsset(1);
+        try {
+            $a->updateProject("string");
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exceptions");
+    }
+
+    /**
+     * @test
+     * Test Update Project Exceptions - 2
+     */
+    public function projUpdateExceptionTwo()
+    {
+        $a = new AssetModel(AssetModel::RO);
+        $a->loadAsset(1);
+        try {
+            $a->updateProject(112343234);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     * Test for listAssets method
+     */
+    public function testlistassets()
+    {
+        $a = new AssetModel(AssetModel::RO);
+        $data = $a->listAssets();
+        $this->assertTrue(count($data) > 0 ) ;
     }
 }
  
