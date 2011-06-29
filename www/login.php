@@ -60,8 +60,8 @@ if (isset($_POST['frmSubmit'])) {
 
     if (strlen($err) <= 0 ) {
         // set cookie with username and userid
-        setcookie("userId", $u->getUserId(), time()+3600, '/');
-        setcookie("username", $u->uname, time()+3600, '/');
+        setcookie("userId", $u->getUserId(), time()+36000, '/');
+        setcookie("username", $u->uname, time()+36000, '/');
 
         //redirect to the home page! TODO store/send back to referrer link
         //header("Location: http://{$_SERVER['HTTP_HOST']}/osomf/user/view/1");

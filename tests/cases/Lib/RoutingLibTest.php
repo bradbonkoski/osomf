@@ -58,4 +58,17 @@ class RoutingLbTest extends PHPUnit_Framework_TestCase
 //        print_r($rl->getParams());
         
     }
+
+    /**
+     * @test
+     * Route Function with greater than 9 for the "id"
+     */
+    public function bigId()
+    {
+        $rl = new Routes("www.home.com/osomf/user/view/22/help");
+        $this->assertEquals("user", $rl->getController());
+        $this->assertEquals("view", $rl->getAction());
+        echo $rl->getParams();
+        echo "\n";
+    }
 }

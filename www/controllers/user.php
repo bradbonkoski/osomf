@@ -31,41 +31,35 @@ class user extends ControllerBase
                 //swap out the view for an XML one...
             }
         }
-        $userId = $params[0];
+        $userId = $parms[0];
         if (!is_numeric($userId)) {
             echo "ERROR";
+            //redirect to the home here!
         }
 
         $u = new UserModel(UserModel::RO);
-        $u->fetchUserInfo($userId);
-        //echo "User: $u\n";
-        $this->data['title'] =
-            "User Data for: {$u->fname} {$u->lname} ({$u->uname})";
-        $this->data['username'] = $u->uname;
-        $this->data['fullname'] = $u->fname ." ". $u->lname;
-        $this->data['email'] = $u->email;
-        $this->data['phone'] = $u->phone;
-        $this->data['pager'] = $u->pager;
+        try {
+            $u->fetchUserInfo($userId);
 
-        //Get the User's User Group
-        $ug = new UserGroup(UserGroup::RO);
-        $ret = $ug->getGroupsForUser($userId);
-        //print_r($ret);
-        foreach ($ret as $gid => $group) {
-            $this->data['groups'][$gid] = $group;
+            //echo "User: $u\n";
+            $this->data['title'] =
+                "User Data for: {$u->fname} {$u->lname} ({$u->uname})";
+            $this->data['username'] = $u->uname;
+            $this->data['fullname'] = $u->fname ." ". $u->lname;
+            $this->data['email'] = $u->email;
+            $this->data['phone'] = $u->phone;
+            $this->data['pager'] = $u->pager;
+
+            //Get the User's User Group
+            $ug = new UserGroup(UserGroup::RO);
+            $ret = $ug->getGroupsForUser($userId);
+            //print_r($ret);
+            foreach ($ret as $gid => $group) {
+                $this->data['groups'][$gid] = $group;
+            }
+        } catch (Exception $e) {
+            $this->data['title'] = $e->getMessage();
         }
-//        foreach ($ug as $group) {
-//            $g = new UserGroup(UserGroup::REUSE);
-//            $g->fetchUserGroup($group);
-//            $this->data['groups'][] = array(
-//                'GroupName' => $g->groupName,
-//                'GroupDesc' => $g->groupDesc,
-//                'GroupPager' => $g->pager,
-//                'GroupPhone' => $g->phone,
-//            );
-//        }
-//
-//        print_r($this->data);
 
     }
 }
