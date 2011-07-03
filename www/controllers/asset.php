@@ -4,24 +4,21 @@ use \osomf\models\AssetModel;
 
 class asset extends ControllerBase
 {
+    private $_ciid;
+    
+
     public function __construct($controller = '', $action = '') 
     { 
         parent::__construct("asset", $action);
+        $this->ciid = 0;
     }
 
-    public function view($params)
+    private function _pullAssetInfo()
     {
-        $this->setAction("view");
-        $params = $this->parseParams($params);
-
-        if (!array_key_exists(0, $params) || !is_numeric($params[0])) {
-            error_log("Sending to display");
-            return $this->display();
-        }
-        $assetId = $params[0];
-        
+        try {
         $a = new AssetModel(AssetModel::RO);
-        $a->loadAsset($assetId);
+        $a->loadAsset($this->_ciid);
+        $this->data['ciid'] = $a->getAssetId();
         $this->data['title'] = "Asset information for: ".$a->ciName;
         $this->data['ciName'] = $a->ciName;
         $this->data['ciDesc'] = $a->ciDesc;
@@ -83,6 +80,24 @@ class asset extends ControllerBase
         } else {
             $this->data['loc'] = 0;
         }
+        } catch (Exception $e) {
+            $this->_addError($e->getMessage());
+        }
+    }
+
+    public function view($params)
+    {
+        $this->setAction("view");
+        $params = $this->parseParams($params);
+
+        if (!array_key_exists(0, $params) || !is_numeric($params[0])) {
+            error_log("Sending to display");
+            return $this->display();
+        }
+        
+        $this->_ciid = $params[0];
+        
+        $this->_pullAssetInfo();
 
     }
 
@@ -103,16 +118,30 @@ class asset extends ControllerBase
         $assetId = -1;
         if (is_numeric($params[0])) {
             $assetId = $params[0];
-        }
+        } 
 
         if ($assetId <= 0 ) {
-            return $this->add();
+            return $this->add($params);
         }
+        $this->_ciid = $assetId;
+        $this->_pullAssetInfo();
     }
 
-    public function add()
+    public function add( $params )
     {
         $this->setAction("edit");
         $this->data['pageTitle'] = "Add New CI to the system";
+        foreach ($params as $k=>$v) {
+            //echo "$k --> $v<br/>";
+            $this->data[$k] = urldecode($v);
+        }
+    }
+
+    public function autocomplete( $params )
+    {
+        $this->ac = true;
+        $str = explode('=', $params);
+        $ci = new AssetModel(AssetModel::RO);
+        echo json_encode($ci->autocomplete("ciName", $str[1]));
     }
 }

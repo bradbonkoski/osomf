@@ -36,6 +36,8 @@ class UserGroup extends DB
         $this->phone = "";
         $this->pager = "";
         $this->users = array();
+
+        $this->_table = "userGroup";
     }
 
     private function _fetchGroupInfo($groupId)
@@ -112,7 +114,7 @@ class UserGroup extends DB
                 "Invalid User Id - ".__FILE__." : ".__LINE__
             );
         }
-        $sql = "select ugid from users_groups where userid = ?";
+        $sql = "select ugid, status from users_groups where userid = ?";
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($userId));
         $rows = $stmt->fetchAll();
@@ -125,6 +127,7 @@ class UserGroup extends DB
                 'GroupDesc' => $this->groupDesc,
                 'GroupPhone' => $this->phone,
                 'GroupPager' => $this->pager,
+                'status' => $r['status'],
             );
         }
         return $ret;

@@ -45,6 +45,8 @@ class UserModel extends DB
         $this->phone = "";
         $this->pager = "";
         $this->status = '';
+
+        $this->_table = "users";
     }
 
     private function _validate()
@@ -216,6 +218,14 @@ class UserModel extends DB
 //        $rows = $stmt->fetchAll();
 //        return $rows;
 //    }
+
+    public function getAllUsers()
+    {
+        $sql = "select * from users";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 
     public function save()
     {

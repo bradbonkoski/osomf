@@ -30,6 +30,32 @@
         </dl>
 
     </fieldset>
+    
+    <fieldset>
+        <legend>Group Members</legend>
+        <table class="baseTable">
+            <tr>
+                <th>User Name</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Pager</th>
+                <th>status</th>
+            </tr>
+            {% for u in users %}
+            <tr>
+                <td><a href="/osomf/user/view/{{ u.uid }}">{{ u.uname }}</a></td>
+                <td>{{ u.name }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.phone }}</td>
+                <td>{{ u.pager }}</td>
+                <td>{{ u.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+    </fieldset>
 
 {% endblock %}
 

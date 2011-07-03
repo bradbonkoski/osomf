@@ -32,6 +32,11 @@ class ControllerBase
         $this->ac = false;
     }
 
+    protected function _addError($msg)
+    {
+        $this->data['err'][] = $msg;
+    }
+
     public function setTest()
     {
         $this->_test = true;

@@ -1,0 +1,27 @@
+{% extends 'layout.phtml' %}
+
+
+{% block content %}
+
+<div id="pageTitle">
+    <h1>Current Listing of Known Users</h1>
+</div>
+
+    
+
+<table class="baseTable" id="userHome">
+    <tr>
+        <th>User Name</th><th>Full Name</th><th>email</th>
+        <th>phone</th><th>pager</th>
+    </tr>
+    {% for u in users %}
+    <tr>
+        <td><a href="/osomf/user/view/{{ u.userId }}">{{ u.uname }}</a></td>
+        <td>{{ u.fname }} {{ u.lname }}</td>
+        <td><a href="mailto:{{ u.email }}">{{ u.email }}</a></td>
+        <td>{{ u.phone }}</td>
+        <td>{{ u.pager }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

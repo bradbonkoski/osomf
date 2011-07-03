@@ -19,6 +19,14 @@ class user extends ControllerBase
 
     }
 
+    public function home()
+    {
+        $this->setAction("home");
+        $u = new UserModel(UserModel::RO);
+        $rows = $u->getAllUsers();
+        $this->data['users'] = $rows;
+    }
+
     public function view( $params )
     {
         //echo "<pre>".print_r($_COOKIE, true)."</pre>";
@@ -33,8 +41,8 @@ class user extends ControllerBase
         }
         $userId = $parms[0];
         if (!is_numeric($userId)) {
-            echo "ERROR";
-            //redirect to the home here!
+            //echo "ERROR";
+            return $this->home();
         }
 
         $u = new UserModel(UserModel::RO);
@@ -56,10 +64,19 @@ class user extends ControllerBase
             //print_r($ret);
             foreach ($ret as $gid => $group) {
                 $this->data['groups'][$gid] = $group;
+
             }
         } catch (Exception $e) {
             $this->data['title'] = $e->getMessage();
         }
 
+    }
+
+    public function autocomplete( $params )
+    {
+        $this->ac = true;
+        $str = explode('=', $params);
+        $u = new UserModel(UserModel::RO);
+        echo json_encode($u->autocomplete("uname", $str[1]));
     }
 }

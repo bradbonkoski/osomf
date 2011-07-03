@@ -78,6 +78,8 @@ class AssetModel extends DB
         $this->loc = null;
         $this->acquiredDate = '';
         $this->disposalDate = '';
+
+        $this->_table = "ci";
         
     }
 

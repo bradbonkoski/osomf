@@ -1,8 +1,9 @@
 {% extends "layout.phtml" %}
 
-        {% block title %} {{ title }} {% endblock %}
+{% block title %} {{ title }} {% endblock %}
 {% block content %}
-        <a href="javascript:history.go(-1)">Go Back</a>
+
+<a href="javascript:history.go(-1)">Go Back</a>
 <h2 class="pageHeading">{{ title }}</h2>
 
     <fieldset>
@@ -40,7 +41,7 @@
     <legend>group membership</legend>
     <ul>Groups<br/>
         {% for gid, group in groups %}
-        <a href="#">{{ group.GroupName }} ({{ gid }})</a><br/>
+        <a href="/osomf/group/view/{{ gid }}">{{ group.GroupName }} ( {{ group.status }})</a><br/>
         {% endfor %}
     <ul/>
         </fieldset>

@@ -24,6 +24,7 @@ class ProjectModel extends DB
     public $projOwner; //maps to the User{Group}Model Class
     private $_projOwnerId;
 
+
     public function __construct($conn)
     {
         if (!in_array($conn, $this->_validConn)) {
@@ -36,6 +37,7 @@ class ProjectModel extends DB
         $this->projDesc = '';
         $this->_ownerType = self::OWNER_USER;
         $this->projOwner = null;
+        $this->_table = "projects";
     }
 
     public function getProjId()

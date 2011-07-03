@@ -50,6 +50,27 @@ class group extends ControllerBase
         $this->data['phone'] = $ug->phone;
         $this->data['pager'] = $ug->pager;
 
+        foreach($ug->users as $u) {
+            $arr = array(
+                'uid' => $u->getUserId(),
+                'uname' => $u->uname,
+                'name' => $u->fname." ".$u->lname,
+                'email' => $u->email,
+                'phone' => $u->phone,
+                'pager' => $u->pager,
+                'status' => $u->status,
+            );
+            $this->data['users'][] = $arr;
+        }
 
+
+    }
+
+    public function autocomplete( $params )
+    {
+        $this->ac = true;
+        $str = explode('=', $params);
+        $ug = new UserGroup(UserGroup::RO);
+        echo json_encode($ug->autocomplete("groupName", $str[1]));
     }
 }

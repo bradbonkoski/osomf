@@ -42,4 +42,13 @@ class project extends ControllerBase
         //$this->data['projOwner'] = ;
 
     }
+
+    public function autocomplete( $params )
+    {
+        $this->ac = true;
+        $str = explode('=', $params);
+        //error_log("Query String is: {$str[1]}");
+        $p = new ProjectModel(ProjectModel::RO);
+        echo json_encode($p->autocomplete("projName", $str[1]));
+    }
 }
