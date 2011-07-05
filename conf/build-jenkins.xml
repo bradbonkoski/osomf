@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="osomf" default="build" basedir="/var/lib/tomcat6/webapps/jenkins/jobs/osomf/workspace">
+<project name="osomf" default="build" basedir="/var/lib/jenkins/jobs/OSOMF/workspace">
 
     <import file="./db-jenkins.xml"/>
 

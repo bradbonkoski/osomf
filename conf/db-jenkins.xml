@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="database" basedir="/var/lib/tomcat6/webapps/jenkins/jobs/osomf/workspace" default="db">
+<project name="database" basedir="/var/lib/jenkins/jobs/OSOMF/workspace" default="db">
     <property name="schemaDir" value="${basedir}/schema" />
     <property name="seedDir" value="${basedir}/tests/seeds"/>
 
