@@ -38,6 +38,7 @@ class ProjectModel extends DB
         $this->_ownerType = self::OWNER_USER;
         $this->projOwner = null;
         $this->_table = "projects";
+        $this->_tableKey = "projId";
     }
 
     public function getProjId()

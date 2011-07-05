@@ -40,6 +40,7 @@ class LocationModel extends DB
         $this->_locAddr = '';
 
         $this->_table = "location";
+        $this->_tableKey = "locId";
     }
 
     private function _validate()

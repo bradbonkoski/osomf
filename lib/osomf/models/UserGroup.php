@@ -38,6 +38,7 @@ class UserGroup extends DB
         $this->users = array();
 
         $this->_table = "userGroup";
+        $this->_tableKey = "ugid";
     }
 
     private function _fetchGroupInfo($groupId)

@@ -22,6 +22,12 @@ class CiStatus extends DB
         $this->statusDesc = '';
 
         $this->_table = "ciStatus";
+        $this->_tableKey = "ciStatusId";
+    }
+
+    public function getStatusId()
+    {
+        return $this->_ciStatusId;
     }
 
     public function verifyStatusId($statusId)

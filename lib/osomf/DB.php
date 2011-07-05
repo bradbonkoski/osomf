@@ -2,7 +2,6 @@
 
 namespace osomf;
 
-//require_once('lib/Conf.php');
 use \osomf\Conf;
 use \osomf\ConfDB;
 
@@ -29,12 +28,22 @@ class DB extends \PDO
         self::TYPE_USER,
     );
 
+    /**
+     * @var _table
+     * Set by the inherited class as the name of the table
+     */
     protected $_table;
+    /**
+     * @var _tableKey
+     * Set by the inherited class as the primary key/index
+     * on the table
+     */
+    protected $_tableKey;
 
     protected $_validConn = array(self::RO, self::RW);
     
     protected $_db;
-   
+
     private function _buildDSN($dbname, $host, $port) 
     {
         $dsn = '';
@@ -96,16 +105,28 @@ class DB extends \PDO
         $this->_db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @param $colName
+     * @param $queryStr
+     * @return array
+     */
     public function autocomplete($colName, $queryStr)
     {
-        $sql = "select $colName from {$this->_table} where upper($colName) like ?";
+        $sql = "select {$this->_tableKey}, $colName from {$this->_table}
+            where upper($colName) like ?";
+        error_log($sql);
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array('%'.strtoupper($queryStr).'%'));
         $stmt->execute();
         $rows = $stmt->fetchAll();
         $arr = array();
         foreach ($rows as $r) {
-            $arr[] = $r[$colName];
+            $arr[] = array (
+                'id' => $r[$this->_tableKey],
+                'value' => $r[$colName],
+            );
+
+            //$arr[$r[$this->_tableKey]] = $r[$colName];
         }
         return $arr;
     }

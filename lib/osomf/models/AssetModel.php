@@ -80,6 +80,7 @@ class AssetModel extends DB
         $this->disposalDate = '';
 
         $this->_table = "ci";
+        $this->_tableKey = "ciid";
         
     }
 
@@ -401,30 +402,37 @@ class AssetModel extends DB
                 )
             );
         } else {
-            // Update to an existing User
-            $sql = "update ci set ciName = ?, ciDesc = ?,
-                ownerType = ?, owner = ?, projectId = ?,
-                statusId = ?, phyParentId = ?, netParentId = ?,
-                ciTypeId = ?, locId = ?, acquiredDate = ?,
-                displosalDate = ?, mtime=NOW() where ciid = ?";
-            $stmt = $this->_db->prepare($sql);
-            $stmt->execute(
-                array(
-                    $this->ciName,
-                    $this->ciDesc,
-                    $this->_ownerType,
-                    $this->_ownerId,
-                    $this->_projectId,
-                    $this->_ciStatusId,
-                    $this->_phyParentId,
-                    $this->_netParentId,
-                    $this->_ciTypeId,
-                    $this->_locId,
-                    $this->acquiredDate,
-                    $this->disposalDate,
-                    $this->_locId,
-                )
+            // Update to an existing Asset
+            $sql = "update ci set ciName = :ciName, ciDesc = :ciDesc,
+                ciSerialNum = :ciSerial,
+                ownerType = :ownType, ownerId = :owner, projectId = :proj,
+                statusId = :stat, phyParentId = :phy, netParentId = :net,
+                ciTypeId = :type, locId = :loc, acquiredDate = :ad,
+                disposalDate = :dd, mtime=NOW() where ciid = :ciid";
+            error_log($sql);
+            $data = array(
+                ':ciName' => $this->ciName,
+                ':ciDesc' => $this->ciDesc,
+                ':ciSerial' => $this->ciSerialNum,
+                ':ownType' => $this->_ownerType,
+                ':owner' => $this->_ownerId,
+                ':proj' => $this->_projectId,
+                ':stat' => $this->_ciStatusId,
+                ':phy' => $this->_phyParentId,
+                ':net' => $this->_netParentId,
+                ':type' => $this->_ciTypeId,
+                ':loc' => $this->_locId,
+                ':ad' => $this->acquiredDate,
+                ':dd' => $this->disposalDate,
+                ':ciid' => $this->_ciid,
             );
+            error_log(print_r($data, true));
+            $stmt = $this->_db->prepare($sql);
+            if (!$stmt->execute($data)) {
+                error_log("Something amis!");
+                $arr = $stmt->errorInfo();
+                error_log(print_r($arr, true));
+            }
 
         }
     }

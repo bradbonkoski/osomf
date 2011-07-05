@@ -22,6 +22,12 @@ class CiType extends DB
         $this->typeDesc = '';
 
         $this->_table = "ciType";
+        $this->_tableKey = "ciTypeId";
+    }
+
+    public function getTypeId()
+    {
+        return $this->_ciTypeId;
     }
 
     public function verifyType($typeId)

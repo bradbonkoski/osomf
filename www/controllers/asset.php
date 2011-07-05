@@ -5,6 +5,8 @@ use \osomf\models\AssetModel;
 class asset extends ControllerBase
 {
     private $_ciid;
+
+    private $_postedData;
     
 
     public function __construct($controller = '', $action = '') 
@@ -23,7 +25,9 @@ class asset extends ControllerBase
         $this->data['ciName'] = $a->ciName;
         $this->data['ciDesc'] = $a->ciDesc;
         $this->data['status'] = $a->ciStatus->statusName;
+        $this->data['statusId'] = $a->ciStatus->getStatusId();
         $this->data['ownerId'] = $a->getOwnerId();
+        $this->data['ownerType'] = $a->getOwnerType();
         if ($a->getOwnerType() == AssetModel::OWNER_USER) {
             $ownerCont = 'user';
             $this->data['ownerName'] = $a->owner->uname;
@@ -36,6 +40,7 @@ class asset extends ControllerBase
         $this->data['ctime'] = $times['created'];
         $this->data['mtime'] = $times['modified'];
         $this->data['type'] = $a->ciType->typeName;
+        $this->data['typeId'] = $a->ciType->getTypeId();
         $this->data['serial'] = $a->ciSerialNum;
         $this->data['acquired'] = $a->acquiredDate;
         $this->data['retired'] = $a->isRetired;
@@ -111,20 +116,73 @@ class asset extends ControllerBase
         }
     }
 
+    private function _assetNew()
+    {
+        $a = new AssetModel(AssetModel::RW);
+        $a->ciName = $this->_postedData['ciName'];
+        $a->ciDesc = $this->_postedData['ciDesc'];
+        $a->updateOwner($this->_postedData['ownerTypeVal'], $this->_postedData['ownerId']);
+        $a->updateProject($this->_postedData['projId']);
+        $a->updateStatus($this->_postedData['statusId']);
+        $a->updateType($this->_postedData['typeId']);
+        if (is_numeric($this->_postedData['phyId'])) {
+            $a->updatePhyParent($this->_postedData['phyId']);
+        }
+        $a->updateNetParent($this->_postedData['netId']);
+        $a->updateLoc($this->_postedData['locId']);
+        $a->save();
+    }
+
+    private function _assetUpdate()
+    {
+        $a = new AssetModel(AssetModel::RW);
+        $a->loadAsset($this->_ciid);
+        $a->ciName = $this->_postedData['ciName'];
+        $a->ciDesc = $this->_postedData['ciDesc'];
+        $a->ciSerialNum = $this->_postedData['ciSerial'];
+        $a->updateOwner($this->_postedData['ownerTypeVal'], $this->_postedData['ownerId']);
+        $a->updateProject($this->_postedData['projId']);
+        $a->updateStatus($this->_postedData['statusId']);
+        $a->updateType($this->_postedData['typeId']);
+        if (
+            is_numeric($this->_postedData['phyId'])
+            && $this->_postedData['phyId'] > 0
+        ) {
+            $a->updatePhyParent($this->_postedData['phyId']);
+        }
+        $a->updateNetParent($this->_postedData['netId']);
+        $a->updateLoc($this->_postedData['locId']);
+        $a->save();
+    }
+
     public function edit( $params )
-    { 
+    {
         $this->setAction("edit");
         $params = $this->parseParams($params);
         $assetId = -1;
         if (is_numeric($params[0])) {
             $assetId = $params[0];
-        } 
+        }
+
+        if ($_POST['assetSubmit']) {
+            //echo "<pre>".print_r($_POST, true)."</pre>";
+            $this->_postedData = $_POST;
+            if ($assetId <= 0 ) {
+                $this->_assetNew();
+            } else {
+                $this->_ciid = $assetId;
+                $this->_assetUpdate();
+            }
+        }
 
         if ($assetId <= 0 ) {
             return $this->add($params);
         }
         $this->_ciid = $assetId;
         $this->_pullAssetInfo();
+        $this->data['submitButtonText'] = "update";
+        $this->data['pageTitle'] = "Edit Asset Information";
+        //echo "<pre>".print_r($this->data, true)."</pre>";
     }
 
     public function add( $params )
@@ -135,12 +193,14 @@ class asset extends ControllerBase
             //echo "$k --> $v<br/>";
             $this->data[$k] = urldecode($v);
         }
+        $this->data['submitButtonText'] = "add";
     }
 
     public function autocomplete( $params )
     {
         $this->ac = true;
         $str = explode('=', $params);
+        error_log(print_r($params, true));
         $ci = new AssetModel(AssetModel::RO);
         echo json_encode($ci->autocomplete("ciName", $str[1]));
     }

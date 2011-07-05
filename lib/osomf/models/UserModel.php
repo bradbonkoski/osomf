@@ -47,6 +47,7 @@ class UserModel extends DB
         $this->status = '';
 
         $this->_table = "users";
+        $this->_tableKey = "userId";
     }
 
     private function _validate()
