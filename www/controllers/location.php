@@ -11,6 +11,8 @@ use \osomf\models\LocationModel;
 
 class location extends ControllerBase
 {
+    private $_locId;
+    private $_postData;
 
     public function __construct( $controller = "", $action = "")
     {
@@ -18,13 +20,29 @@ class location extends ControllerBase
 
     }
 
+    private function _loadLocInfo()
+    {
+        $l = new LocationModel(LocationModel::RO);
+        $l->fetchLocInfo($this->_locId);
+        //echo "User: $u\n";
+        $this->data['title'] = "Location information for: ".$l->locName;
+        $this->data['locName'] = $l->getLocName();
+        $this->data['locDesc'] = $l->getLocDesc();
+        $this->data['locAddr'] = $l->getLocAddr();
+
+        $this->data['locId'] = $this->_locId;
+        $this->data['changes'] = $l->getChanges();
+
+        //echo "<pre>".print_r($this->data, true)."</pre>";
+    }
+
     public function view( $params )
     {
         $this->setAction("view");
         //echo "Params are: $params\n";
-        $parms = $this->parseParams($params);
-        if (array_key_exists("format", $parms)) {
-            if ($parms['format'] == 'xml') {
+        $params = $this->parseParams($params);
+        if (array_key_exists("format", $params)) {
+            if ($params['format'] == 'xml') {
                 //swap out the view for an XML one...
             }
         }
@@ -32,15 +50,42 @@ class location extends ControllerBase
         if (!is_numeric($locId)) {
             echo "ERROR";
         }
+        $this->_locId = $locId;
+        $this->_loadLocInfo();
 
-        $l = new LocationModel(LocationModel::RO);
-        $l->fetchLocInfo($locId);
-        //echo "User: $u\n";
-        $this->data['title'] = "Location information for: ".$l->locName;
-        $this->data['locName'] = $l->locName;
-        $this->data['locDesc'] = $l->locDesc;
-        //$this->data['projOwner'] = ;
+    }
 
+    private function _saveLocInfo()
+    {
+        $l = new LocationModel(LocationModel::RW);
+        $l->fetchLocInfo($this->_locId);
+        $l->setLocName($this->_postData['locName']);
+        $l->setLocDesc($this->_postData['locDesc']);
+        $l->setLocAddr($this->_postData['locAddr']);
+        $l->save();
+    }
+
+    public function edit( $params )
+    {
+        $params = $this->parseParams($params);
+
+        $locId = $params[0];
+        $this->_locId = $locId;
+        
+        if (isset($_POST['locUpdate'])) {
+            //echo "<pre>".print_r($_POST, true)."</pre>";
+            $this->_postData = $_POST;
+            $this->_saveLocInfo();
+        }
+        $this->setAction("edit");
+
+        if (!is_numeric($locId)) {
+            //todo fix this!
+            echo "ERROR";
+        }
+
+        $this->_locId = $locId;
+        $this->_loadLocInfo();
     }
 
     public function autocomplete( $params )

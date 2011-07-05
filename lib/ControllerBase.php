@@ -69,6 +69,15 @@ class ControllerBase
         return $ret;
     }
 
+    public function redirect($controller, $action, $id=0)
+    {
+        $url = "/osomf/$controller/$action";
+        if ($id > 0 ) {
+            $url .="/$id";
+        }
+        header("Location: $url");
+    }
+
     public function __destruct() 
     {
         // need to short circuit auto redirect to the view

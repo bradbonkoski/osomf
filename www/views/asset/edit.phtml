@@ -12,6 +12,9 @@
 
 <h1>{{ pageTitle }}</h1>
 
+    {% if editAsset %}
+        <a href="/osomf/asset/view/{{ ciid }}">cancel edit</a>
+    {% endif %}
     <form id="frmAsset" action="" method="post">
     <fieldset>
         <legend>CI Attributes</legend>

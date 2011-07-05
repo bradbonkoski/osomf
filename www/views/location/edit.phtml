@@ -1,0 +1,33 @@
+{% extends "layout.phtml" %}
+
+        {% block title %} {{ title }} {% endblock %}
+{% block content %}
+<h2 class="pageHeading">{{ title }}</h2>
+
+    <form action="" method="POST">
+    <fieldset>
+        <legend>location data</legend>
+
+
+        <dl>
+            <dt><label>location Name</label></dt>
+            <dd><input required type="text" name="locName" value="{{ locName }}"/></dd>
+        </dl>
+
+        <dl>
+            <dt><label>location Description</label></dt>
+            <dd><textarea name="locDesc">{{ locDesc }}</textarea></dd>
+        </dl>
+
+        <dl>
+            <dt><label>location address</label></dt>
+            <dd><textarea name="locAddr">{{ locAddr }}</textarea></dd>
+        </dl>
+
+        <dl>
+            <dt><input type="submit" name="locUpdate" value="Update"/></dt>
+        </dl>
+</fieldset>
+        </form>
+{% endblock %}
+

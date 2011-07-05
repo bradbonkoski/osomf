@@ -27,8 +27,8 @@ class LocationTest extends PHPUnit_Framework_TestCase
     {
         $l = new LocationModel(LocationModel::RO);
         $l->fetchLocInfo(1);
-        $this->assertEquals("DCC1", $l->locName);
-        $this->assertEquals("First Data Center", $l->locDesc);
+        $this->assertEquals("DCC1", $l->getLocName());
+        $this->assertEquals("First Data Center", $l->getLocDesc());
         //print_r($l->locOwner);
         $this->assertEquals("bradb", $l->locOwner->uname);
     }
@@ -41,15 +41,15 @@ class LocationTest extends PHPUnit_Framework_TestCase
     {
         $l = new LocationModel(LocationModel::RW);
         $l->fetchLocInfo(4);
-        $this->assertEquals("DC4", $l->locName);
-        $l->locName = "DC4-Update";
-        $l->locDesc = "New Test Description";
+        $this->assertEquals("DC4", $l->getLocName());
+        $l->setLocName("DC4-Update");
+        $l->setLocDesc("New Test Description");
         $l->save();
 
         $ltwo = new LocationModel(LocationModel::RO);
         $ltwo->fetchLocInfo(4);
-        $this->assertEquals("New Test Description", $ltwo->locDesc);
-        $this->assertEquals("DC4-Update", $ltwo->locName);
+        $this->assertEquals("New Test Description", $ltwo->getLocDesc());
+        $this->assertEquals("DC4-Update", $ltwo->getLocName());
     }
 
     /**
@@ -59,10 +59,10 @@ class LocationTest extends PHPUnit_Framework_TestCase
     public function newLoc()
     {
         $l = new LocationModel(LocationModel::RW);
-        $l->locName = "TestNewLoc";
-        $l->locDesc = "Description for test location";
+        $l->setLocName("TestNewLoc");
+        $l->setLocDesc("Description for test location");
         $l->updateOwner(LocationModel::OWNER_USER, 1);
-        $l->locAddr = "1122 Testing Road";
+        $l->setLocAddr("1122 Testing Road");
         $l->save();
     }
 
@@ -74,7 +74,7 @@ class LocationTest extends PHPUnit_Framework_TestCase
     {
         $l = new LocationModel(LocationModel::RW);
         $l->fetchLocInfo(1);
-        $l->locName = '';
+        $l->setLocName('');
         try {
             $l->save();
         } catch (Exception $e) {
@@ -92,7 +92,7 @@ class LocationTest extends PHPUnit_Framework_TestCase
     {
         $l = new LocationModel(LocationModel::RW);
         $l->fetchLocInfo(1);
-        $l->locDesc = str_repeat('l', 3200);
+        $l->setLocDesc(str_repeat('l', 3200));
         try {
             $l->save();
         } catch (Exception $e) {

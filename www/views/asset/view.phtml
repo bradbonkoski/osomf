@@ -70,14 +70,14 @@
 
         <dl>
             <dt><label>Project</label></dt>
-            {% if proj == 1 %}
+            {% if proj >= 1 %}
                 <dd><a href="{{ projLink }}">{{ projName }}</a></dd>
             {% endif %}
         </dl>
 
         <dl>
             <dt><label>Location</label></dt>
-            {% if loc == 1 %}
+            {% if loc >= 1 %}
                 <dd><a href="{{ locLink }}">{{ locName }}</a></dd>
             {% endif %}
         </dl>
@@ -91,7 +91,7 @@
 
         <dl>
             <dt><label>Network Parent</label></dt>
-            {% if netParent == 1 %}
+            {% if netParent >= 1 %}
             <dd><a href="{{ netParentLink }}">{{ netParentName }}</a></dd>
             {% endif %}
         </dl>
@@ -99,7 +99,7 @@
 
         <dl>
             <dt><label>Physical Parent</label></dt>
-            {% if phyParent == 1 %}
+            {% if phyParent >= 1 %}
             <dd><a href="{{ phyParentLink }}">{{ phyParentName }}</a></dd>
             {% endif %}
         </dl>

@@ -109,7 +109,7 @@ dl dt, dl dd {
 float: left;
 margin: 0 .5em 0 .5em;
 }
-dl dt {clear: left; width: 8em;}
+dl dt {clear: left; width: 10em;}
 
 dt label {
     text-transform:lowercase;
@@ -175,8 +175,33 @@ table.baseTable tr:nth-child(odd) {
 }
 
 table.baseTable td {
-    text-align: right;
+ /*   text-align: right; */
     padding-bottom: 2px;
+
+}
+
+table.embedded {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+table.embedded th {
+    background-color: blue;
+    color: white;
+}
+
+table.embedded td {
+    text-align: left;
+    font-size: 10px;
+}
+
+table.embedded tr:nth-child(odd) {
+    background-color: #add8e6;
+}
+
+table.embedded tr:nth-child(even) {
+    background-color: #ffffff;
 }
 
 div.colLeft {

@@ -3,7 +3,10 @@
         {% block title %} {{ title }} {% endblock %}
 {% block content %}
         <a href="javascript:history.go(-1)">Go Back</a>
-<h2 class="pageHeading">{{ title }}</h2>
+    <div id="pageTitle">
+    <h2 class="pageHeading">{{ title }}</h2>
+    <a class="editLink" href="/osomf/location/edit/{{ locId }}">Edit</a>
+</div>
 
     <fieldset>
         <legend>location data</legend>
@@ -18,10 +21,40 @@
             <dt><label>location Description</label></dt>
             <dd>{{ locDesc }}</dd>
         </dl>
-<!--
+
+        <dl>
+            <dt><label>location address</label></dt>
+            <dd>{{ locAddr }}</dd>
+        </dl>
+
         <img style="float:right" src="http://maps.google.com/maps/api/staticmap?center=135 Rio Robles E San Jose, CA 95134&zoom=14&size=200x200&maptype=roadmap&sensor=false"/>
--->
+
 
 </fieldset>
+
+    <fieldset>
+        <legend>history</legend>
+        <table class="baseTable">
+            <tr><th>Date</th><th>user</th><th>changes</th></tr>
+        {% for c in changes %}
+            <tr>
+                <td>{{ c.time }}</td>
+                <td>{{ c.user }}</td>
+                <td>
+                    <table class="embedded">
+                        <tr><th>Col</th><th>Orig</th><th>new</th></tr>
+                    {% for cc in c.deltas %}
+                        <tr>
+                            <td>{{ cc.col }}</td>
+                            <td>{{ cc.orig }}</td>
+                            <td>{{ cc.new }}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </fieldset>
 {% endblock %}
 

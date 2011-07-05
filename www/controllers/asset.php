@@ -48,7 +48,7 @@ class asset extends ControllerBase
 
         // relations
         if ($a->netParent instanceof AssetModel) {
-            $this->data['netParent'] = 1;
+            $this->data['netParent'] = $a->netParent->getAssetId();
             $this->data['netParentName'] = $a->netParent->ciName;
             $this->data['netParentLink'] =
                 "/osomf/asset/view/".$a->netParent->getAssetId();
@@ -57,7 +57,7 @@ class asset extends ControllerBase
         }
 
         if ($a->phyParent instanceof AssetModel) {
-            $this->data['phyParent'] = 1;
+            $this->data['phyParent'] = $a->phyParent->getAssetId();
             $this->data['phyParentName'] = $a->phyParent->ciName;
             $this->data['phyParentLink'] =
                 "/osomf/asset/view/".$a->phyParent->getAssetId();
@@ -67,7 +67,7 @@ class asset extends ControllerBase
 
         // project info
         if ($a->project instanceof \osomf\models\ProjectModel) {
-            $this->data['proj'] = 1;
+            $this->data['proj'] = $a->project->getProjId();
             $this->data['projName'] = $a->project->projName;
             $this->data['projLink'] =
                 "/osomf/project/view/".$a->project->getProjId();
@@ -78,8 +78,8 @@ class asset extends ControllerBase
 
         //location info
         if ($a->loc instanceof \osomf\models\LocationModel) {
-            $this->data['loc'] = 1;
-            $this->data['locName'] = $a->loc->locName;
+            $this->data['loc'] = $a->loc->getLocId();
+            $this->data['locName'] = $a->loc->getLocName();
             $this->data['locLink'] =
                 "/osomf/location/view/".$a->loc->getLocId();
         } else {
@@ -103,7 +103,7 @@ class asset extends ControllerBase
         $this->_ciid = $params[0];
         
         $this->_pullAssetInfo();
-
+        //echo "<pre>".print_r($this->data, true)."</pre>";
     }
 
     public function display()
@@ -150,7 +150,12 @@ class asset extends ControllerBase
         ) {
             $a->updatePhyParent($this->_postedData['phyId']);
         }
-        $a->updateNetParent($this->_postedData['netId']);
+        if (
+            is_numeric($this->_postedData['netId'])
+            && $this->_postedData['netId'] > 0
+        ) {
+            $a->updateNetParent($this->_postedData['netId']);
+        }
         $a->updateLoc($this->_postedData['locId']);
         $a->save();
     }
@@ -182,6 +187,8 @@ class asset extends ControllerBase
         $this->_pullAssetInfo();
         $this->data['submitButtonText'] = "update";
         $this->data['pageTitle'] = "Edit Asset Information";
+        $this->data['editAsset'] = true;
+        $this->data['ciid'] = $assetId;
         //echo "<pre>".print_r($this->data, true)."</pre>";
     }
 

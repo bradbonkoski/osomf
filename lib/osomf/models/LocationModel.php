@@ -18,12 +18,15 @@ use osomf\models\UserGroup;
 class LocationModel extends DB
 {
     private $_locId;
-    public $locName;
-    public $locDesc;
+    private $_locName;
+    private $_locDesc;
     private $_ownerType;
     public $locOwner; //maps to the UserModel Class
     private $_locOwnerId;
-    public $locAddr;
+    private $_locAddr;
+
+    private $_history;
+    private $_changes;
 
     public function __construct($conn)
     {
@@ -33,14 +36,76 @@ class LocationModel extends DB
         parent::__construct("omf_assets", $conn);
 
         $this->_locId = -1;
-        $this->locName = '';
-        $this->locDesc = '';
+        $this->_locName = '';
+        $this->_locDesc = '';
         $this->_ownerType = self::OWNER_USER;
-        $this->locOwner = null;
+        $this->_locOwner = null;
         $this->_locAddr = '';
 
         $this->_table = "location";
         $this->_tableKey = "locId";
+        $this->_history = array();
+        $this->_changes = array();
+    }
+
+    public function getLocName()
+    {
+        return $this->_locName;
+    }
+
+    public function setLocName($val)
+    {
+        if (
+            strlen($this->_locName) > 0
+            && $this->_locName != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Location Name',
+                'orig' => $this->_locName,
+                'new' => $val
+            );
+        }
+        $this->_locName = $val;
+    }
+
+    public function getLocDesc()
+    {
+        return $this->_locDesc;
+    }
+
+    public function setLocDesc($val)
+    {
+        if (
+            strlen($this->_locDesc) > 0
+            && $this->_locDesc != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Location Description',
+                'orig' => $this->_locDesc,
+                'new' => $val,
+            );
+        }
+        $this->_locDesc = $val;
+    }
+
+    public function getLocAddr()
+    {
+        return $this->_locAddr;
+    }
+
+    public function setLocAddr($val)
+    {
+        if (
+            strlen($this->_locAddr) > 0
+            && $this->_locAddr != $val
+        ) {
+            $this->_history[] = array(
+                'col' => "Location Address",
+                'orig' => $this->_locAddr,
+                'new' => $val,
+            );
+        }
+        $this->_locAddr = $val;
     }
 
     private function _validate()
@@ -49,18 +114,18 @@ class LocationModel extends DB
             '_locId' => array(
                 Validator::IS_NUM => true,
             ),
-            'locName' => array(
+            '_locName' => array(
                 Validator::IS_STRING => true,
                 Validator::STRLEN => array('min' => 1, 'max' => 128),
             ),
-            'locDesc' => array(
+            '_locDesc' => array(
                 Validator::IS_STRING => true,
                 Validator::STRLEN => array('min' => 0, 'max' => 2056),
             ),
             '_locOwnerId' => array(
                 Validator::IS_NUM => true,
             ),
-            'locAddr' => array(
+            '_locAddr' => array(
                 Validator::IS_STRING => true,
                 Validator::STRLEN => array('min' => 1, 'max' => 2056),
                 //Validator::IS_EMAIL => true,
@@ -140,7 +205,7 @@ class LocationModel extends DB
     public function fetchLocInfo($locId)
     {
         if (($locId <= 0 ) || !is_numeric($locId)) {
-            throw new \Exception("Invalid User Id - ".__FILE__." : ".__LINE__);
+            throw new \Exception("Invalid Location Id - ".__FILE__." : ".__LINE__);
         }
 
         $sql = "select * from location where locId = ?";
@@ -149,12 +214,34 @@ class LocationModel extends DB
         $row = $stmt->fetch();
         //print_r($row);
         $this->_locId = $row['locId'];
-        $this->locName = $row['locName'];
-        $this->locDesc = $row['locDesc'];
+        $this->_locName = $row['locName'];
+        $this->_locDesc = $row['locDesc'];
         $this->_ownerType = $row['locOwnerType'];
-        $this->locAddr = $row['locAddr'];
+        $this->_locAddr = $row['locAddr'];
         $this->_locOwnerId = $row['locOwner'];
         $this->_loadLocOwner();
+        $this->_loadHistory();
+    }
+
+    private function _loadHistory()
+    {
+        $sql = "select * from locationHistory where locId = ? order by mtime";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($this->_locId));
+        $rows = $stmt->fetchAll();
+        foreach($rows as $r) {
+            $this->_changes[] = array(
+                'time' => $r['mtime'],
+                'user' => $r['mUser'],
+                'deltas' => unserialize($r['changes'])
+            );
+        }
+
+    }
+
+    public function getChanges()
+    {
+        return $this->_changes;
     }
 
     public function save()
@@ -173,11 +260,11 @@ class LocationModel extends DB
             $stmt = $this->_db->prepare($sql);
             $stmt->execute(
                 array(
-                    $this->locName,
-                    $this->locDesc,
+                    $this->_locName,
+                    $this->_locDesc,
                     $this->_ownerType,
                     $this->_locOwnerId,
-                    $this->locAddr,
+                    $this->_locAddr,
                 )
             );
         } else {
@@ -187,14 +274,27 @@ class LocationModel extends DB
             $stmt = $this->_db->prepare($sql);
             $stmt->execute(
                 array(
-                    $this->locName,
-                    $this->locDesc,
+                    $this->_locName,
+                    $this->_locDesc,
                     $this->_ownerType,
                     $this->_locOwnerId,
-                    $this->locAddr,
+                    $this->_locAddr,
                     $this->_locId,
                 )
             );
+            if (count($this->_history) > 0 ) {
+                $sql = "insert into locationHistory set locId = ?,
+                mUser = ?, changes = ?";
+                $stmt = $this->_db->prepare($sql);
+                $stmt->execute(
+                    array(
+                        $this->_locId,
+                        1,
+                        serialize($this->_history),
+                    )
+                );
+            }
+            echo "<pre>".print_r($this->_history, true)."</pre>";
 
         }
     }

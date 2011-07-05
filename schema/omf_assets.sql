@@ -15,10 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-drop database if exists omf_assets;
-create database if not exists omf_assets;
-use omf_assets;
-
 --
 -- Table structure for table `Attributes`
 --
@@ -45,7 +41,7 @@ CREATE TABLE `ci` (
   `ciid` int(11) NOT NULL AUTO_INCREMENT,
   `ciName` varchar(64) NOT NULL,
   `ciDesc` text,
-  `ownerType` enum('USER','GROUP') not null default 'USER',
+  `ownerType` enum('USER','GROUP') NOT NULL DEFAULT 'USER',
   `ownerId` int(11) NOT NULL,
   `projectId` int(11) NOT NULL,
   `statusId` int(11) NOT NULL,
@@ -60,7 +56,7 @@ CREATE TABLE `ci` (
   `acquiredDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `disposalDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ciid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +116,7 @@ CREATE TABLE `ciStatus` (
   `statusName` varchar(32) NOT NULL,
   `statusDesc` text,
   PRIMARY KEY (`ciStatusId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +131,7 @@ CREATE TABLE `ciType` (
   `typeName` varchar(32) NOT NULL,
   `typeDesc` text,
   PRIMARY KEY (`ciTypeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,10 +179,25 @@ CREATE TABLE `location` (
   `locId` int(11) NOT NULL AUTO_INCREMENT,
   `locName` varchar(128) NOT NULL,
   `locDesc` text,
-  `locOwnerType` enum('USER','GROUP') not null default 'USER',
+  `locOwnerType` enum('USER','GROUP') NOT NULL DEFAULT 'USER',
   `locOwner` int(11) NOT NULL,
   `locAddr` text,
   PRIMARY KEY (`locId`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `locationHistory`
+--
+
+DROP TABLE IF EXISTS `locationHistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `locationHistory` (
+  `locId` int(11) NOT NULL,
+  `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `mUser` int(11) NOT NULL,
+  `changes` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -202,9 +213,9 @@ CREATE TABLE `projects` (
   `projName` varchar(128) NOT NULL,
   `projDesc` text,
   `projOwner` int(11) NOT NULL,
-  `projOwnerType` enum('USER','GROUP') not null default 'USER',
+  `projOwnerType` enum('USER','GROUP') NOT NULL DEFAULT 'USER',
   PRIMARY KEY (`projId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,4 +242,4 @@ CREATE TABLE `services` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-13 10:43:30
+-- Dump completed on 2011-07-05 12:59:33
