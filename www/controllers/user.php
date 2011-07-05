@@ -77,6 +77,13 @@ class user extends ControllerBase
         $this->ac = true;
         $str = explode('=', $params);
         $u = new UserModel(UserModel::RO);
+
+        if ($this->_test) {
+            return json_encode($u->autocomplete("uname", $str[1]));
+        }
+
+        // @codeCoverageIgnoreStart
         echo json_encode($u->autocomplete("uname", $str[1]));
+        // @codeCoverageIgnoreEnd
     }
 }

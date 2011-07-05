@@ -17,16 +17,6 @@ require_once 'www/controllers/user.php';
 class UserControllerTest extends PHPUnit_Framework_TestCase
 {
 
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /**
      * @test
      */
@@ -40,5 +30,37 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("bradley@ymail.com", $c->data['email']);
         $this->assertEquals("800-698-5555", $c->data['phone']);
         
+    }
+
+    /**
+     * @test
+     */
+    public function UserAutoComplete()
+    {
+        $u = new user("", "autocomplete");
+        $u->setTest();
+        $ret = $u->autocomplete('term=br');
+        //print_r($ret);
+        $data = json_decode($ret);
+        //print_r($data[0]);
+        $this->assertEquals(3, $data[0]->id);
+        $this->assertEquals('brad2', $data[0]->value);
+
+        $this->assertEquals(1, $data[1]->id);
+        $this->assertEquals('bradb', $data[1]->value);
+    }
+
+    /**
+     * @test
+     */
+    public function UserHome()
+    {
+        $u = new user('','home');
+        $u->setTest();
+        $u->home();
+        //print_r($u->data);
+        $this->assertTrue(is_array($u->data['users']));
+        $this->assertEquals('1', $u->data['users'][0]['userId']);
+        $this->assertEquals('bradb', $u->data['users'][0]['uname']);
     }
 }
