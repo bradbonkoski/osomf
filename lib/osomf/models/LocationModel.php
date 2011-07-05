@@ -205,7 +205,9 @@ class LocationModel extends DB
     public function fetchLocInfo($locId)
     {
         if (($locId <= 0 ) || !is_numeric($locId)) {
-            throw new \Exception("Invalid Location Id - ".__FILE__." : ".__LINE__);
+            throw new \Exception(
+                "Invalid Location Id - ".__FILE__." : ".__LINE__
+            );
         }
 
         $sql = "select * from location where locId = ?";
@@ -229,7 +231,7 @@ class LocationModel extends DB
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($this->_locId));
         $rows = $stmt->fetchAll();
-        foreach($rows as $r) {
+        foreach ($rows as $r) {
             $this->_changes[] = array(
                 'time' => $r['mtime'],
                 'user' => $r['mUser'],
@@ -255,7 +257,8 @@ class LocationModel extends DB
 
         if ($this->_locId < 0 ) {
             // new record
-            $sql = "insert into location (locName, locDesc, locOwnerType, locOwner, locAddr)
+            $sql = "insert into location (locName, locDesc, locOwnerType,
+                locOwner, locAddr)
                 values (?,?,?,?,?)";
             $stmt = $this->_db->prepare($sql);
             $stmt->execute(

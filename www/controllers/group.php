@@ -50,7 +50,7 @@ class group extends ControllerBase
         $this->data['phone'] = $ug->phone;
         $this->data['pager'] = $ug->pager;
 
-        foreach($ug->users as $u) {
+        foreach ($ug->users as $u) {
             $arr = array(
                 'uid' => $u->getUserId(),
                 'uname' => $u->uname,

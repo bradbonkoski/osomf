@@ -121,7 +121,10 @@ class asset extends ControllerBase
         $a = new AssetModel(AssetModel::RW);
         $a->ciName = $this->_postedData['ciName'];
         $a->ciDesc = $this->_postedData['ciDesc'];
-        $a->updateOwner($this->_postedData['ownerTypeVal'], $this->_postedData['ownerId']);
+        $a->updateOwner(
+            $this->_postedData['ownerTypeVal'],
+            $this->_postedData['ownerId']
+        );
         $a->updateProject($this->_postedData['projId']);
         $a->updateStatus($this->_postedData['statusId']);
         $a->updateType($this->_postedData['typeId']);
@@ -140,7 +143,10 @@ class asset extends ControllerBase
         $a->ciName = $this->_postedData['ciName'];
         $a->ciDesc = $this->_postedData['ciDesc'];
         $a->ciSerialNum = $this->_postedData['ciSerial'];
-        $a->updateOwner($this->_postedData['ownerTypeVal'], $this->_postedData['ownerId']);
+        $a->updateOwner(
+            $this->_postedData['ownerTypeVal'],
+            $this->_postedData['ownerId']
+        );
         $a->updateProject($this->_postedData['projId']);
         $a->updateStatus($this->_postedData['statusId']);
         $a->updateType($this->_postedData['typeId']);
