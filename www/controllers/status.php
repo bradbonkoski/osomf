@@ -18,6 +18,8 @@ class status extends ControllerBase
         if ($this->_test) {
             return json_encode($s->autocomplete("statusName", $str[1]));
         }
+        // @codeCoverageIgnoreStart
         echo json_encode($s->autocomplete("statusName", $str[1]));
+        // @codeCoverageIgnoreEnd
     }
 }
