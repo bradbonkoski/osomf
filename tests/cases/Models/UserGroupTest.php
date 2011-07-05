@@ -57,8 +57,8 @@ class UserGroupTest extends PHPUnit_Framework_TestCase
         $ret = $u->getGroupsForUser(1);
         //print_r($ret);
         $this->assertEquals(2, count($ret));
-        $this->assertEquals(4, count($ret[2]));
-        $this->assertEquals(4, count($ret[1]));
+        $this->assertEquals(5, count($ret[2]));
+        $this->assertEquals(5, count($ret[1]));
 
     }
 
