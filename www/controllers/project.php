@@ -49,6 +49,13 @@ class project extends ControllerBase
         $str = explode('=', $params);
         //error_log("Query String is: {$str[1]}");
         $p = new ProjectModel(ProjectModel::RO);
+
+        if ($this->_test) {
+            return json_encode($p->autocomplete("projName", $str[1]));
+        }
+
+        // @codeCoverageIgnoreStart
         echo json_encode($p->autocomplete("projName", $str[1]));
+        // @codeCoverageIgnoreEnd
     }
 }

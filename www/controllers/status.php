@@ -15,6 +15,7 @@ class status extends ControllerBase
         $str = explode('=', $params);
         //error_log("Query String is: {$str[1]}");
         $s = new CiStatus(CiStatus::RO);
+
         if ($this->_test) {
             return json_encode($s->autocomplete("statusName", $str[1]));
         }

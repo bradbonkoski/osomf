@@ -1,2 +1,2 @@
-[05-Jul-2011 16:05:24] select ciStatusId, statusName from ciStatus
-            where upper(statusName) like ?
+[05-Jul-2011 16:21:34] select projId, projName from projects
+            where upper(projName) like ?
