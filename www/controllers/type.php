@@ -15,6 +15,9 @@ class type extends ControllerBase
         $str = explode('=', $params);
         //error_log("Query String is: {$str[1]}");
         $s = new CiType(CiType::RO);
+        if ($this->_test) {
+            return json_encode($s->autocomplete("typeName", $str[1]));
+        }
         echo json_encode($s->autocomplete("typeName", $str[1]));
     }
 }
