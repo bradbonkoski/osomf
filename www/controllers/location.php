@@ -25,7 +25,7 @@ class location extends ControllerBase
         $l = new LocationModel(LocationModel::RO);
         $l->fetchLocInfo($this->_locId);
         //echo "User: $u\n";
-        $this->data['title'] = "Location information for: ".$l->locName;
+        $this->data['title'] = "Location information for: ".$l->getLocName();
         $this->data['locName'] = $l->getLocName();
         $this->data['locDesc'] = $l->getLocDesc();
         $this->data['locAddr'] = $l->getLocAddr();
@@ -94,7 +94,14 @@ class location extends ControllerBase
         $str = explode('=', $params);
         //error_log("Query String is: {$str[1]}");
         $l = new LocationModel(LocationModel::RO);
+
+        if ($this->_test) {
+            return json_encode($l->autocomplete("locName", $str[1]));
+        }
+
+        // @codeCoverageIgnoreStart
         echo json_encode($l->autocomplete("locName", $str[1]));
+        // @codeCoverageIgnoreEnd
     }
 
 }

@@ -1,2 +1,2 @@
-[05-Jul-2011 16:21:34] select projId, projName from projects
-            where upper(projName) like ?
+[05-Jul-2011 16:28:52] select locId, locName from location
+            where upper(locName) like ?
