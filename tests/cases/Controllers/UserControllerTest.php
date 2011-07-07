@@ -57,7 +57,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
     {
         $u = new user('','home');
         $u->setTest();
-        $u->home();
+        $u->home(array());
         //print_r($u->data);
         $this->assertTrue(is_array($u->data['users']));
         $this->assertEquals('1', $u->data['users'][0]['userId']);
