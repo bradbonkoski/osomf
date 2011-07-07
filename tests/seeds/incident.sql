@@ -14,3 +14,27 @@ insert into status set statusId=3, statusName='RESOLVED', statusDesc='Incident i
 insert into status set statusId=4, statusName='PM_DONE', statusDesc='Post Mortem Done, waiting for Remediation Items', orderNum=4;
 insert into status set statusId=5, statusName='REM_OVERDUE', statusDesc='Remediation Now Overdue', orderNum=5;
 insert into status set statusId=6, statusName='CLOSED', statusDesc='Resolved, Remediation Clear, all done', orderNum=6;
+
+-- Some Incident Data
+insert into incident set
+    incidentId = 1,
+    title = 'Test Incident #1',
+    statusId = 1,
+    start_time = '2010-02-01 11:00:00',
+    createdBy = 1,
+    severity = 1,
+    impact = 'Not sure on the impact',
+    revImpact = 'unknown',
+    description = 'cat pulled out the power cord',
+    detect_time = '2010-02-01 10:55:00';
+
+
+
+-- test impacted Data
+insert into impacted set incidentId = 1, impactType = 'asset', impactValue=1, impactDesc = 'Machine is down!';
+insert into impacted set incidentId = 1, impactType = 'project', impactValue = 1, impactDesc='Users unable to play';
+
+
+-- test worklog data
+insert into worklog set workLogId=1, incidentId=1, userId=1, mtime=NOW(), wlType='WORKLOG', data='some worklog entry';
+

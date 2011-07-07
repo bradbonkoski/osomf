@@ -23,11 +23,15 @@ DROP TABLE IF EXISTS `impacted`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `impacted` (
+  `impactId` int(11) NOT NULL AUTO_INCREMENT,
   `incidentId` int(11) NOT NULL,
   `impactType` enum('asset','project','cmr') NOT NULL,
   `impactValue` int(11) NOT NULL,
-  `impactDesc` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `impactDesc` text,
+  `impactSeverity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`impactId`),
+  KEY `incidentId` (`incidentId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +42,7 @@ DROP TABLE IF EXISTS `incident`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `incident` (
-  `incident_id` int(11) NOT NULL AUTO_INCREMENT,
+  `incidentId` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(128) NOT NULL,
   `statusId` int(11) NOT NULL,
   `start_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -54,7 +58,27 @@ CREATE TABLE `incident` (
   `detect_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `mtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`incident_id`)
+  PRIMARY KEY (`incidentId`),
+  KEY `severity` (`severity`),
+  KEY `statusId` (`statusId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `incidentHistory`
+--
+
+DROP TABLE IF EXISTS `incidentHistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `incidentHistory` (
+  `histId` int(11) NOT NULL AUTO_INCREMENT,
+  `incidentId` int(11) NOT NULL,
+  `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `mUser` int(11) NOT NULL,
+  `changes` text NOT NULL,
+  PRIMARY KEY (`histId`),
+  KEY `incidentId` (`incidentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -70,7 +94,7 @@ CREATE TABLE `severity` (
   `sevName` varchar(32) NOT NULL,
   `sevDesc` text,
   PRIMARY KEY (`sevId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +110,7 @@ CREATE TABLE `status` (
   `statusDesc` text,
   `orderNum` int(11) DEFAULT NULL,
   PRIMARY KEY (`statusId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,8 +127,9 @@ CREATE TABLE `worklog` (
   `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `wlType` enum('WORKLOG','STATUS','UPDATE') NOT NULL,
   `data` text,
-  PRIMARY KEY (`workLogId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`workLogId`),
+  KEY `incidentId` (`incidentId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -116,4 +141,4 @@ CREATE TABLE `worklog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-05 14:55:40
+-- Dump completed on 2011-07-07 14:19:53
