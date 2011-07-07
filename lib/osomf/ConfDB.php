@@ -45,6 +45,11 @@ class ConfDB extends Conf
         return $this->_data['omf_assets'];
     }
 
+    public function getAllIncident()
+    {
+        return $this->_data['omf_incident'];
+    }
+
     public function getChangeValue($key)
     {
         return $this->_data['change'][$key];

@@ -17,7 +17,7 @@ class DB extends \PDO
     const TYPE_CHANGE = "change";
     const TYPE_USER = "omf_users";
     const TYPE_PROBLEM = "problem";
-    const TYPE_INCIDENT = "incident";
+    const TYPE_INCIDENT = "omf_incident";
     const TYPE_ASSET = "omf_assets";
     
     private $_validTypes = array(
@@ -78,6 +78,14 @@ class DB extends \PDO
             case self::TYPE_PROBLEM:
                 break;
             case self::TYPE_INCIDENT:
+                $conf = $c->getAllIncident();
+                $dsn = $this->_buildDSN(
+                    $conf['db_name'],
+                    $conf[$hostIdx],
+                    $conf[$portIdx]
+                );
+                $user = $conf[$conn."_user"];
+                $pass = $conf[$conn."_pass"];
                 break;
             case self::TYPE_ASSET:
                 $conf = $c->getAllAsset();
@@ -129,6 +137,19 @@ class DB extends \PDO
             //$arr[$r[$this->_tableKey]] = $r[$colName];
         }
         return $arr;
+    }
+
+    public function validateKey($val)
+    {
+        $sql = "select count(*) as cnt from {$this->_tabl}
+            where {$this->_tableKey} = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($val));
+        $row = $stmt->fetch();
+        if ($row['cnt'] > 0 ) {
+            return true;
+        }
+        return false; //implicit else
     }
     
 }
