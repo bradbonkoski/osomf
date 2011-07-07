@@ -1,2 +1,0 @@
-[05-Jul-2011 16:36:27] select userId, uname from users
-            where upper(uname) like ?

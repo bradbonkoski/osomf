@@ -8,7 +8,7 @@ class Routes
     private $_controller;
     private $_action;
     private $_params;
-
+    public $isWS;
 
 
     public function __construct($url = "") 
@@ -16,11 +16,17 @@ class Routes
         $this->_controller = "";
         $this->_action = "";
         $this->_params = array();
+        $this->isWS = false;
         if (strlen($url) > 0 ) {
             $routeUri = rtrim($url, '/');
             $data = explode('/', $routeUri);
             //print_r($data);
             if (isset($data[2])) {
+                if ($data[2] == 'ws') {
+                    //reroute for web service actions;
+                    $this->isWS = true;
+                    return $this->_routeWS($data);
+                }
                 $this->_controller = $data[2];
             }
             if (isset($data[3])) {
@@ -39,6 +45,37 @@ class Routes
                     }
             }
         }
+    }
+
+    private function _routeWS($data)
+    {
+        /**
+         * format should be something like this:
+         * [1] -> host/uri
+         * [2] -> 'ws' --indicates it is a web service
+         * [3] -> controller
+         * [4] -> action
+         * [5..*] -> params
+         */
+        print_r($data);
+        if (isset($data[3])) {
+            $this->_controller = $data[3];
+        } else {
+            //todo some error logic!
+        }
+
+        if (isset($data[4])) {
+            $this->_action = $data[4];
+        } else {
+            //todo some error logic
+        }
+
+        if (count($data) >= 6 ) {
+            for ($i=5; $i<count($data); $i++) {
+                $this->_params[] = $data[$i];
+            }
+        }
+
     }
 
     public function getController() 

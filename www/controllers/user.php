@@ -19,12 +19,18 @@ class user extends ControllerBase
 
     }
 
-    public function home()
+    public function home( $params )
     {
         $this->setAction("home");
         $u = new UserModel(UserModel::RO);
         $rows = $u->getAllUsers();
         $this->data['users'] = $rows;
+        
+        if (array_key_exists("format", $params)) {
+            if ($params['format'] == 'xml') {
+                $this->setAction("homeXml");
+            }
+        }
     }
 
     public function view( $params )
@@ -32,17 +38,17 @@ class user extends ControllerBase
         //echo "<pre>".print_r($_COOKIE, true)."</pre>";
         $this->setAction("view");
         //echo "Params are: $params\n";
-        $parms = $this->parseParams($params);
+        $params = $this->parseParams($params);
         //echo "<pre>".print_r($this->parseParams($params), true)."</pre>";
-        if (array_key_exists("format", $parms)) {
-            if ($parms['format'] == 'xml') {
-                //swap out the view for an XML one...
+        if (array_key_exists("format", $params)) {
+            if ($params['format'] == 'xml') {
+                $this->setAction("viewXml");
             }
         }
-        $userId = $parms[0];
+        $userId = $params[0];
         if (!is_numeric($userId)) {
             //echo "ERROR";
-            return $this->home();
+            return $this->home($params);
         }
 
         $u = new UserModel(UserModel::RO);
@@ -57,6 +63,7 @@ class user extends ControllerBase
             $this->data['email'] = $u->email;
             $this->data['phone'] = $u->phone;
             $this->data['pager'] = $u->pager;
+            $this->data['userid'] = $u->getUserId();
 
             //Get the User's User Group
             $ug = new UserGroup(UserGroup::RO);

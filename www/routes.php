@@ -23,8 +23,14 @@ $route = new Routes($_SERVER['REQUEST_URI']);
 //Load the controller class and get the party started!
 
 $cont = $route->getController();
-if (file_exists(PATH."/www/controllers/{$cont}.php")) {
-    require("www/controllers/{$cont}.php");
+if ($route->isWS) {
+    $prefix = "ws/";
+} else {
+    $prefix = "www/controllers/";
+}
+
+if (file_exists(PATH."/{$prefix}{$cont}.php")) {
+    require("{$prefix}{$cont}.php");
     $controller = new $cont();
 
     if ((int)method_exists($controller, $route->getAction())) {
@@ -37,6 +43,7 @@ if (file_exists(PATH."/www/controllers/{$cont}.php")) {
         echo "ERROR!<br/>";
     }
 } else {
+    echo "PATH: ".PATH."{$prefix}{$cont}.php\n";
     //default to main controller
     require("www/controllers/main.php");
     $controller = new main("main", "index");

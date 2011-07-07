@@ -1,0 +1,15 @@
+<user id="{{ userid }}">
+    <username>{{ username }}</username>
+    <fullname>{{ fullname }}</fullname>
+    <email>{{ email }}</email>
+    <phone>{{ phone }}</phone>
+    <pager>{{ pager }}</pager>
+    <groups>
+        {% for gid, group in groups %}
+        <group>
+            <name>{{ group.GroupName }}</name>
+            <status>{{ group.status }}</status>
+        </group>
+        {% endfor %}
+    </groups>
+</user>

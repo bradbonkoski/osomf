@@ -48,6 +48,7 @@ class Template
         $this->_variables['nav'] = $nav->getMenu();
 
         //echo "<pre>".print_r($this->_variables, true)."</pre>";
+        //echo $this->_controller."/".$this->_action.".phtml<br/>";
         $template = $this->_twig->loadTemplate(
             $this->_controller."/".$this->_action.".phtml"
         );

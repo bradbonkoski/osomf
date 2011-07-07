@@ -71,4 +71,17 @@ class RoutingLbTest extends PHPUnit_Framework_TestCase
         echo $rl->getParams();
         echo "\n";
     }
+
+    /**
+     * @return closure
+     * @test
+     * @group routeWS
+     */
+    public function getReqWebService()
+    {
+        $rl = new Routes("localhost/osomf/ws/user/view/1");
+        echo "Controller is: ".$rl->getController()."\n";
+        echo "Action is: ".$rl->getAction()."\n";
+        echo "Params: ".$rl->getParams()."\n";
+    }
 }

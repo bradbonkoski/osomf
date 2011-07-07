@@ -1,0 +1,11 @@
+<users>
+    {% for u in users %}
+    <user>
+        <username>{{ u.uname }}</username>
+        <fullname>{{ u.fname }} {{ u.lname }}</fullname>
+        <email>{{ u.email }}</email>
+        <phone>{{ u.phone }}</phone>
+        <pager>{{ u.pager }}</pager>
+    </user>
+    {% endfor %}
+</users>

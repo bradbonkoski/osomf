@@ -84,6 +84,9 @@ class ControllerBase
         // in the instance where we are unit testing controllers
         if (!$this->_test) {
             if (!$this->ac) {
+                if (preg_match("/xml/i", $this->_action)) {
+                    header ("Content-Type:text/xml");
+                }
                 $this->_template = new Template($this->_controller, $this->_action);
                 foreach ($this->data as $k => $v) {
                     $this->_template->set($k, $v);
