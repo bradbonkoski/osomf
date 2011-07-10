@@ -172,6 +172,8 @@ class IncidentModel extends DB
         $this->_incidentId = $incidentId;
         $this->_title = $row['title'];
         $this->_statusId = $row['statusId'];
+        $this->status = new IncidentStatus(self::RO);
+        $this->status->loadStatus($this->_statusId);
         $this->_startTime = $row['start_time'];
         $this->_createdBy = $row['createdBy'];
         $this->createdByUser = new UserModel(self::RO);

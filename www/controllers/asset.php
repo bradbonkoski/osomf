@@ -103,6 +103,9 @@ class asset extends ControllerBase
         $this->_ciid = $params[0];
         
         $this->_pullAssetInfo();
+        if (count($this->data['err']) > 0 ) {
+            $this->redirect('asset', 'view');
+        }
         //echo "<pre>".print_r($this->data, true)."</pre>";
     }
 

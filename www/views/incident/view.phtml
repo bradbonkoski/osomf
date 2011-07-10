@@ -1,15 +1,99 @@
 {% extends "layout.phtml" %}
 
 {% block content %}
-<h1>I am in the Incident-->View Template</h1>
+
+        <fieldset>
+            <legend>incident information</legend>
+
+            <dl>
+                <dt><label>title</label></dt>
+                <dd>{{ incidentTitle }}</dd>
+            </dl>
+
+            <dl>
+                <dt><label>status/Severity</label></dt>
+                <dd>{{ status }} / {{ severity }}</dd>
+            </dl>
+
+            <dl>
+                <dt><label>Description</label></dt>
+                <dd>{{ desc }}</dd>
+            </dl>
+
+            <dl>
+                <dt><label>Impact</label></dt>
+                <dd>{{ impact }}</dd>
+            </dl>
+
+            <dl>
+                <dt><label>Revenue Impact</label></dt>
+                <dd>{{ revImpact }}</dd>
+            </dl>
+        </fieldset>
+
+    <div class="colLeft">
+        <fieldset>
+            <legend>timeline</legend>
+            <dl>
+                <dt><label>Detect Time</label></dt>
+                <dd></dd>
+            </dl>
+            <dl>
+                <dt><label>start time</label></dt>
+                <dd></dd>
+            </dl>
+            <dl>
+                <dt><label>create time</label></dt>
+                <dd></dd>
+            </dl>
+            <dl>
+                <dt><label>last modified</label></dt>
+                <dd></dd>
+            </dl>
+        </fieldset>
+    </div>
+    <div class="colRight">
+        <fieldset>
+            <legend>Resolution</legend>
+            <dl>
+                <dt><label>Resolve Time</label></dt>
+                <dd></dd>
+            </dl>
+            <dl>
+                <dt><label>Resolve Steps</label></dt>
+                <dd></dd>
+            </dl>
+            <dl>
+                <dt><label>Responsible Project</label></dt>
+                <dd></dd>
+            </dl>
+        </fieldset>
+    </div>
+
+    <fieldset>
+        <legend>impacts</legend>
+        <span id="impactAddModal">Add Impact</span>
+    </fieldset>
+
+     {% include 'modals/incidentImpact.phtml' %}
+{% endblock %}
 
 
-<?php echo $title; ?>
+    
+{% block js %}
+    <script type="text/javascript" src="/osomf/www/js/jquery.simplemodal.1.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function ($) {
+	        // Load dialog on page load
+	        //$('#basic-modal-content').modal();
 
+	        // Load dialog on click
+	        $('#impactAddModal').click(function (e) {
+		        $('#AddImpactModal').modal();
 
-<?php foreach($testArray as $a) : ?>
-<li><?php echo $a; ?></li>
-<?php endforeach; ?>
-
+		        return false;
+	        });
+        });
+    </script>
 {% endblock %}
 
