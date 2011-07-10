@@ -125,7 +125,7 @@ CREATE TABLE `worklog` (
   `incidentId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
   `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `wlType` enum('WORKLOG','STATUS','UPDATE') NOT NULL,
+  `wlType` enum('WORKLOG','STATUS','SOCIAL') NOT NULL,
   `data` text,
   PRIMARY KEY (`workLogId`),
   KEY `incidentId` (`incidentId`)

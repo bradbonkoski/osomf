@@ -200,4 +200,17 @@ class IncidentModel extends DB
         $this->_ctime = $row['ctime'];
         $this->_mtime = $row['mtime'];
     }
+
+    public function listHomeIncidents()
+    {
+        $sql = "select incidentId, title, st.statusName as status,
+            se.sevName as severity, start_time
+            from incident i join status st on st.statusId = i.statusId
+            join severity se on se.sevId = i.severity
+            where i.statusId in (1,2,3)";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
 }

@@ -91,6 +91,7 @@ span.error {
 fieldset {
     margin-right: 2em;
     margin-left: 2em;
+    margin-top: 1.5em;
     width: 96%;
     border:  1px solid #b0c4de;
 }
@@ -100,6 +101,14 @@ fieldset legend {
     font-size: 10px;
     font-family: Monospace;
 }
+
+fieldset.container {
+    border:0px;
+    padding:0px;
+    margin:0px;
+    width: 100%;
+}
+
 h2.pageHeading {
     margin-top: 2em;
     margin-left: 2em;
