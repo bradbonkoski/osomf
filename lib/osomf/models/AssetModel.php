@@ -429,7 +429,6 @@ class AssetModel extends DB
             error_log(print_r($data, true));
             $stmt = $this->_db->prepare($sql);
             if (!$stmt->execute($data)) {
-                error_log("Something amis!");
                 $arr = $stmt->errorInfo();
                 error_log(print_r($arr, true));
             }

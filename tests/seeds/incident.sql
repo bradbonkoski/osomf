@@ -37,4 +37,5 @@ insert into impacted set incidentId = 1, impactType = 'project', impactValue = 1
 
 -- test worklog data
 insert into worklog set workLogId=1, incidentId=1, userId=1, mtime=NOW(), wlType='WORKLOG', data='some worklog entry';
-
+insert into worklog set worklogId=2, incidentId=2, userId=1, mtime='2011-07-11 19:11:36', wlType='STATUS',
+data='a:3:{i:0;s:4:"OPEN";i:1;s:9:"ESCALATED";i:2;s:17:"Testing thats all";}';

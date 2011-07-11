@@ -141,7 +141,7 @@ class DB extends \PDO
 
     public function validateKey($val)
     {
-        $sql = "select count(*) as cnt from {$this->_tabl}
+        $sql = "select count(*) as cnt from {$this->_table}
             where {$this->_tableKey} = ?";
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($val));
