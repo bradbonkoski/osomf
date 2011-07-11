@@ -30,6 +30,7 @@ class ControllerBase
             $this->data['baseuri'] = "localhost";
         }
         $this->ac = false;
+        $this->data['err'] = array();
     }
 
     protected function _addError($msg)
@@ -66,6 +67,16 @@ class ControllerBase
             }
         }
         //var_dump($ret);
+        return $ret;
+    }
+
+    public function parseGetParams($data) {
+        $ret = array();
+        $arr = explode("&", $data);
+        foreach ($arr as $a) {
+            $tmp = explode("=", $a);
+            $ret[$tmp[0]] = $tmp[1];
+        }
         return $ret;
     }
 

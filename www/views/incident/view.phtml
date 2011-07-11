@@ -1,7 +1,7 @@
 {% extends "layout.phtml" %}
 
 {% block content %}
-
+        <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
         <fieldset>
             <legend>incident information</legend>
 
@@ -84,6 +84,26 @@
 
     <fieldset>
         <legend>Worklog <a id="worklogAddModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
+        <table class="baseTable" id="incidentWorklogTable">
+            <tr>
+                <th>user</th>
+                <th>time</th>
+                <th>type</th>
+                <th>data</th>
+            </tr>
+            {% for wl in worklogs %}
+            <tr>
+                <td>{{ wl.user }}</td>
+                <td>{{ wl.mtime }}</td>
+                <td>{{ wl.type }}</td>
+                {% if wl.type == 'STATUS' %}
+                    <td>[orig] {{ wl.data[0] }} [new] {{ wl.data[1] }} [Reason] {{ wl.data[2] }}</td>
+                {% else %}
+                <td>{{ wl.data }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
     </fieldset>
 
      {% include 'modals/incidentImpact.phtml' %}
@@ -94,21 +114,6 @@
     
 {% block js %}
     <script type="text/javascript" src="/osomf/www/js/jquery.simplemodal.1.4.1.min.js"></script>
-    <script type="text/javascript">
-        $(function ($) {
-	        // Load dialog on page load
-	        //$('#basic-modal-content').modal();
-
-	        // Load dialog on click
-	        $('#impactAddModal').click(function (e) {
-		        $('#AddImpactModal').modal();
-
-		        return false;
-	        });
-            $('#worklogAddModal').click(function(e) {
-                $('#AddWorklogModal').modal();
-            });
-        });
-    </script>
+    <script type="text/javascript" src="/osomf/www/js/incident.js"></script>
 {% endblock %}
 

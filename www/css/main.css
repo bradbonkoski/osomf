@@ -259,8 +259,8 @@ div#pageTitle a {
 
 /* Container */
 #simplemodal-container {
-    height:360px;
-    width:600px;
+    height:160px;
+    width:400px;
     color:#bbb;
     background-color: #ffffff;
     border:4px solid #b0c4de;

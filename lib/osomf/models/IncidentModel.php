@@ -15,6 +15,7 @@ use \osomf\models\IncidentStatus;
 use \osomf\models\IncidentSeverity;
 use \osomf\models\ProjectModel;
 use \osomf\models\UserModel;
+use \osomf\models\Worklog;
 
 class IncidentModel extends DB
 {
@@ -39,6 +40,7 @@ class IncidentModel extends DB
     private $_detectTime;
     private $_ctime;
     private $_mtime;
+    private $_worklogs;
 
 
     public function __construct($conn)
@@ -69,6 +71,7 @@ class IncidentModel extends DB
         $this->_detectTime = '';
         $this->_ctime = '';
         $this->_mtime = '';
+        $this->_worklogs = array();
         
         $this->_table = "incident";
         $this->_tableKey = "incidentId";
@@ -155,6 +158,25 @@ class IncidentModel extends DB
         return $this->_mtime;
     }
 
+    public function getWorklogs()
+    {
+        // might need something a little better here!
+        $arr = array();
+
+        $u = new UserModel(self::RO);
+
+        foreach ($this->_worklogs as $wl) {
+            $u->fetchUserInfo($wl->getUserId());
+            $arr[] = array(
+                'user' => $u->uname,
+                'mtime' => $wl->getMtime(),
+                'type' => $wl->getType(),
+                'data' => $wl->getData(),
+            );
+        }
+        return $arr;
+    }
+
     public function loadIncident($incidentId)
     {
         if (!is_numeric($incidentId) || $incidentId <= 0 ) {
@@ -199,6 +221,27 @@ class IncidentModel extends DB
         $this->_detectTime = $row['detect_time'];
         $this->_ctime = $row['ctime'];
         $this->_mtime = $row['mtime'];
+        $this->loadWorkLogs();
+    }
+
+    public function loadWorklogs()
+    {
+        $sql = "select worklogId from worklog
+            where incidentId = ? order by mtime";
+        $stmt = $this->_db->prepare($sql);
+        if (!$stmt->execute(array($this->_incidentId))) {
+            error_log(print_r($stmt->errorInfo(), true));
+            throw new \Exception(
+                "Troubles Fetching Worklog Info"
+            );
+        }
+
+        $rows = $stmt->fetchAll();
+        foreach ($rows as $r) {
+            $wl = new Worklog(self::RO);
+            $wl->getWlEntry($r['worklogId']);
+            $this->_worklogs[] = $wl;
+        }
     }
 
     public function listHomeIncidents()
