@@ -80,6 +80,10 @@ class Worklog extends DB
         switch($this->_type) {
             case self::TYPE_STATUS:
                 $this->_msgType = new Status();
+                break;
+            case self::TYPE_WORKLOG:
+                $this->_msgType = new \osomf\worklog\Worklog();
+                break;
         }
     }
 

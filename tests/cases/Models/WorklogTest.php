@@ -38,5 +38,26 @@ class WorklogTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($wl->getData()));
         $this->assertEquals('Testing thats all', $data[2]);
     }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function newWorklogEntry()
+    {
+        $wl = new Worklog(Worklog::RW);
+        $wl->newWorkLog(1, 1, WorkLog::TYPE_WORKLOG, "Some MEssage.. testing");
+        $wl->save();
+    }
+
+    /**
+     * @test
+     */
+    public function getWorklogEntryFromDB()
+    {
+        $wl = new \osomf\models\Worklog(Worklog::RO);
+        $wl->getWlEntry(1);
+        $this->assertEquals('some worklog entry', $wl->getData());
+    }
 }
  
