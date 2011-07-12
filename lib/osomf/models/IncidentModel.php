@@ -149,6 +149,9 @@ class IncidentModel extends DB
             || $this->_statusId != $val
         ) {
             $this->_statusId = $val;
+            if (!$this->status instanceof IncidentStatus) {
+                $this->status = new IncidentStatus();
+            }
             $this->status->loadStatus($val);
         }
     }

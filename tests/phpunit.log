@@ -1,0 +1,10 @@
+[12-Jul-2011 13:12:40] select ciStatusId, statusName from ciStatus
+            where upper(statusName) like ?
+[12-Jul-2011 13:12:40] select userId, uname from users
+            where upper(uname) like ?
+[12-Jul-2011 13:12:40] select ciTypeId, typeName from ciType
+            where upper(typeName) like ?
+[12-Jul-2011 13:12:40] select locId, locName from location
+            where upper(locName) like ?
+[12-Jul-2011 13:12:40] select projId, projName from projects
+            where upper(projName) like ?
