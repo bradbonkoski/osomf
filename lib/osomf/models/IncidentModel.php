@@ -495,6 +495,7 @@ class IncidentModel extends DB
             )) {
                 print_r($stmt->errorInfo());
             }
+            $this->_incidentId = $this->_db->lastInsertId();
         } else {
             // Update to an existing Incident
             $sql = "update incident set title = ?, statusId = ?,

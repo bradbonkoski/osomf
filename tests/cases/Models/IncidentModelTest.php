@@ -53,7 +53,14 @@ class IncidentModelTest extends PHPUnit_Framework_TestCase
         $i->setSeverity(2);
         $i->setImpact("Automated Impact");
         $i->setRevImpact('Automated Revenue Impact');
-        $i->setDescription('Aome Descriptive text should go here');
+        $i->setDescription('Some Descriptive text should go here');
         $i->save();
+
+        $incidentId = $i->getIncidentId();
+        $i = null;
+        $i = new IncidentModel(IncidentModel::RO);
+        $i->loadIncident($incidentId);
+        $this->assertEquals('Automated Test Creation #1', $i->getTitle());
+        $this->assertEquals('Automated Impact', $i->getImpact());
     }
 }
