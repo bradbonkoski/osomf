@@ -18,7 +18,7 @@ class IncidentSeverity extends DB
     private $_sevName;
     private $_sevDesc;
 
-    public function __construct($conn)
+    public function __construct($conn = self::RO)
     {
         if (!in_array($conn, $this->_validConn)) {
             throw new \Exception("Invalid Connection");
@@ -65,5 +65,18 @@ class IncidentSeverity extends DB
         $this->_sevId = $sevId;
         $this->_sevName = $row['sevName'];
         $this->_sevDesc = $row['sevDesc'];
+    }
+
+    public function getAllSeverity()
+    {
+        $sql = "select sevId, sevName from severity";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $ret = array();
+        foreach ($rows as $r) {
+            $ret[$r['sevId']] = $r['sevName'];
+        }
+        return $ret;
     }
 }

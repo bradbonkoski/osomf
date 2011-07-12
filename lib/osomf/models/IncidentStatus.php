@@ -19,7 +19,7 @@ class IncidentStatus extends DB
     private $_statusDesc;
     private $_statusOrder;
 
-    public function __construct($conn)
+    public function __construct($conn = self::RO)
     {
         if (!in_array($conn, $this->_validConn)) {
             throw new \Exception("Invalid Connection");
@@ -73,5 +73,18 @@ class IncidentStatus extends DB
         $this->_statusName = $row['statusName'];
         $this->_statusDesc = $row['statusDesc'];
         $this->_statusOrder = $row['orderNum'];
+    }
+
+    public function getAllStatus()
+    {
+        $sql = "select statusId, statusName from status order by orderNum asc";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $ret = array();
+        foreach ($rows as $r) {
+            $ret[$r['statusId']] = $r['statusName'];
+        }
+        return $ret;
     }
 }

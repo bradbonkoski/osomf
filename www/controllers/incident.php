@@ -6,6 +6,7 @@ use \osomf\models\Worklog;
 class incident extends ControllerBase
 {
     private $_incidentId;
+    private $_postedData;
 
     public function __construct($controller = '', $action = '') 
     { 
@@ -20,12 +21,48 @@ class incident extends ControllerBase
 
     }
 
+    private function _newIncident()
+    {
+        $i = new IncidentModel(IncidentModel::RW);
+        $i->setTitle($this->_postedData['title']);
+        $i->setStatus($this->_postedData['incidentStatus']);
+        $i->setSeverity($this->_postedData['incidentSev']);
+        $i->setDescription($this->_postedData['desc']);
+        $i->setImpact($this->_postedData['impact']);
+        $i->setRevImpact($this->_postedData['revImpact']);
+        $i->setDetectTime($this->_postedData['detectTime']);
+        $i->setStartTime($this->_postedData['startTime']);
+        $i->setCreatedBy($_COOKIE['userId']);
+        $i->save();
+        $incidentId = $i->getIncidentId();
+        $this->redirect('incident','view', $incidentId);
+    }
+
+    public function add()
+    {
+        $this->setAction("add");
+        if (isset($_POST['subIncident'])) {
+            //create new incident
+            $this->_postedData = $_POST;
+            $this->_newIncident();
+        }
+
+        $stat = new \osomf\models\IncidentStatus();
+        $this->data['statusVals'] = $stat->getAllStatus();
+
+        $sev = new \osomf\models\IncidentSeverity();
+        $this->data['sevVals'] = $sev->getAllSeverity();
+
+    }
+
     public function view( $params ) 
     {
         $this->setAction("view");
         $params = $this->parseParams($params);
         //print_r($params);
         if (!array_key_exists(0, $params) || !is_numeric($params[0])) {
+            error_log("Redirect here!");
+            //exit;
             return $this->home($params);
         }
         $this->_incidentId = $params[0];
@@ -34,6 +71,23 @@ class incident extends ControllerBase
         if (count($this->data['err']) > 0 ) {
             $this->redirect('incident', 'view');
         }
+    }
+
+    private function _IncidentUpdate()
+    {
+        $i = new IncidentModel(IncidentModel::RW);
+        $i->loadIncident($this->_incidentId);
+        $i->setTitle($this->_postedData['title']);
+        $i->setDescription($this->_postedData['desc']);
+        $i->setImpact($this->_postedData['impact']);
+        $i->setRevImpact($this->_postedData['revImpact']);
+        $i->setDetectTime($this->_postedData['detectTime']);
+        $i->setStartTime($this->_postedData['startTime']);
+        $i->setResolveTime($this->_postedData['resolveTime']);
+        $i->setResolveSteps($this->_postedData['resolveSteps']);
+        $i->setRespProjId($this->_postedData['projId']);
+        $i->save();
+
     }
 
     public function edit($params)
@@ -45,6 +99,13 @@ class incident extends ControllerBase
             return $this->home($params);
         }
         $this->_incidentId = $params[0];
+        
+        if (isset($_POST['subIncident'])) {
+            $this->_postedData = $_POST;
+            $this->_IncidentUpdate();
+            //echo "<pre>".print_r($_POST, true)."</pre>";
+
+        }
 
         $this->_loadIncidentData();
         if (count($this->data['err']) > 0 ) {

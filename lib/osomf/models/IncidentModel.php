@@ -503,6 +503,9 @@ class IncidentModel extends DB
               impact=?, revImpact=?, description=?, resolveTime=?,
               resolveSteps=?, respProject=?, detect_time=?,
               mtime=NOW() where incidentId = ?";
+
+            //echo "$sql <br/>";
+
             $stmt = $this->_db->prepare($sql);
             if (!$stmt->execute(
                 array(

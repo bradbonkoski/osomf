@@ -1,1 +1,71 @@
-<h1>Default View for Controller: incident and Action: add</h1>
+{% extends "layout.phtml" %}
+
+{% block content %}
+    <div id="pageTitle">
+        <h1>Create New Incident</h1>
+    </div>
+        <form method="POST" name="frmIncident" action=''>
+        <fieldset>
+            <legend>incident information</legend>
+
+            <dl>
+                <dt><label>title</label></dt>
+                <dd><input type="text" name="title" required/></dd>
+            </dl>
+
+            <dl>
+                <dt><label>status</label></dt>
+                <dd>
+                    <select name="incidentStatus">
+                        {% for id, val in statusVals %}
+                            <option value="{{ id }}">{{ val }}</option>
+                        {% endfor %}
+                    </select>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt><label>Severity</label></dt>
+                <dd>
+                    <select name="incidentSev">
+                        {% for id, val in sevVals %}
+                        <option value="{{ id }}">{{ val }}</option>
+                        {% endfor %}
+                    </select>
+                </dd>
+            </dl>
+            <dl>
+                <dt><label>Description</label></dt>
+                <dd><textarea name="desc">{{ desc }}</textarea></dd>
+            </dl>
+
+            <dl>
+                <dt><label>Impact</label></dt>
+                <dd><textarea name="impact">{{ impact }}</textarea></dd>
+            </dl>
+
+            <dl>
+                <dt><label>Revenue Impact</label></dt>
+                <dd><textarea name="revImpact">{{ revImpact }}</textarea></dd>
+            </dl>
+        </fieldset>
+
+        <fieldset>
+            <legend>timeline</legend>
+            <dl>
+                <dt><label>Detect Time</label></dt>
+                <dd><input type="text" name="detectTime" value="{{ detectTime }}"/></dd>
+            </dl>
+            <dl>
+                <dt><label>start time</label></dt>
+                <dd><input type="text" name="startTime" value="{{ startTime }}"/></dd>
+            </dl>
+        </fieldset>
+    
+
+    <input class="btnUpdate" type="submit" name="subIncident" value="create"/>
+    </form>
+
+{% endblock %}
+
+

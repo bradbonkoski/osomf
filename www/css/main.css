@@ -197,7 +197,8 @@ table.baseTable th {
     padding:  0px;
     margin: 0px;
     text-transform:lowercase;
-    text-align: center;
+    /*text-align: center;*/
+    text-align: left;
 }
 
 table.baseTable tr:nth-child(odd) {
@@ -251,8 +252,13 @@ div#pageTitle a {
      text-transform:lowercase;
 }
 
-.btnUpdate {
+input.btnUpdate {
     background:url(../img/accept.png) no-repeat;
+    padding-left: 1.15em;
+}
+
+input.btnRevert {
+    background:url(../img/arrow_undo.png) no-repeat;
     padding-left: 1.15em;
 }
 
