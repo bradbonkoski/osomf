@@ -16,7 +16,8 @@ namespace osomf\worklog;
  * consitency.
  */
 
-interface iWorklog {
+interface iWorklog
+{
 
     /**
      * @abstract

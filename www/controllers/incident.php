@@ -76,7 +76,8 @@ class incident extends ControllerBase
             $this->data['resolveSteps'] = $i->getResolveSteps();
             $this->data['respProjName'] = $i->respProj->projName;
             $this->data['proj'] = $i->getRespProjId();
-            $this->data['respProjLink'] = "/osomf/project/view/".$i->getRespProjId();
+            $this->data['respProjLink'] =
+                    "/osomf/project/view/".$i->getRespProjId();
 
             $this->data['worklogs'] = $i->getWorklogs();
             //echo "<pre>".print_r($this->data, true)."</pre>";
@@ -95,7 +96,12 @@ class incident extends ControllerBase
         $userId = $_COOKIE['userId'];
         error_log("User id: $userId");
         $wl = new Worklog(Worklog::RW);
-        $wl->newWorkLog($data['id'], $userId, WorkLog::TYPE_WORKLOG, urldecode($data['text']));
+        $wl->newWorkLog(
+            $data['id'],
+            $userId,
+            WorkLog::TYPE_WORKLOG,
+            urldecode($data['text'])
+        );
         $wl->save();
         echo "<tr>
             <td>bradb</td>
