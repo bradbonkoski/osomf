@@ -42,6 +42,9 @@ class IncidentModel extends DB
     private $_mtime;
     private $_worklogs;
 
+    private $_history;
+    private $_changes;
+
 
     public function __construct($conn)
     {
@@ -72,9 +75,41 @@ class IncidentModel extends DB
         $this->_ctime = '';
         $this->_mtime = '';
         $this->_worklogs = array();
+        $this->_history = array();
+        $this->_changes = array();
         
         $this->_table = "incident";
         $this->_tableKey = "incidentId";
+    }
+
+    private function _validate()
+    {
+        $validators = array(
+            '_incidentId' => array(
+                Validator::IS_NUM => true,
+            ),
+            '_title' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 1, 'max' => 128),
+            ),
+            '_statusId' => array(
+                Validator::IS_NUM => true,
+            ),
+            '_desc' => array(
+                Validator::IS_STRING => true,
+                Validator::STRLEN => array('min' => 0, 'max' => 2056),
+            ),
+        );
+
+        foreach ($validators as $key => $val) {
+            //echo "Validating: $key [{$this->$key}]\n";
+            $v = new Validator($val);
+            $v->validate($this->$key);
+            if ($v->errNo > 0 ) {
+                $errs = $v->getErrors();
+                throw new \Exception($errs[0]);
+            }
+        }
     }
 
     public function getIncidentId()
@@ -87,9 +122,33 @@ class IncidentModel extends DB
         return $this->_title;
     }
 
+    public function setTitle($val)
+    {
+        if (
+            strlen($this->_title) > 0
+            && $this->_title != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Title',
+                'orig' => $this->_title,
+                'new' => $val,
+            );
+        }
+        $this->_title = $val;
+    }
+
     public function getStatusId()
     {
         return $this->_statusId;
+    }
+
+    public function setStatus($val)
+    {
+        // only do this if there is no status
+        // otherwise it will be handled elsewhere
+        if ($this->_statusId == -1 ) {
+            $this->_statusId = $val;
+        }
     }
 
     public function getStartTime()
@@ -98,9 +157,33 @@ class IncidentModel extends DB
         return $this->_startTime;
     }
 
+    public function setStartTime($val)
+    {
+        if (
+            strlen($this->_startTime) > 0
+            && $this->_startTime != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Start Time',
+                'orig' => $this->_startTime,
+                'new' => $val,
+            );
+        }
+        $this->_startTime = $val;
+    }
+
     public function getCreatedById()
     {
         return $this->_createdBy;
+    }
+
+    public function setCreatedBy($val)
+    {
+        // only update if there is no creator
+        // i.e. a new incident
+        if ($this->_createdBy == -1 ) {
+            $this->_createdBy = $val;
+        }
     }
 
     public function getUpdatedById()
@@ -108,9 +191,33 @@ class IncidentModel extends DB
         return $this->_updatedBy;
     }
 
+    public function setUpdatedBy($val)
+    {
+        $this->_updatedBy = $val;
+    }
+
     public function getSeverityId()
     {
         return $this->_severityId;
+    }
+
+    public function setSeverity($val)
+    {
+        if (
+            $this->_severityId > 0
+            && $this->_severityId != $val
+        ) {
+
+            $arr =  array(
+                'col' => 'Severity',
+                'orig' => $this->severity->getSevName(),
+                //'new' => $val,
+            );
+            $this->severity->loadSeverity($val);
+            $arr['new'] = $this->severity->getSevName();
+            $this->_history[] = $arr;
+        }
+        $this->_severityId = $val;
     }
 
     public function getImpact()
@@ -118,9 +225,39 @@ class IncidentModel extends DB
         return $this->_impact;
     }
 
+    public function setImpact($val)
+    {
+        if (
+            strlen($this->_impact) > 0
+            && $this->_impact != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Impact',
+                'orig' => $this->_impact,
+                'new' => $val,
+            );
+        }
+        $this->_impact = $val;
+    }
+
     public function getRevImpact()
     {
         return $this->_revImpact;
+    }
+
+    public function setRevImpact($val)
+    {
+        if (
+            strlen($this->_revImpact) > 0
+            && $this->_revImpact != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Revenue Impact',
+                'orig' => $this->_revImpact,
+                'new' => $val,
+            );
+        }
+        $this->_revImpact = $val;
     }
 
     public function getDescription()
@@ -128,9 +265,39 @@ class IncidentModel extends DB
         return $this->_desc;
     }
 
+    public function setDescription($val)
+    {
+        if (
+            strlen($this->_desc) > 0
+            && $this->_desc != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Description',
+                'orig' => $this->_desc,
+                'new' => $val,
+            );
+        }
+        $this->_desc = $val;
+    }
+
     public function getResolveTime()
     {
         return $this->_resolveTime;
+    }
+
+    public function setResolveTime($val)
+    {
+        if (
+            strlen($this->_resolveTime) > 0
+            && $this->_resolveTime != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Resolve Time',
+                'orig' => $this->_resolveTime,
+                'new' => $val,
+            );
+        }
+        $this->_resolveTime = $val;
     }
 
     public function getResolveSteps()
@@ -138,14 +305,63 @@ class IncidentModel extends DB
         return $this->_resolveSteps;
     }
 
+    public function setResolveSteps($val)
+    {
+        if (
+            strlen($this->_resolveSteps) > 0
+            && $this->_resolveSteps != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Resolve Steps',
+                'orig' => $this->_resolveSteps,
+                'new' => $val,
+            );
+        }
+        $this->_resolveSteps = $val;
+    }
+
     public function getRespProjId()
     {
         return $this->_respProjId;
     }
 
+    public function setRespProjId($val)
+    {
+        if (
+            $this->_respProjId > 0
+            && $this->_respProjId != $val
+        ) {
+
+            $arr = array(
+                'col' => 'Responsible Project',
+                'orig' => $this->respProj->getProjName(),
+                //'new' => $val,
+            );
+            $this->respProj->fetchProjInfo($val);
+            $arr['new'] = $this->respProj->getProjName();
+            $this->_history[] = $arr;
+        }
+        $this->_respProjId = $val;
+    }
+
     public function getDetectTime()
     {
         return $this->_detectTime;
+    }
+
+    public function setDetectTime($val)
+    {
+        if (
+            strlen($this->_detectTime) > 0
+            && $this->_detectTime != $val
+        ) {
+            $this->_history[] = array(
+                'col' => 'Detect Time',
+                'orig' => $this->_detectTime,
+                'new' => $val,
+            );
+        }
+        $this->_detectTime = $val;
     }
 
     public function getCtime()
@@ -241,6 +457,85 @@ class IncidentModel extends DB
             $wl = new Worklog(self::RO);
             $wl->getWlEntry($r['worklogId']);
             $this->_worklogs[] = $wl;
+        }
+    }
+
+    public function save()
+    {
+        try {
+            $this->_validate();
+        } catch (\Exception $e) {
+            //echo "Validation Exception!\n";
+            throw $e;
+        }
+
+        if ($this->_incidentId < 0 ) {
+            // new record
+            $sql = "insert into incident (title, statusId, start_time,
+                createdBy, severity, impact, revImpact,
+                description, resolveTime, resolveSteps, respProject,
+                detect_time)
+                values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            $stmt = $this->_db->prepare($sql);
+            if (!$stmt->execute(
+                array(
+                    $this->_title,
+                    $this->_statusId,
+                    $this->_startTime,
+                    $this->_createdBy,
+                    $this->_severityId,
+                    $this->_impact,
+                    $this->_revImpact,
+                    $this->_desc,
+                    $this->_resolveTime,
+                    $this->_resolveSteps,
+                    $this->_respProjId,
+                    $this->_detectTime
+                )
+            )) {
+                print_r($stmt->errorInfo());
+            }
+        } else {
+            // Update to an existing Incident
+            $sql = "update incident set title = ?, statusId = ?,
+              start_time = ?, updatedBy = ?, severity = ?,
+              impact=?, revImpact=?, description=?, resolveTime=?,
+              resolveSteps=?, respProject=?, detect_time=?,
+              mtime=NOW() where incidentId = ?";
+            $stmt = $this->_db->prepare($sql);
+            if (!$stmt->execute(
+                array(
+                    $this->_title,
+                    $this->_statusId,
+                    $this->_startTime,
+                    $this->_updatedBy,
+                    $this->_severityId,
+                    $this->_impact,
+                    $this->_revImpact,
+                    $this->_desc,
+                    $this->_resolveTime,
+                    $this->_resolveSteps,
+                    $this->_respProjId,
+                    $this->_detectTime,
+                    $this->_incidentId
+                )
+            )) {
+                print_r($stmt->errorInfo());
+            }
+            if (count($this->_history) > 0 ) {
+                $sql = "insert into incidentHistory set incidentId = ?,
+                mUser = ?, changes = ?";
+                $stmt = $this->_db->prepare($sql);
+                $stmt->execute(
+                    array(
+                        $this->_incidentId,
+                        1,
+                        serialize($this->_history),
+                    )
+                );
+            }
+            //echo "<pre>".print_r($this->_history, true)."</pre>";
+
         }
     }
 

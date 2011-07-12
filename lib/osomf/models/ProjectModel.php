@@ -46,6 +46,12 @@ class ProjectModel extends DB
         return $this->_projId;
     }
 
+    public function getProjName()
+    {
+        return $this->projName;
+    }
+
+
     private function _validate()
     {
         $validators = array(

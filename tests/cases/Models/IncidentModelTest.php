@@ -27,4 +27,33 @@ class IncidentModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bradb', $i->createdByUser->uname);
         $this->assertEquals('S0', $i->severity->getSevName());
     }
+
+    /**
+     * @test
+     */
+    public function updateIncidentTest()
+    {
+        $i = new IncidentModel(IncidentModel::RW);
+        $i->loadIncident(2);
+        $this->assertEquals('Test Incident #2', $i->getTitle());
+        $i->setTitle("Update to Incident #2");
+        $i->save();
+    }
+
+    /**
+     * @test
+     */
+    public function newIncidentCreationTest()
+    {
+        $i = new IncidentModel(IncidentModel::RW);
+        $i->setTitle("Automated Test Creation #1");
+        $i->setStatus(1);
+        $i->setStartTime('2011-01-01 12:00:00');
+        $i->setCreatedBy(1);
+        $i->setSeverity(2);
+        $i->setImpact("Automated Impact");
+        $i->setRevImpact('Automated Revenue Impact');
+        $i->setDescription('Aome Descriptive text should go here');
+        $i->save();
+    }
 }

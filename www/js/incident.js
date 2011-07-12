@@ -6,7 +6,34 @@
  * To change this template use File | Settings | File Templates.
  */
 
-$(function ($) {
+$(function() {
+
+    function disableBox(input, box) {
+        $("#"+input).attr('disabled', true);
+        $("#"+box).show();
+    }
+
+    if ($('#respProj').val().length > 0 ) {
+        disableBox('respProj', 'clearProjBox');
+    }
+
+    $("#clearProjBox").click(function() {
+        $("#respProj").attr('disabled', false);
+        $("#respProj").val('');
+        $("#clearProjBox").hide();
+    });
+
+    $("#respProj").autocomplete({
+        source: function (request, response) {
+            $.getJSON("/osomf/project/autocomplete", {term: request.term}, response);
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            disableBox("respProj", "clearProjBox");
+            $('#projId').val(ui.item.id);
+        }
+    });
+
     // Load dialog on click
 	$('#impactAddModal').click(function (e) {
 	    $('#AddImpactModal').modal();

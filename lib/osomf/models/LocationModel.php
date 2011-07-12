@@ -271,7 +271,7 @@ class LocationModel extends DB
                 )
             );
         } else {
-            // Update to an existing User
+            // Update to an existing Location
             $sql = "update location set locName = ?, locDesc = ?,
                 locOwnerType = ?, locOwner = ?, locAddr = ? where locId = ?";
             $stmt = $this->_db->prepare($sql);
@@ -297,7 +297,7 @@ class LocationModel extends DB
                     )
                 );
             }
-            echo "<pre>".print_r($this->_history, true)."</pre>";
+            //echo "<pre>".print_r($this->_history, true)."</pre>";
 
         }
     }

@@ -74,8 +74,9 @@ class incident extends ControllerBase
 
             $this->data['resolveTime'] = $i->getResolveTime();
             $this->data['resolveSteps'] = $i->getResolveSteps();
-            //$this->data['respProjName'] = $i->respProj->projName;
-            //$this->data['respProjLink'] = "/osomf/project/view/".$i->getRespProjId();
+            $this->data['respProjName'] = $i->respProj->projName;
+            $this->data['proj'] = $i->getRespProjId();
+            $this->data['respProjLink'] = "/osomf/project/view/".$i->getRespProjId();
 
             $this->data['worklogs'] = $i->getWorklogs();
             //echo "<pre>".print_r($this->data, true)."</pre>";

@@ -1,7 +1,11 @@
 {% extends "layout.phtml" %}
 
+        {% block css %}
+        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
+{% endblock %}
 {% block content %}
 
+        <form method="POST" name="frmIncident" action=''>
         <fieldset>
             <legend>incident information</legend>
 
@@ -21,17 +25,17 @@
             </dl>
             <dl>
                 <dt><label>Description</label></dt>
-                <dd>{{ desc }}</dd>
+                <dd><textarea>{{ desc }}</textarea></dd>
             </dl>
 
             <dl>
                 <dt><label>Impact</label></dt>
-                <dd>{{ impact }}</dd>
+                <dd><textarea>{{ impact }}</textarea></dd>
             </dl>
 
             <dl>
                 <dt><label>Revenue Impact</label></dt>
-                <dd>{{ revImpact }}</dd>
+                <dd><textarea>{{ revImpact }}</textarea></dd>
             </dl>
         </fieldset>
 
@@ -41,11 +45,11 @@
             <legend>timeline</legend>
             <dl>
                 <dt><label>Detect Time</label></dt>
-                <dd>{{ detectTime }}</dd>
+                <dd><input type="text" value="{{ detectTime }}"/></dd>
             </dl>
             <dl>
                 <dt><label>start time</label></dt>
-                <dd>{{ startTime }}</dd>
+                <dd><input type="text" value="{{ startTime }}"/></dd>
             </dl>
             <dl>
                 <dt><label>create time</label></dt>
@@ -62,52 +66,37 @@
             <legend>Resolution</legend>
             <dl>
                 <dt><label>Resolve Time</label></dt>
-                <dd>{{ resolveTime }}</dd>
+                <dd><input type="text" value="{{ resolveTime }}"/></dd>
             </dl>
             <dl>
                 <dt><label>Resolve Steps</label></dt>
-                <dd>{{ resolveSteps }}</dd>
+                <dd><textarea>{{ resolveSteps }}</textarea></dd>
             </dl>
             <dl>
                 <dt><label>Responsible Project</label></dt>
-                <dd><a href="{{ respProjLink }}">{{ respProjName }}</a></dd>
+                <dd>
+                    <input id="respProj" type="text" value="{{ respProjName }}" size=15/>
+                    <span style="display:none" id="clearProjBox"><img src="/osomf/www/img/cross.png"/></span>
+                </dd>
+                    <input type="hidden" name="projId" id="projId" value="{{ proj }}"/>
+                
             </dl>
         </fieldset>
     </div>
     </fieldset>
 
-    <fieldset>
-        <legend>impacts <a id="impactAddModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
-        
-    </fieldset>
+    <input class="btnUpdate" type="submit" name="subIncident" value="update"/>
+    </form>
 
-    <fieldset>
-        <legend>Worklog <a id="worklogAddModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
-    </fieldset>
-
-     {% include 'modals/incidentImpact.phtml' %}
-     {% include 'modals/incidentWorklog.phtml' %}
 {% endblock %}
 
 
     
 {% block js %}
-    <script type="text/javascript" src="/osomf/www/js/jquery.simplemodal.1.4.1.min.js"></script>
-    <script type="text/javascript">
-        $(function ($) {
-	        // Load dialog on page load
-	        //$('#basic-modal-content').modal();
-
-	        // Load dialog on click
-	        $('#impactAddModal').click(function (e) {
-		        $('#AddImpactModal').modal();
-
-		        return false;
-	        });
-            $('#worklogAddModal').click(function(e) {
-                $('#AddWorklogModal').modal();
-            });
-        });
-    </script>
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.core.min.js"></script>
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.widget.min.js"></script>
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
+        <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/incident.js"></script>
 {% endblock %}
 
