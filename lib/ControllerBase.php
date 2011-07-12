@@ -70,7 +70,8 @@ class ControllerBase
         return $ret;
     }
 
-    public function parseGetParams($data) {
+    public function parseGetParams($data)
+    {
         $ret = array();
         $arr = explode("&", $data);
         foreach ($arr as $a) {
@@ -96,9 +97,12 @@ class ControllerBase
         if (!$this->_test) {
             if (!$this->ac) {
                 if (preg_match("/xml/i", $this->_action)) {
-                    header ("Content-Type:text/xml");
+                    header("Content-Type:text/xml");
                 }
-                $this->_template = new Template($this->_controller, $this->_action);
+                $this->_template = new Template(
+                    $this->_controller,
+                    $this->_action
+                );
                 foreach ($this->data as $k => $v) {
                     $this->_template->set($k, $v);
                 }
