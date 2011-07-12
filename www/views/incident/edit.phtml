@@ -22,7 +22,17 @@
 
             <dl>
                 <dt><label>Severity</label></dt>
-                <dd>{{ severity }}</dd>
+                <dd>
+                    <select name="severity">
+                    {% for id, val in sevValues %}
+                    {% if val == severity %}
+                    <option SELECTED value="{{ id }}">{{ val }}</option>
+                    {% else %}
+                        <option value="{{ id }}">{{ val }}</option>
+                    {% endif %}
+                    {% endfor %}
+                    </select>
+                </dd>
             </dl>
             <dl>
                 <dt><label>Description</label></dt>

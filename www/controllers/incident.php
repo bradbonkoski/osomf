@@ -91,6 +91,7 @@ class incident extends ControllerBase
         $i->setResolveTime($this->_postedData['resolveTime']);
         $i->setResolveSteps($this->_postedData['resolveSteps']);
         $i->setRespProjId($this->_postedData['projId']);
+        $i->setSeverity($this->_postedData['severity']);
         $i->save();
 
     }
@@ -117,6 +118,9 @@ class incident extends ControllerBase
             error_log(print_r($this->data['err'], true));
             $this->redirect('incident', 'view');
         }
+
+        $sev = new \osomf\models\IncidentSeverity();
+        $this->data['sevValues'] = $sev->getAllSeverity();
     }
 
     private function _loadIncidentData()
