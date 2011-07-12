@@ -144,10 +144,12 @@ class IncidentModel extends DB
 
     public function setStatus($val)
     {
-        // only do this if there is no status
-        // otherwise it will be handled elsewhere
-        if ($this->_statusId == -1 ) {
+        if (
+            $this->_statusId == -1
+            || $this->_statusId != $val
+        ) {
             $this->_statusId = $val;
+            $this->status->loadStatus($val);
         }
     }
 

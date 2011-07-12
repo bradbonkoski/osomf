@@ -18,6 +18,28 @@ $(function() {
         return false;
     });
 
+    $('#changeIncidentStatus').click(function(e) {
+        $('#StatusChangeModal').modal();
+        return false;   
+    });
+
+    $('#btnChangeStatus').click(function (e) {
+        var incident =  $("#incidentId").val();
+        var newStatus = $('#stausChangeVal').val();
+        var reason = $('#reason').val();
+        var params = "id="+incident+"&newStatus="+newStatus+"&reason="+reason;
+        //alert(params);
+        $.ajax({
+            type: "GET",
+            url: "/osomf/incident/statusChange",
+            data: params,
+            success: function(html) {
+                $('#incidentStatus').text(html);
+                $.modal.close();
+            }
+        })
+    });
+
     $('#addWorklogButton').click(function(e) {
         //alert("Help");
         var incident = $("#incidentId").val();

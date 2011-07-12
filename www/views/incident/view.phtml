@@ -13,7 +13,12 @@
 
             <dl>
                 <dt><label>status</label></dt>
-                <dd>{{ status }}</dd>
+                <dd>
+                    <span id="incidentStatus">{{ status }}</span>
+                    <a id="changeIncidentStatus" href="#">
+                        <img src="/osomf/www/img/arrow_switch.png"/>
+                    </a>
+                </dd>
             </dl>
 
             <dl>
@@ -109,6 +114,7 @@
 
      {% include 'modals/incidentImpact.phtml' %}
      {% include 'modals/incidentWorklog.phtml' %}
+     {% include 'modals/incidentStatusUpdate.phtml' %}
 {% endblock %}
 
 

@@ -71,7 +71,12 @@ class incident extends ControllerBase
         if (count($this->data['err']) > 0 ) {
             $this->redirect('incident', 'view');
         }
+
+        $stat = new \osomf\models\IncidentStatus();
+        $this->data['statusVals'] = $stat->getAllStatus();
     }
+
+
 
     private function _IncidentUpdate()
     {
@@ -170,6 +175,31 @@ class incident extends ControllerBase
             <td>WORKLOG</td>
             <td>".urldecode($data['text'])."</td>
         </tr>";
+    }
+
+    public function statusChange( $params )
+    {
+        $this->ac = true;
+        $data = $this->parseGetParams($params);
+        $userId = $_COOKIE['userId'];
+        $i = new \osomf\models\IncidentModel(IncidentModel::RW);
+        $i->loadIncident($data['id']);
+        $origStatus = $i->getStatusId();
+        $i->setStatus($data['newStatus']);
+        $wl = new Worklog(Worklog::RW);
+        $wlData = array(
+            'orig' => $origStatus,
+            'new' => $data['newStatus'],
+            'reason' => urldecode($data['reason'])
+        );
+        $wl->newWorkLog(
+            $data['id'],
+            $userId,
+            Worklog::TYPE_STATUS,
+            $wlData
+        );
+        $i->save();
+        echo $i->status->getStatusName();
     }
 
     public function search( $params )

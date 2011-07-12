@@ -1,0 +1,31 @@
+<div id="StatusChangeModal" class="modal">
+    <h3>Change Status for Incident</h3>
+
+    <dl>
+        <dt><label>Existing Status</label></dt>
+        <dd>
+            {{ status }}
+        </dd>
+    </dl>
+
+    <dl>
+        <dt><label>Change Status To</label></dt>
+        <dd>
+            <select id="stausChangeVal">
+                {% for id, val in statusVals %}
+                    {% if val != status %}
+                        <option value="{{ id }}">{{ val }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </dd>
+    </dl>
+
+    <dl>
+        <dt><label>Reason</label></dt>
+        <dd><textarea id="reason"></textarea></dd>
+    </dl>
+    <dl>
+        <dt><input id="btnChangeStatus" type="button" value="update"/></dt>
+    </dl>
+</div>
