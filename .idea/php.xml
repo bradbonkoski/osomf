@@ -10,5 +10,8 @@
       </PhpSdkConfig>
     </sdk>
   </component>
+  <component name="PhpTemplatesSettings">
+    <option name="NEW_PHP_FILE_LAST_EXTENSION" value="phtml" />
+  </component>
 </project>
 

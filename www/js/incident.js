@@ -37,6 +37,21 @@ $(function() {
         return false;   
     });
 
+    $('#btnEdit').click(function(e) {
+        var incident =  $("#incidentId").val();
+        window.location = "/osomf/incident/edit/"+incident;
+    });
+
+     $('#btnAudit').click(function(e) {
+        var incident =  $("#incidentId").val();
+        window.location = "/osomf/incident/hist/"+incident;
+    });
+
+    $('#btnView').click(function(e) {
+        var incident =  $("#incidentId").val();
+        window.location = "/osomf/incident/view/"+incident;
+    });
+
     $('#btnChangeStatus').click(function (e) {
         var incident =  $("#incidentId").val();
         var newStatus = $('#stausChangeVal').val();

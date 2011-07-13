@@ -4,7 +4,11 @@
 {% endblock %}
 {% block content %}
         <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
+    <!--
     <a href="/osomf/incident/edit/{{ incidentId }}">edit</a>
+    -->
+    <input class="btnEdit" id="btnEdit" type="button" value="Edit"/>
+    <input class="btnAudit" id="btnAudit" type="button" value="History" />
         <fieldset>
             <legend>incident information</legend>
 

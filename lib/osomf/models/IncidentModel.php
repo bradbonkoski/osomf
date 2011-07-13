@@ -48,7 +48,7 @@ class IncidentModel extends DB
     private $_changes;
 
 
-    public function __construct($conn)
+    public function __construct($conn = self::RO)
     {
         if (!in_array($conn, $this->_validConn)) {
             throw new \Exception("Invalid Connection");
@@ -118,6 +118,11 @@ class IncidentModel extends DB
     public function getIncidentId()
     {
         return $this->_incidentId;
+    }
+
+    public function setIncidentId($val)
+    {
+        $this->_incidentId = $val;
     }
 
     public function getTitle()
@@ -429,7 +434,7 @@ class IncidentModel extends DB
                 array(
                     $this->_incidentId,
                     $user,
-                    serialize($changes)
+                    serialize(array($changes))
                 )
             )) {
                 $err = print_r($stmt->errorInfo(), true);
@@ -664,6 +669,22 @@ class IncidentModel extends DB
             //echo "<pre>".print_r($this->_history, true)."</pre>";
 
         }
+    }
+
+    public function getHistory()
+    {
+        $sql = "select * from incidentHistory where incidentId = ? order by mtime";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($this->_incidentId));
+        $rows = $stmt->fetchAll();
+        foreach ($rows as $r) {
+            $this->_changes[] = array(
+                'time' => $r['mtime'],
+                'user' => $r['mUser'],
+                'deltas' => unserialize($r['changes'])
+            );
+        }
+        return $this->_changes;
     }
 
     public function listHomeIncidents()

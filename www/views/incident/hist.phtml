@@ -1,0 +1,54 @@
+{% extends "layout.phtml" %}
+
+{% block css %}
+        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
+{% endblock %}
+{% block title %}
+    {{ pageTitle }}
+{% endblock %}
+{% block content %}
+        <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
+
+
+    <input class="btnView" id="btnView" type="button" value="Incident View" />
+    <input class="btnEdit" id="btnEdit" type="button" value="Edit"/>
+
+    <div id="pageTitle">
+        <h1>{{ pageTitle }}</h1>
+    </div>
+
+    <table class="baseTable">
+        <tr>
+            <th>user</th>
+            <th>time</th>
+            <th>changes</th>
+        </tr>
+        {% for c in changes %}
+        <tr>
+            <td><a href="/osomf/user/view/{{ c.user }}">{{ c.username }}</a></td>
+            <td>{{ c.time }}</td>
+            <td>
+                <table class="embedded">
+                    <tr>
+                        <th>Change</th>
+                        <th>Original</th>
+                        <th>New</th>
+                    </tr>
+                    {% for d in c.deltas %}
+                    <tr>
+                        <td>{{ d.col }}</td>
+                        <td>{{ d.orig }}</td>
+                        <td>{{ d.new }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/osomf/www/js/incident.js"></script>
+{% endblock %}

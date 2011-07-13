@@ -262,6 +262,20 @@ input.btnRevert {
     padding-left: 1.15em;
 }
 
+input.btnAudit {
+    background:url(../img/book.png) no-repeat;
+    padding-left: 1.15em;
+}
+
+input.btnView {
+    background:url(../img/magnifier.png) no-repeat;
+    padding-left: 1.15em;
+}
+
+input.btnEdit {
+    background:url(../img/application_edit.png) no-repeat;
+    padding-left: 1.15em;
+}
 /* Modal Styles */
 .modal {display:none;}
 

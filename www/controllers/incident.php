@@ -2,6 +2,7 @@
 
 use \osomf\models\IncidentModel;
 use \osomf\models\Worklog;
+use \osomf\models\UserModel;
 
 class incident extends ControllerBase
 {
@@ -253,6 +254,31 @@ class incident extends ControllerBase
         );
         $i->save();
         echo $i->status->getStatusName();
+    }
+
+    public function hist($params)
+    {
+        $this->setAction("hist");
+        $params = $this->parseParams($params);
+        //print_r($params);
+        if (!array_key_exists(0, $params) || !is_numeric($params[0])) {
+            return $this->home($params);
+        }
+        $this->_incidentId = $params[0];
+        $this->data['pageTitle'] = "History for Incident: ".$this->_incidentId;
+        $this->data['incidentId'] = $this->_incidentId;
+        $i = new IncidentModel();
+        $i->setIncidentId($this->_incidentId);
+        $changes = $i->getHistory();
+        $u = new UserModel();
+
+        foreach ($changes as &$c) {
+            $u->fetchUserInfo($c['user']);
+            $c['username'] = $u->uname;
+        }
+        //echo "<pre>".print_r($changes, true)."</pre>";
+
+        $this->data['changes'] = $changes;
     }
 
     public function search( $params )

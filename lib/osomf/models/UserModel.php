@@ -30,7 +30,7 @@ class UserModel extends DB
      * @throws Exception
      * @param  $conn
      */
-    public function __construct($conn)
+    public function __construct($conn = self::RO)
     {
         if (!in_array($conn, $this->_validConn)) {
             throw new \Exception("Invalid Connection");
