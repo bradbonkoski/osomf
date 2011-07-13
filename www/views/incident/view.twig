@@ -1,4 +1,4 @@
-{% extends "layout.phtml" %}
+{% extends "layout.twig" %}
 {% block css %}
         <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
 {% endblock %}
@@ -135,9 +135,9 @@
         </table>
     </fieldset>
 
-     {% include 'modals/incidentImpact.phtml' %}
-     {% include 'modals/incidentWorklog.phtml' %}
-     {% include 'modals/incidentStatusUpdate.phtml' %}
+     {% include 'modals/incidentImpact.twig' %}
+     {% include 'modals/incidentWorklog.twig' %}
+     {% include 'modals/incidentStatusUpdate.twig' %}
 {% endblock %}
 
 

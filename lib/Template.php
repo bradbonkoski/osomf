@@ -35,14 +35,14 @@ class Template
 //
 //        extract($this->_variables);
 //
-//        if (file_exists(PATH."/www/views/header.phtml")) {
-//            include(PATH."/www/views/header.phtml");
+//        if (file_exists(PATH."/www/views/header.twig")) {
+//            include(PATH."/www/views/header.twig");
 //        }
 //
 //        include("www/views/{$this->_controller}/{$this->_action}.phtml");
 //
-//        if (file_exists(PATH."/www/views/footer.phtml")) {
-//            include(PATH."/www/views/footer.phtml");
+//        if (file_exists(PATH."/www/views/footer.twig")) {
+//            include(PATH."/www/views/footer.twig");
 //        }
         $nav = new Navigation();
         $this->_variables['nav'] = $nav->getMenu();
@@ -50,7 +50,7 @@ class Template
         //echo "<pre>".print_r($this->_variables, true)."</pre>";
         //echo $this->_controller."/".$this->_action.".phtml<br/>";
         $template = $this->_twig->loadTemplate(
-            $this->_controller."/".$this->_action.".phtml"
+            $this->_controller."/".$this->_action.".twig"
         );
 
         $template->display($this->_variables);

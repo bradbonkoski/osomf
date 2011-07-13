@@ -25,8 +25,8 @@
 {% endblock %}
 
     <div id="mainNav">
-    {% include "navigation.phtml" %}
-    {% include "topSearch.phtml" %}
+    {% include "navigation.twig" %}
+    {% include "topSearch.twig" %}
         <div id="subnav">
     {% block subnav %}
 
@@ -37,7 +37,7 @@
 
   <div id="content">{% block content %}Default Content{% endblock %}</div>
   <div id="footer">
-    {% include "footer.phtml" %}
+    {% include "footer.twig" %}
   </div>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>

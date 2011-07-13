@@ -18,11 +18,7 @@ class home extends ControllerBase
     {
         $this->setAction("view");
         $params = $this->parseParams($params);
+        $this->data['pageTitle'] = 'OSOMF - Home Page/Dashboard';
     }
 
-    public function add( $params )
-    {
-        $this->setAction("add");
-        $params = $this->parseParams($params);
-    }
 }
