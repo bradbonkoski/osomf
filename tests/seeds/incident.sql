@@ -42,8 +42,12 @@ insert into incident set
 
 
 -- test impacted Data
-insert into impacted set incidentId = 1, impactType = 'asset', impactValue=1, impactDesc = 'Machine is down!';
-insert into impacted set incidentId = 1, impactType = 'project', impactValue = 1, impactDesc='Users unable to play';
+insert into impacted set impactId = 1, incidentId = 1,
+    impactType = 'asset', impactValue=1,
+    impactDesc = 'Machine is down!', impactSeverity = 1;
+insert into impacted set impactId = 2, incidentId = 1,
+    impactType = 'project', impactValue = 1,
+    impactDesc='Users unable to play', impactSeverity=2;
 
 
 -- test worklog data

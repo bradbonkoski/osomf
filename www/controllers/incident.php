@@ -74,6 +74,9 @@ class incident extends ControllerBase
 
         $stat = new \osomf\models\IncidentStatus();
         $this->data['statusVals'] = $stat->getAllStatus();
+
+        $sev = new \osomf\models\IncidentSeverity();
+        $this->data['sevValues'] = $sev->getAllSeverity();
     }
 
 
@@ -95,6 +98,8 @@ class incident extends ControllerBase
         $i->save();
 
     }
+
+
 
     public function edit($params)
     {
@@ -150,6 +155,7 @@ class incident extends ControllerBase
                     "/osomf/project/view/".$i->getRespProjId();
 
             $this->data['worklogs'] = $i->getWorklogs();
+            $this->data['impacts'] = $i->getImpacts();
             //echo "<pre>".print_r($this->data, true)."</pre>";
             
         } catch (Exception $e) {
@@ -179,6 +185,49 @@ class incident extends ControllerBase
             <td>WORKLOG</td>
             <td>".urldecode($data['text'])."</td>
         </tr>";
+    }
+
+    public function addImpact($params)
+    {
+        $this->ac = true;
+        $data = $this->parseGetParams($params);
+        $userId = $_COOKIE['userId'];
+        $i = new IncidentModel(IncidentModel::RW);
+        $i->loadIncident($data['incident']);
+        $vals = $i->addImpact(
+            $userId,
+            $data['type'],
+            $data['entity'],
+            urldecode($data['desc']),
+            $data['sev']
+        );
+        $ret = "<tr>
+            <td>{$data['type']}</td>
+            <td>{$vals['name']}</td>
+            <td>{$vals['sev']}</td>
+            <td>".urldecode($data['desc'])."</td>
+            <td>
+                <img
+                    src=\"/osomf/www/img/cancel.png\"
+                    onclick=\"javascript:removeImpact('{$vals['impactId']}')\"
+                />
+            </td>
+            </tr>";
+        echo $ret;
+    }
+
+    public function removeImpact($params)
+    {
+        $this->ac = true;
+        $data = $this->parseGetParams($params);
+        $userId = $_COOKIE['userId'];
+        $i = new IncidentModel(IncidentModel::RW);
+        try {
+            $i->loadIncident($data['incidentId']);
+            $i->removeImpact($data['impactId'], $userId);
+        } catch (\Exception $e) {
+            error_log("Problem removing impact");
+        }
     }
 
     public function statusChange( $params )

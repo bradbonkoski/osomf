@@ -47,7 +47,7 @@ class AssetModel extends DB
     public $acquiredDate;
     public $disposalDate;
 
-    public function __construct($conn)
+    public function __construct($conn = self::RO)
     {
         if (!in_array($conn, $this->_validConn)) {
             throw new \Exception("Invalid Connection");
@@ -83,6 +83,12 @@ class AssetModel extends DB
         $this->_tableKey = "ciid";
         
     }
+
+    public function getAssetName()
+    {
+        return $this->ciName;
+    }
+
 
     public function getOwnerId()
     {

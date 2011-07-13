@@ -16,6 +16,7 @@ use \osomf\models\IncidentSeverity;
 use \osomf\models\ProjectModel;
 use \osomf\models\UserModel;
 use \osomf\models\Worklog;
+use \osomf\models\IncidentImpact;
 
 class IncidentModel extends DB
 {
@@ -41,6 +42,7 @@ class IncidentModel extends DB
     private $_ctime;
     private $_mtime;
     private $_worklogs;
+    private $_impacts;
 
     private $_history;
     private $_changes;
@@ -75,6 +77,7 @@ class IncidentModel extends DB
         $this->_ctime = '';
         $this->_mtime = '';
         $this->_worklogs = array();
+        $this->_impacts = array();
         $this->_history = array();
         $this->_changes = array();
         
@@ -398,6 +401,103 @@ class IncidentModel extends DB
         return $arr;
     }
 
+    public function getImpacts()
+    {
+        $arr = array();
+
+        $s = new IncidentSeverity();
+        foreach ($this->_impacts as $im) {
+            $s->loadSeverity($im->getImpactSeverity());
+            $arr[] = array(
+                'id' => $im->getImpactId(),
+                'type' => $im->getImpactType(),
+                'item' => $im->getImpactedName(),
+                'itemId' => $im->getImpactValId(),
+                'desc' => $im->getImpactDesc(),
+                'sev' => $s->getSevName(),
+            );
+        }
+        return $arr;
+    }
+
+    private function _addHistItem($user, $changes)
+    {
+        $sql = "insert into incidentHistory set incidentId = ?,
+                mUser = ?, changes = ?";
+            $stmt = $this->_db->prepare($sql);
+            if (!$stmt->execute(
+                array(
+                    $this->_incidentId,
+                    $user,
+                    serialize($changes)
+                )
+            )) {
+                $err = print_r($stmt->errorInfo(), true);
+                error_log($err);
+                throw new \Exception("Troubles Adding history");
+            }
+    }
+
+    public function removeImpact($id, $userId)
+    {
+        if (array_key_exists($id, $this->_impacts)) {
+            $ii = new IncidentImpact();
+            $ii->loadImpacted($id);
+            $impacted = $ii->getImpactedName();
+            $ii->remove();
+            $arr = array(
+                'col' => 'Removal of Impact',
+                'orig' => $impacted,
+                'new' => ''
+            );
+            $this->_addHistItem($userId, $arr);
+        } else {
+            throw new \Exception("Impact not tied to this incident");
+        }
+    }
+
+    public function addImpact($userId, $type, $val, $desc, $sev)
+    {
+        $ii = new IncidentImpact(IncidentImpact::RW);
+        if (!in_array($type, $ii->validImpacts)) {
+            throw new \Exception("Unknown impact type");
+        }
+
+        if (!is_numeric($val)) {
+            throw new \Exception("Impact Value must be numeric");
+        }
+
+        if (!is_numeric($sev)) {
+            throw new \Exception("Impact Severity must be numeric");
+        }
+
+        $ii->setIncidentId($this->_incidentId);
+        $ii->setImpactType($type);
+        $ii->setImpactVal($val);
+        $ii->setImpactDesc($desc);
+        $ii->setImpactSeverity($sev);
+        try {
+            $ii->mapImpactedObject();
+        } catch (Exception $e) {
+            throw $e;
+        }
+        $hist = array(
+            'col' => 'New Impact',
+            'orig' => '',
+            'new' => $ii->getImpactedName()
+        );
+        $this->_addHistItem($userId, $hist);
+        $ii->save();
+        $is = new IncidentSeverity();
+        $is->loadSeverity($sev);
+        return array(
+            'name' => $ii->getImpactedName(),
+            'impactId' => $ii->getImpactId(),
+            'sev' => $is->getSevName()
+        );
+    }
+
+
     public function loadIncident($incidentId)
     {
         if (!is_numeric($incidentId) || $incidentId <= 0 ) {
@@ -443,6 +543,7 @@ class IncidentModel extends DB
         $this->_ctime = $row['ctime'];
         $this->_mtime = $row['mtime'];
         $this->loadWorkLogs();
+        $this->loadImpacts();
     }
 
     public function loadWorklogs()
@@ -462,6 +563,23 @@ class IncidentModel extends DB
             $wl = new Worklog(self::RO);
             $wl->getWlEntry($r['worklogId']);
             $this->_worklogs[] = $wl;
+        }
+    }
+
+    public function loadImpacts()
+    {
+        $sql = "select impactId from impacted
+            where incidentId = ?";
+        $stmt = $this->_db->prepare($sql);
+        if (!$stmt->execute(array($this->_incidentId))) {
+            throw new \Exception("Troubles Loading Impacts");
+        }
+
+        $rows = $stmt->fetchAll();
+        foreach ($rows as $r) {
+            $im = new IncidentImpact();
+            $im->loadImpacted($r['impactId']);
+            $this->_impacts[$r['impactId']] = $im;
         }
     }
 

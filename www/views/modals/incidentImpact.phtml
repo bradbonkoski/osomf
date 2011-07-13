@@ -10,4 +10,31 @@
             </select>
         </dd>
     </dl>
+
+    <dl>
+        <dt><label>Impacted Entity</label></dt>
+        <dd><input id="impactedEntity" type="text"/></dd>
+        <input type="hidden" name="entityId" id="entityId" value=""/>
+        <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+    </dl>
+
+    <dl>
+        <dt><label>Impact Description</label></dt>
+        <dd><textarea id="impactDesc"></textarea></dd>
+    </dl>
+
+    <dl>
+        <dt><label>Impact Severity</label></dt>
+        <dd>
+            <select id="impactSev">
+                {% for id, val in sevValues %}
+                <option value="{{ id }}">{{ val }}</option>
+                {% endfor %}
+            </select>
+        </dd>
+    </dl>
+
+    <dl>
+        <dt><input id="btnImpactAdd" type="button" value="Add"/></dt>
+    </dl>
 </div>

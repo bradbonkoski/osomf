@@ -6,6 +6,20 @@
  * To change this template use File | Settings | File Templates.
  */
 
+function removeImpact(impactId) {
+    var incident =  $("#incidentId").val();
+    //alert(incident);
+    var data = "incidentId="+incident+"&impactId="+impactId
+    $.ajax({
+        type: "GET",
+        url: "/osomf/incident/removeImpact",
+        data: data,
+        success: function(html) {
+            $('#impactRow'+impactId).remove();
+        }
+    });
+}
+
 $(function() {
     // Load dialog on click
 	$('#impactAddModal').click(function (e) {
@@ -50,6 +64,50 @@ $(function() {
             data: "id="+incident+"&text="+txt,
             success: function(html) {
                 $('#incidentWorklogTable > tbody:last').append(html);
+                $.modal.close();
+            }
+        });
+    });
+
+    $('#newImpact').change(function() {
+        $("#impactedEntity").val('');
+        if ($("#newImpact").val() == 'asset') {
+            $('#impactedEntity').autocomplete("option", "source",
+                function (request, response) { $.getJSON("/osomf/asset/autocomplete", {term: request.term}, response)});
+        } else {
+            //alert('project');
+            $('#impactedEntity').autocomplete("option", "source",
+                function (request, response) { $.getJSON("/osomf/project/autocomplete", {term: request.term}, response)});
+        }
+    });
+
+    $("#impactedEntity").autocomplete({
+        source: function (request, response) {
+            $.getJSON("/osomf/asset/autocomplete", {term: request.term}, response);
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            //disableBox("ciOwner", "clearOwnerBox");
+            $('#impactedEntity').attr('disabled', true);
+            $('#newImpact').attr('disabled', true);
+            $('#entityId').val(ui.item.id);
+        }
+    });
+
+    $('#btnImpactAdd').click(function(e) {
+        var incident =  $("#incidentId").val();
+        var impactType = $("#newImpact").val();
+        var id = $('#entityId').val();
+        var desc = $('#impactDesc').val();
+        var sev = $('#impactSev').val();
+        var data = "incident="+incident+"&type="+impactType+"&entity="+id+"&desc="+desc+"&sev="+sev;
+        //alert(data);
+        $.ajax({
+            type: "GET",
+            url: "/osomf/incident/addImpact",
+            data: data,
+            success: function(html) {
+                $('#incidentImpactsTable > tbody:last').append(html);
                 $.modal.close();
             }
         });

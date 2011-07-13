@@ -1,5 +1,7 @@
 {% extends "layout.phtml" %}
-
+{% block css %}
+        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
+{% endblock %}
 {% block content %}
         <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
     <a href="/osomf/incident/edit/{{ incidentId }}">edit</a>
@@ -85,7 +87,24 @@
 
     <fieldset>
         <legend>impacts <a id="impactAddModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
-        
+        <table class="baseTable" id="incidentImpactsTable">
+            <tr>
+                <th>type</th>
+                <th>impact</th>
+                <th>severity</th>
+                <th>description</th>
+                <th></th>
+            </tr>
+            {% for im in impacts %}
+            <tr id="impactRow{{ im.id }}">
+                <td>{{ im.type }}</td>
+                <td><a href="/osomf/{{ im.type }}/view/{{ im.itemId }}">{{ im.item }}</a></td>
+                <td>{{ im.sev }}</td>
+                <td>{{ im.desc }}</td>
+                <td><img src="/osomf/www/img/cancel.png" onclick="javascript:removeImpact('{{ im.id }}')"/> </td>
+            </tr>
+            {% endfor %}
+        </table>
     </fieldset>
 
     <fieldset>
@@ -120,6 +139,10 @@
 
     
 {% block js %}
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/jquery.simplemodal.1.4.1.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/incident.js"></script>
 {% endblock %}
