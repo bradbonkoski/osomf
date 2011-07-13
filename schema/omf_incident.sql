@@ -16,6 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `bugSystems`
+--
+
+DROP TABLE IF EXISTS `bugSystems`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bugSystems` (
+  `sysId` int(11) NOT NULL AUTO_INCREMENT,
+  `systemName` varchar(32) NOT NULL,
+  `systemDesc` text,
+  `systemLink` text,
+  PRIMARY KEY (`sysId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `impacted`
 --
 
@@ -31,7 +47,7 @@ CREATE TABLE `impacted` (
   `impactSeverity` int(11) DEFAULT NULL,
   PRIMARY KEY (`impactId`),
   KEY `incidentId` (`incidentId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +77,7 @@ CREATE TABLE `incident` (
   PRIMARY KEY (`incidentId`),
   KEY `severity` (`severity`),
   KEY `statusId` (`statusId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,6 +95,68 @@ CREATE TABLE `incidentHistory` (
   `changes` text NOT NULL,
   PRIMARY KEY (`histId`),
   KEY `incidentId` (`incidentId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `remTasks`
+--
+
+DROP TABLE IF EXISTS `remTasks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `remTasks` (
+  `taskId` int(11) NOT NULL AUTO_INCREMENT,
+  `remId` int(11) NOT NULL,
+  `ownerId` int(11) NOT NULL,
+  `systemId` int(11) NOT NULL,
+  `tktNum` varchar(64) NOT NULL,
+  `dueDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isComplete` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`taskId`),
+  KEY `remId` (`remId`),
+  KEY `ownerId` (`ownerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `remediation`
+--
+
+DROP TABLE IF EXISTS `remediation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `remediation` (
+  `remId` int(11) NOT NULL AUTO_INCREMENT,
+  `incidentId` int(11) NOT NULL,
+  `ownerId` int(11) NOT NULL,
+  `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `mtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `notes` text,
+  `rootCauseCat` int(11) DEFAULT NULL,
+  `rootCauseId` int(11) DEFAULT NULL,
+  `rootCauseDesc` text,
+  PRIMARY KEY (`remId`),
+  KEY `incidentId` (`incidentId`),
+  KEY `ownerId` (`ownerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `rootCauses`
+--
+
+DROP TABLE IF EXISTS `rootCauses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rootCauses` (
+  `causeId` int(11) NOT NULL AUTO_INCREMENT,
+  `causeType` enum('category','rootcause') NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`causeId`),
+  KEY `causeType` (`causeType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,7 +207,7 @@ CREATE TABLE `worklog` (
   `data` text,
   PRIMARY KEY (`workLogId`),
   KEY `incidentId` (`incidentId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -141,4 +219,4 @@ CREATE TABLE `worklog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-07 14:19:53
+-- Dump completed on 2011-07-13 13:22:20
