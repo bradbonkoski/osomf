@@ -7,6 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
+use \osomf\models\IncidentModel;
+
 class home extends ControllerBase
 {
     public function __construct($controller = '', $action = '')
@@ -19,6 +21,8 @@ class home extends ControllerBase
         $this->setAction("view");
         $params = $this->parseParams($params);
         $this->data['pageTitle'] = 'OSOMF - Home Page/Dashboard';
+        $i = new IncidentModel();
+        $this->data['incidents'] = $i->listHomeIncidents();
     }
 
 }

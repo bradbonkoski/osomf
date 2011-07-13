@@ -5,6 +5,33 @@
 {% endblock %}
 {% block content %}
 
-<h1>Default View for Controller: home and Action: view</h1>
+<div id="pageTitle">
+        <h1>{{ pageTitle }}</h1>
+</div>
 
+
+<fieldset>
+    <legend>Current Incidents</legend>
+    <table class="baseTable" id="incidentHome">
+        <tr>
+            <th>Incident</th>
+            <th>Title</th>
+            <th>Status/Severity</th>
+            <th>start time</th>
+        </tr>
+        {% for i in incidents %}
+            <tr>
+                <td><a href="/osomf/incident/view/{{ i.incidentId }}">{{ i.incidentId }}</a></td>
+                <td>{{ i.title }}</td>
+                <td>{{ i.status }} / {{ i.severity }}</td>
+                <td>{{ i.start_time }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>Changes</legend>
+    Next Phase
+</fieldset>
 {% endblock %}
