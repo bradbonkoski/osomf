@@ -93,4 +93,5 @@ class RoutingLbTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('search', $rl->getController());
         $this->assertEquals('search', $rl->getAction());
     }
+
 }

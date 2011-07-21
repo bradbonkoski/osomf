@@ -28,4 +28,14 @@ class search extends ControllerBase
     {
         $this->setAction('asset');
     }
+
+    public function quick($params)
+    {
+        $this->ac = true;
+        $params = $this->parseGetParams($params);
+        //echo "<pre>".print_r($params, true)."</pre>";
+        list($cont, $id) = explode(":", urldecode($params['topSearchBox']));
+        //echo "Controller: $cont and ID: $id<br/>";
+        $this->redirect($cont, 'view', $id);
+    }
 }
