@@ -1,0 +1,10 @@
+
+input#btnIncident {
+    background:url(../img/lightning.png) no-repeat;
+    padding-left: 1.15em;
+}
+
+input#btnAsset {
+    background:url(../img/server.png) no-repeat;
+    padding-left: 1.15em;
+}

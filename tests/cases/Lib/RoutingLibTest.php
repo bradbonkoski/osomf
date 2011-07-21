@@ -2,7 +2,6 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
-//require_once 'lib/Routes.php';
 use \Routes;
 
 /**
@@ -83,5 +82,15 @@ class RoutingLbTest extends PHPUnit_Framework_TestCase
         echo "Controller is: ".$rl->getController()."\n";
         echo "Action is: ".$rl->getAction()."\n";
         echo "Params: ".$rl->getParams()."\n";
+    }
+
+    /**
+     * @test
+     */
+    public function searchRoutingTest()
+    {
+        $rl = new Routes('localhost/osomf/search/search');
+        $this->assertEquals('search', $rl->getController());
+        $this->assertEquals('search', $rl->getAction());
     }
 }

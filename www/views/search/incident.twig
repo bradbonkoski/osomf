@@ -1,0 +1,33 @@
+{% extends "layout.twig" %}
+
+{% block css %}
+ <link rel="stylesheet" href="/osomf/www/css/search.css">
+{% endblock %}
+
+{% block content %}
+
+{% include 'search/searchNav.twig' %}
+
+    <div id="pageTitle">
+        <h1>Incident Search</h1>
+    </div>
+
+    <form action="" method="POST" name="frmIncidentSearch">
+
+    <fieldset>
+        <legend>incident search</legend>
+        <dl>
+            <dt><label>incident title</label></dt>
+            <dd><input type="text" name="title"/></dd>
+        </dl>
+        
+    </fieldset>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="/osomf/www/js/search.js"></script>
+{% endblock %}
+
+
