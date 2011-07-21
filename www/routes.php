@@ -43,9 +43,9 @@ if (file_exists(PATH."/{$prefix}{$cont}.php")) {
         echo "ERROR!<br/>";
     }
 } else {
-    echo "PATH: ".PATH."{$prefix}{$cont}.php\n";
+    //echo "PATH: ".PATH."{$prefix}{$cont}.php\n";
     //default to main controller
-    require("www/controllers/main.php");
-    $controller = new main("main", "index");
-    call_user_func_array(array($controller, "index"), array());
+    require("www/controllers/home.php");
+    $controller = new home("home", "view");
+    call_user_func_array(array($controller, "view"), array());
 }
