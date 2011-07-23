@@ -276,6 +276,12 @@ input.btnEdit {
     background:url(../img/application_edit.png) no-repeat;
     padding-left: 1.15em;
 }
+
+input.btnSearch {
+    background:url(../img/magnifier.png) no-repeat;
+    padding-left: 1.15em;
+}
+
 /* Modal Styles */
 .modal {display:none;}
 

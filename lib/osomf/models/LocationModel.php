@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * Location Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
+
 namespace osomf\models;
 
 use osomf\DB;
@@ -7,13 +19,15 @@ use osomf\models\User;
 use osomf\models\UserGroup;
 
 /**
-* Location Model Class
-*
-* @category Model
-* @package Location
-* @author Brad Bonkoski <brad.bonkoski@yahoo.com>
-* @copyright Copyright (c) 2011
-*/
+ * Location Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
 
 class LocationModel extends DB
 {

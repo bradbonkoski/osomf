@@ -1,13 +1,26 @@
 <?php
+
 /**
- * Created by JetBrains PhpStorm.
- * User: bradb
- * Date: 6/21/11
- * Time: 2:33 PM
- * To change this template use File | Settings | File Templates.
+ * Home Controller
+ *
+ *
+ * @category    Controller
+ * @package     Home
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
  */
 
 use \osomf\models\IncidentModel;
+
+/**
+ * Home Controller
+ *
+ *
+ * @category    Controller
+ * @package     Home
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class home extends ControllerBase
 {

@@ -1,13 +1,26 @@
 <?php
+
 /**
- * Created by JetBrains PhpStorm.
- * User: bradb
- * Date: 6/8/11
- * Time: 9:00 AM
- * To change this template use File | Settings | File Templates.
+ * Project Controller
+ *
+ *
+ * @category    Controller
+ * @package     Project
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
  */
 
 use \osomf\models\ProjectModel;
+
+/**
+ * Project Controller
+ *
+ *
+ * @category    Controller
+ * @package     Project
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class project extends ControllerBase
 {

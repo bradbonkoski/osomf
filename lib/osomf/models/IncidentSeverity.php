@@ -1,15 +1,30 @@
 <?php
+
 /**
- * Created by JetBrains PhpStorm.
- * User: bradb
- * Date: 7/7/11
- * Time: 12:31 PM
- * To change this template use File | Settings | File Templates.
+ * Incident Severity Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
  */
  
 namespace osomf\models;
 
 use osomf\DB;
+
+/**
+ * Incident Severity Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
 
 class IncidentSeverity extends DB
 {
@@ -59,7 +74,7 @@ class IncidentSeverity extends DB
         $stmt->execute(array($sevId));
         $row = $stmt->fetch();
         if ($row === false) {
-            throw new \Exception("Status id {$sevId} does not exist");
+            throw new \Exception("Severity id {$sevId} does not exist");
         }
 
         $this->_sevId = $sevId;

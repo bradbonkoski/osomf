@@ -1,11 +1,15 @@
 <?php
+
 /**
- * Created by JetBrains PhpStorm.
- * User: bradb
- * Date: 7/7/11
- * Time: 2:22 PM
- * To change this template use File | Settings | File Templates.
+ * Incident Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
  */
+
  
 namespace osomf\models;
 
@@ -17,6 +21,16 @@ use \osomf\models\ProjectModel;
 use \osomf\models\UserModel;
 use \osomf\models\Worklog;
 use \osomf\models\IncidentImpact;
+
+/**
+ * Incident Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class IncidentModel extends DB
 {
@@ -47,7 +61,11 @@ class IncidentModel extends DB
     private $_history;
     private $_changes;
 
-
+    /**
+     * Incident Model Constructor
+     * @throws \Exception
+     * @param string $conn
+     */
     public function __construct($conn = self::RO)
     {
         if (!in_array($conn, $this->_validConn)) {
@@ -85,6 +103,11 @@ class IncidentModel extends DB
         $this->_tableKey = "incidentId";
     }
 
+    /**
+     * Incident Model Validation
+     * @throws \Exception
+     * @return void
+     */
     private function _validate()
     {
         $validators = array(
@@ -115,21 +138,35 @@ class IncidentModel extends DB
         }
     }
 
+    /**
+     * @return int
+     */
     public function getIncidentId()
     {
         return $this->_incidentId;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setIncidentId($val)
     {
         $this->_incidentId = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         return $this->_title;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setTitle($val)
     {
         if (
@@ -145,11 +182,18 @@ class IncidentModel extends DB
         $this->_title = $val;
     }
 
+    /**
+     * @return int
+     */
     public function getStatusId()
     {
         return $this->_statusId;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setStatus($val)
     {
         if (
@@ -164,12 +208,19 @@ class IncidentModel extends DB
         }
     }
 
+    /**
+     * @return string
+     */
     public function getStartTime()
     {
         //perhaps we should provide mapping to User Pref here?
         return $this->_startTime;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setStartTime($val)
     {
         if (
@@ -185,11 +236,18 @@ class IncidentModel extends DB
         $this->_startTime = $val;
     }
 
+    /**
+     * @return int
+     */
     public function getCreatedById()
     {
         return $this->_createdBy;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setCreatedBy($val)
     {
         // only update if there is no creator
@@ -199,21 +257,35 @@ class IncidentModel extends DB
         }
     }
 
+    /**
+     * @return int
+     */
     public function getUpdatedById()
     {
         return $this->_updatedBy;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setUpdatedBy($val)
     {
         $this->_updatedBy = $val;
     }
 
+    /**
+     * @return int
+     */
     public function getSeverityId()
     {
         return $this->_severityId;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setSeverity($val)
     {
         if (
@@ -233,11 +305,18 @@ class IncidentModel extends DB
         $this->_severityId = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getImpact()
     {
         return $this->_impact;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setImpact($val)
     {
         if (
@@ -253,11 +332,18 @@ class IncidentModel extends DB
         $this->_impact = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getRevImpact()
     {
         return $this->_revImpact;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setRevImpact($val)
     {
         if (
@@ -273,11 +359,18 @@ class IncidentModel extends DB
         $this->_revImpact = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->_desc;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setDescription($val)
     {
         if (
@@ -293,11 +386,18 @@ class IncidentModel extends DB
         $this->_desc = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getResolveTime()
     {
         return $this->_resolveTime;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setResolveTime($val)
     {
         if (
@@ -313,11 +413,18 @@ class IncidentModel extends DB
         $this->_resolveTime = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getResolveSteps()
     {
         return $this->_resolveSteps;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setResolveSteps($val)
     {
         if (
@@ -333,11 +440,18 @@ class IncidentModel extends DB
         $this->_resolveSteps = $val;
     }
 
+    /**
+     * @return int
+     */
     public function getRespProjId()
     {
         return $this->_respProjId;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setRespProjId($val)
     {
         if (
@@ -357,11 +471,18 @@ class IncidentModel extends DB
         $this->_respProjId = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getDetectTime()
     {
         return $this->_detectTime;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     public function setDetectTime($val)
     {
         if (
@@ -377,16 +498,25 @@ class IncidentModel extends DB
         $this->_detectTime = $val;
     }
 
+    /**
+     * @return string
+     */
     public function getCtime()
     {
         return $this->_ctime;
     }
 
+    /**
+     * @return string
+     */
     public function getMtime()
     {
         return $this->_mtime;
     }
 
+    /**
+     * @return array
+     */
     public function getWorklogs()
     {
         // might need something a little better here!
@@ -406,6 +536,9 @@ class IncidentModel extends DB
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function getImpacts()
     {
         $arr = array();
@@ -425,6 +558,12 @@ class IncidentModel extends DB
         return $arr;
     }
 
+    /**
+     * @throws \Exception
+     * @param $user
+     * @param $changes
+     * @return void
+     */
     private function _addHistItem($user, $changes)
     {
         $sql = "insert into incidentHistory set incidentId = ?,
@@ -443,6 +582,12 @@ class IncidentModel extends DB
             }
     }
 
+    /**
+     * @throws \Exception
+     * @param $id
+     * @param $userId
+     * @return void
+     */
     public function removeImpact($id, $userId)
     {
         if (array_key_exists($id, $this->_impacts)) {
@@ -461,6 +606,15 @@ class IncidentModel extends DB
         }
     }
 
+    /**
+     * @throws \Exception
+     * @param $userId
+     * @param $type
+     * @param $val
+     * @param $desc
+     * @param $sev
+     * @return array
+     */
     public function addImpact($userId, $type, $val, $desc, $sev)
     {
         $ii = new IncidentImpact(IncidentImpact::RW);
@@ -476,6 +630,7 @@ class IncidentModel extends DB
             throw new \Exception("Impact Severity must be numeric");
         }
 
+        //TODO Check for Duplicate Impacts before Insertion
         $ii->setIncidentId($this->_incidentId);
         $ii->setImpactType($type);
         $ii->setImpactVal($val);
@@ -483,7 +638,7 @@ class IncidentModel extends DB
         $ii->setImpactSeverity($sev);
         try {
             $ii->mapImpactedObject();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
         $hist = array(
@@ -491,10 +646,15 @@ class IncidentModel extends DB
             'orig' => '',
             'new' => $ii->getImpactedName()
         );
+        try {
+            $is = new IncidentSeverity();
+            $is->loadSeverity($sev);
+        } catch (\Exception $e) {
+            throw $e;
+        }
         $this->_addHistItem($userId, $hist);
         $ii->save();
-        $is = new IncidentSeverity();
-        $is->loadSeverity($sev);
+
         return array(
             'name' => $ii->getImpactedName(),
             'impactId' => $ii->getImpactId(),
@@ -503,6 +663,11 @@ class IncidentModel extends DB
     }
 
 
+    /**
+     * @throws \Exception
+     * @param $incidentId
+     * @return void
+     */
     public function loadIncident($incidentId)
     {
         if (!is_numeric($incidentId) || $incidentId <= 0 ) {
@@ -551,6 +716,10 @@ class IncidentModel extends DB
         $this->loadImpacts();
     }
 
+    /**
+     * @throws \Exception
+     * @return void
+     */
     public function loadWorklogs()
     {
         $sql = "select worklogId from worklog
@@ -571,6 +740,10 @@ class IncidentModel extends DB
         }
     }
 
+    /**
+     * @throws \Exception
+     * @return void
+     */
     public function loadImpacts()
     {
         $sql = "select impactId from impacted
@@ -588,6 +761,10 @@ class IncidentModel extends DB
         }
     }
 
+    /**
+     * @throws \Exception
+     * @return void
+     */
     public function save()
     {
         try {
@@ -671,6 +848,9 @@ class IncidentModel extends DB
         }
     }
 
+    /**
+     * @return array
+     */
     public function getHistory()
     {
         $sql = "select * from incidentHistory where incidentId = ? order by mtime";
@@ -687,6 +867,10 @@ class IncidentModel extends DB
         return $this->_changes;
     }
 
+    /**
+     * List Home Page Incidents, Place holder to incorporate some data
+     * @return array
+     */
     public function listHomeIncidents()
     {
         $sql = "select incidentId, title, st.statusName as status,
@@ -698,5 +882,26 @@ class IncidentModel extends DB
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
+    }
+
+    public function search($cols, $crit)
+    {
+//        $cols = array('incidentId','title', 'impact');
+//
+//        $crit = array('title' => 'incident', 'resolveSteps' => 'some');
+        $where = array();
+        foreach ($crit as $k=>$v) {
+                $where[] = "$k like '%$v%'";
+        }
+
+        $sql = "select ".implode(', ', $cols)." from incident";
+        if(count($where > 0 )) {
+                $sql .= " where ".implode(' AND ', $where);
+        }
+
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
     }
 }

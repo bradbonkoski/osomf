@@ -1,16 +1,31 @@
 <?php
-namespace osomf\models;
 
 /**
- * User: bradb
- * Date: 5/28/11
- * Time: 3:53 PM
- * Copyright: (c) 2011 FHC
+ * User Group Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
  */
+
+namespace osomf\models;
 
 use osomf\DB;
 use osomf\models\UserModel;
 
+/**
+ * User Group Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
 
 class UserGroup extends DB
 {

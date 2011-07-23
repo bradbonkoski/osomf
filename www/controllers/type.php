@@ -1,6 +1,26 @@
 <?php
 
+/**
+ * Type (CI) Controller
+ *
+ *
+ * @category    Controller
+ * @package     Type
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
+
 use \osomf\models\CiType;
+
+/**
+ * Type (CI) Controller
+ *
+ *
+ * @category    Controller
+ * @package     Type
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class type extends ControllerBase
 {

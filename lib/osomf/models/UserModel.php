@@ -1,18 +1,31 @@
 <?php
 
+/**
+ * User Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
+
 namespace osomf\models;
 
 use osomf\DB;
 use osomf\Validator;
 
 /**
-* User Model Class
-*
-* @category Model
-* @package User
-* @author Brad Bonkoski <brad.bonkoski@yahoo.com>
-* @copyright Copyright (c) 2011
-*/
+ * User Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
 
 class UserModel extends DB
 {

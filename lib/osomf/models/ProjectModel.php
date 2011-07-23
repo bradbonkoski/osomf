@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * Project Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
+
 namespace osomf\models;
 
 use osomf\DB;
@@ -7,13 +19,15 @@ use osomf\models\User;
 use osomf\models\UserGroup;
 
 /**
-* Project Model Class
-*
-* @category Model
-* @package Project
-* @author Brad Bonkoski <brad.bonkoski@yahoo.com>
-* @copyright Copyright (c) 2011
-*/
+ * Project Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
 
 class ProjectModel extends DB
 {

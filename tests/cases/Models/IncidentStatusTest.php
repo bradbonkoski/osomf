@@ -74,4 +74,16 @@ class IncidentStatusTest extends PHPUnit_Framework_TestCase
         }
         $this->fail("Missed Expected Exception");
     }
+
+    /**
+     * @test
+     */
+    public function getAllStatusTest()
+    {
+        $s = new IncidentStatus();
+        $ret = $s->getAllStatus();
+        $this->assertTrue(is_array($ret));
+        $this->assertEquals('OPEN',$ret[1]);
+        //print_r($ret);
+    }
 }

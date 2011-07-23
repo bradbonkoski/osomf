@@ -1,6 +1,26 @@
 <?php
 
+/**
+ * Asset Controller
+ *
+ *
+ * @category    Controller
+ * @package     Asset
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
+
 use \osomf\models\AssetModel;
+
+/**
+ * Asset Controller
+ *
+ *
+ * @category    Controller
+ * @package     Asset
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class asset extends ControllerBase
 {

@@ -1,10 +1,14 @@
 <?php
+
 /**
- * Created by JetBrains PhpStorm.
- * User: bradb
- * Date: 7/10/11
- * Time: 7:16 AM
- * To change this template use File | Settings | File Templates.
+ * Worklog Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
  */
  
 namespace osomf\models;
@@ -12,6 +16,17 @@ use osomf\DB;
 use \osomf\models\IncidentModel;
 
 use \osomf\worklog\Status;
+
+/**
+ * Worklog Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
 
 class Worklog extends DB
 {

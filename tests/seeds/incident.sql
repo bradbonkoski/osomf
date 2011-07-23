@@ -26,7 +26,10 @@ insert into incident set
     impact = 'Not sure on the impact',
     revImpact = 'unknown',
     description = 'cat pulled out the power cord',
-    detect_time = '2010-02-01 10:55:00';
+    detect_time = '2010-02-01 10:55:00',
+    resolveTime = '2010-02-01 12:30:00',
+    resolveSteps = 'some steps taken',
+    updatedBy = 1;
 
 insert into incident set
     incidentId = 2,
@@ -40,6 +43,20 @@ insert into incident set
     description = 'cat pulled out the power cord',
     detect_time = '2010-02-01 10:55:00';
 
+insert into incident set
+    incidentId = 3,
+    title = 'Test Incident #3',
+    statusId = 1,
+    start_time = '2010-02-01 11:00:00',
+    createdBy = 1,
+    severity = 1,
+    impact = 'Not sure on the impact',
+    revImpact = 'unknown',
+    description = 'cat pulled out the power cord',
+    detect_time = '2010-02-01 10:55:00',
+    resolveTime = '2010-02-01 12:30:00',
+    resolveSteps = 'some steps taken',
+    updatedBy = 1;
 
 -- test impacted Data
 insert into impacted set impactId = 1, incidentId = 1,

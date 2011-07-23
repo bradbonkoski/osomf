@@ -1,13 +1,26 @@
 <?php
+
 /**
- * Created by JetBrains PhpStorm.
- * User: bradb
- * Date: 6/8/11
- * Time: 9:00 AM
- * To change this template use File | Settings | File Templates.
+ * User Group Controller
+ *
+ *
+ * @category    Controller
+ * @package     UserGroup
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
  */
 
 use \osomf\models\UserGroup;
+
+/**
+ * User Group Controller
+ *
+ *
+ * @category    Controller
+ * @package     UserGroup
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class group extends ControllerBase
 {

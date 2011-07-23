@@ -74,4 +74,19 @@ class IncidentSeverityTest extends PHPUnit_Framework_TestCase
         }
         $this->fail("Missed Expected Exception");
     }
+
+    /**
+     * @test
+     */
+    public function getAllSeveritytest()
+    {
+        $s = new IncidentSeverity();
+        $ret = $s->getAllSeverity();
+        $this->assertTrue(is_array($ret));
+        //print_r($ret);
+        $this->assertEquals('S0', $ret[1]);
+        $this->assertEquals('S5',$ret[6]);
+    }
+
+
 }

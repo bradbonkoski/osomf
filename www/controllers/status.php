@@ -1,6 +1,26 @@
 <?php
 
+/**
+ * Status Controller
+ *
+ *
+ * @category    Controller
+ * @package     Status
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
+
 use \osomf\models\CiStatus;
+
+/**
+ * Status Controller
+ *
+ *
+ * @category    Controller
+ * @package     Status
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class status extends ControllerBase
 {

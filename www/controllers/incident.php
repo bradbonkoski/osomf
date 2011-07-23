@@ -1,8 +1,28 @@
 <?php
 
+/**
+ * Incident Controller
+ *
+ *
+ * @category    Controller
+ * @package     Incident
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
+
 use \osomf\models\IncidentModel;
 use \osomf\models\Worklog;
 use \osomf\models\UserModel;
+
+/**
+ * Incident Controller
+ *
+ *
+ * @category    Controller
+ * @package     Incident
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class incident extends ControllerBase
 {

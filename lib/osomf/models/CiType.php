@@ -1,8 +1,31 @@
 <?php
+
+/**
+ * Configuration Item Type Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
+
 namespace osomf\models;
 
 use \osomf\DB;
- 
+
+/**
+ * Configuration Item Type Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ *
+ */
+
 class CiType extends DB
 {
 

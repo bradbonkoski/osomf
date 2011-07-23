@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Asset Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
+
 namespace osomf\models;
 
 use osomf\DB;
@@ -9,13 +20,14 @@ use osomf\models\CiType;
 use osomf\models\Projects;
 
 /**
-* Asset Model Class
-*
-* @category Model
-* @package Asset
-* @author Brad Bonkoski <brad.bonkoski@yahoo.com>
-* @copyright Copyright (c) 2011
-*/
+ * Asset Model
+ *
+ *
+ * @category    Library
+ * @package     Model
+ * @author      Brad Bonkoski <brad.bonkoski@yahoo.com>
+ * @copyright   Copyright (c) 2011 Fitzers House of Code
+ */
 
 class AssetModel extends DB
 {
@@ -449,5 +461,26 @@ class AssetModel extends DB
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
+    }
+
+    public function search($cols, $crit)
+    {
+//        $cols = array('incidentId','title', 'impact');
+//
+//        $crit = array('title' => 'incident', 'resolveSteps' => 'some');
+        $where = array();
+        foreach ($crit as $k=>$v) {
+                $where[] = "$k like '%$v%'";
+        }
+
+        $sql = "select ".implode(', ', $cols)." from ci";
+        if(count($where > 0 )) {
+                $sql .= " where ".implode(' AND ', $where);
+        }
+
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
     }
 }

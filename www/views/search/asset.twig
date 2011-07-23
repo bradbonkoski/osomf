@@ -11,7 +11,50 @@
     <div id="pageTitle">
         <h1>Asset Search</h1>
     </div>
-     
+
+     <form action="" method="POST" name="frmAssetSearch">
+
+    <fieldset>
+        <legend>asset search</legend>
+        <dl>
+            <dt><label>asset name</label></dt>
+            <dd><input type="text" name="ciName"/></dd>
+        </dl>
+
+        <dl>
+            <dt><input type="submit" class="btnSearch" name="btnSearch" value="Search"/></dt>
+        </dl>
+
+    </fieldset>
+    </form>
+
+    {% if results >= 0 %}
+    <fieldset>
+        <legend>Search Results</legend>
+        {% if results == 0 %}
+        No Results Found
+        {% else %}
+        <table class="baseTable">
+        <tr>
+            {% for col in cols %}
+                <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+        {% for res in searchResults %}
+            <tr>
+                {% for colName, colVal in res %}
+                {% if colName == 'ciid' %}
+                    <td><a href="/osomf/asset/view/{{ colVal }}">{{ colVal }}</a> </td>
+                {% else %}
+                    <td>{{ colVal }}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </table>
+        {% endif %}
+    </fieldset>
+    {% endif %}
 
 {% endblock %}
 
