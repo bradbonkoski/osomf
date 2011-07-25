@@ -40,7 +40,7 @@ class IncidentControllerTest extends PHPUnit_Framework_TestCase
     {
         $c = new incident('', 'edit');
         $c->setTest();
-        $c->edit("1");
+        $c->edit("5");
 
         //print_r($c->data);
         $this->assertTrue(is_array($c->data['sevValues']));
@@ -50,7 +50,7 @@ class IncidentControllerTest extends PHPUnit_Framework_TestCase
         $_POST['subIncident'] =1;
         $upTitle = 'incident controller test updated title';
         $_POST['title'] = $upTitle;
-        $c->edit("1");
+        $c->edit("5");
         $this->assertEquals($upTitle, $c->data['incidentTitle']);
         //print_r($c->data);
     }
