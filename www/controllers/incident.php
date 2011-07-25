@@ -83,13 +83,16 @@ class incident extends ControllerBase
         //print_r($params);
         if (!array_key_exists(0, $params) || !is_numeric($params[0])) {
             error_log("Redirect here!");
-            //exit;
             return $this->home($params);
         }
         $this->_incidentId = $params[0];
 
         $this->_loadIncidentData();
+
         if (count($this->data['err']) > 0 ) {
+            if ($this->_test) {
+                print_r($this->data['err']);
+            }
             $this->redirect('incident', 'view');
         }
 
@@ -170,7 +173,9 @@ class incident extends ControllerBase
 
             $this->data['resolveTime'] = $i->getResolveTime();
             $this->data['resolveSteps'] = $i->getResolveSteps();
-            $this->data['respProjName'] = $i->respProj->projName;
+            if ($i->respProj instanceof \osomf\models\ProjectModel) {
+                $this->data['respProjName'] = $i->respProj->projName;
+            }
             $this->data['proj'] = $i->getRespProjId();
             $this->data['respProjLink'] =
                     "/osomf/project/view/".$i->getRespProjId();
