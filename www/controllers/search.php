@@ -30,10 +30,10 @@ class search extends ControllerBase
         parent::__construct("search", $action);
     }
 
-    public function search()
-    {
-        return $this->incident();
-    }
+//    public function search()
+//    {
+//        return $this->incident();
+//    }
 
     public function incident($params = '')
     {
