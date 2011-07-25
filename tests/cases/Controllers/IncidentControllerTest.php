@@ -33,5 +33,26 @@ class IncidentControllerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($c->data['sevValues']));
     }
 
+    /**
+     * @test
+     */
+    public function IncidentControllerEditTest()
+    {
+        $c = new incident('', 'edit');
+        $c->setTest();
+        $c->edit("1");
+
+        //print_r($c->data);
+        $this->assertTrue(is_array($c->data['sevValues']));
+        $this->assertTrue(is_array($c->data['impacts']));
+        $this->assertTrue(is_array($c->data['worklogs']));
+
+        $_POST['subIncident'] =1;
+        $upTitle = 'incident controller test updated title';
+        $_POST['title'] = $upTitle;
+        $c->edit("1");
+        $this->assertEquals($upTitle, $c->data['incidentTitle']);
+        //print_r($c->data);
+    }
     
 }

@@ -109,21 +109,49 @@ class incident extends ControllerBase
     {
         $i = new IncidentModel(IncidentModel::RW);
         $i->loadIncident($this->_incidentId);
-        $i->setTitle($this->_postedData['title']);
-        $i->setDescription($this->_postedData['desc']);
-        $i->setImpact($this->_postedData['impact']);
-        $i->setRevImpact($this->_postedData['revImpact']);
-        $i->setDetectTime($this->_postedData['detectTime']);
-        $i->setStartTime($this->_postedData['startTime']);
-        $i->setResolveTime($this->_postedData['resolveTime']);
-        $i->setResolveSteps($this->_postedData['resolveSteps']);
-        $i->setRespProjId($this->_postedData['projId']);
-        $i->setSeverity($this->_postedData['severity']);
+        
+        if (isset($this->_postedData['title'])) {
+            $i->setTitle($this->_postedData['title']);
+        }
+
+        if (isset($this->_postedData['desc'])) {
+            $i->setDescription($this->_postedData['desc']);
+        }
+
+        if (isset($this->_postedData['impact'])) {
+            $i->setImpact($this->_postedData['impact']);
+        }
+
+        if (isset($this->_postedData['revImpact'])) {
+            $i->setRevImpact($this->_postedData['revImpact']);
+        }
+
+        if (isset($this->_postedData['detectTime'])) {
+            $i->setDetectTime($this->_postedData['detectTime']);
+        }
+
+        if (isset($this->_postedData['startTime'])) {
+            $i->setStartTime($this->_postedData['startTime']);
+        }
+
+        if (isset($this->_postedData['resolveTime'])) {
+            $i->setResolveTime($this->_postedData['resolveTime']);
+        }
+
+        if (isset($this->_postedData['resolveSteps'])) {
+            $i->setResolveSteps($this->_postedData['resolveSteps']);
+        }
+
+        if (isset($this->_postedData['projId'])) {
+            $i->setRespProjId($this->_postedData['projId']);
+        }
+
+        if (isset($this->_postedData['severity'])) {
+            $i->setSeverity($this->_postedData['severity']);
+        }
         $i->save();
 
     }
-
-
 
     public function edit($params)
     {
