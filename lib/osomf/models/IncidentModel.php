@@ -266,15 +266,6 @@ class IncidentModel extends DB
     }
 
     /**
-     * @param $val
-     * @return void
-     */
-    public function setUpdatedBy($val)
-    {
-        $this->_updatedBy = $val;
-    }
-
-    /**
      * @return int
      */
     public function getSeverityId()

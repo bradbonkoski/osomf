@@ -72,6 +72,44 @@ class IncidentModelTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @group b123
+     * Test for Update of an Existing Incident
+     */
+    public function updateIncidentTestOne()
+    {
+        $i = new IncidentModel(IncidentModel::RW);
+        $i->loadIncident(4);
+        $this->assertEquals(1, $i->getSeverityId());
+        $this->assertEquals('2010-02-01 11:00:00', $i->getStartTime());
+        $this->assertEquals('Not sure on the impact', $i->getImpact());
+        $this->assertEquals('unknown', $i->getRevImpact());
+        $this->assertEquals('cat pulled out the power cord', $i->getDescription());
+        $i->setSeverity(2);
+        $i->setImpact('New Automated Test Impact');
+        $i->setStartTime('2010-02-01 12:00:00');
+        $i->setRevImpact('some money');
+        $i->setDescription('new desc');
+        $i->setResolveTime('2010-02-01 13:00:00');
+        $i->setResolveSteps('some steps');
+        $i->setRespProjId(1);
+        $i->setDetectTime('2010-02-01 11:50:00');
+        $i->save();
+
+        $ii = new IncidentModel();
+        $ii->loadIncident(4);
+        $this->assertEquals(2, $ii->getSeverityId());
+        $this->assertEquals('2010-02-01 12:00:00', $ii->getStartTime());
+        $this->assertEquals('New Automated Test Impact', $ii->getImpact());
+        $this->assertEquals('some money', $ii->getRevImpact());
+        $this->assertEquals('new desc', $ii->getDescription());
+        $this->assertEquals('2010-02-01 13:00:00', $ii->getResolveTime());
+        $this->assertEquals('some steps', $ii->getResolveSteps());
+        $this->assertEquals(1, $ii->getRespProjId());
+        $this->assertEquals('2010-02-01 11:50:00', $ii->getDetectTime());
+    }
+
+    /**
+     * @test
      */
     public function listHomePageIncidentsTest()
     {
