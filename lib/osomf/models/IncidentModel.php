@@ -844,7 +844,8 @@ class IncidentModel extends DB
      */
     public function getHistory()
     {
-        $sql = "select * from incidentHistory where incidentId = ? order by mtime";
+        $sql = "select * from incidentHistory
+            where incidentId = ? order by mtime";
         $stmt = $this->_db->prepare($sql);
         $stmt->execute(array($this->_incidentId));
         $rows = $stmt->fetchAll();
@@ -886,7 +887,7 @@ class IncidentModel extends DB
         }
 
         $sql = "select ".implode(', ', $cols)." from incident";
-        if(count($where > 0 )) {
+        if (count($where > 0)) {
                 $sql .= " where ".implode(' AND ', $where);
         }
 

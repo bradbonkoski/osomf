@@ -56,7 +56,7 @@ class incident extends ControllerBase
         $i->setCreatedBy($_COOKIE['userId']);
         $i->save();
         $incidentId = $i->getIncidentId();
-        $this->redirect('incident','view', $incidentId);
+        $this->redirect('incident', 'view', $incidentId);
     }
 
     public function add()

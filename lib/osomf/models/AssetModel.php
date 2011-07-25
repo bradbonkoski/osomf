@@ -474,7 +474,7 @@ class AssetModel extends DB
         }
 
         $sql = "select ".implode(', ', $cols)." from ci";
-        if(count($where > 0 )) {
+        if (count($where > 0)) {
                 $sql .= " where ".implode(' AND ', $where);
         }
 
