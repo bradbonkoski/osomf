@@ -50,8 +50,17 @@ class IncidentControllerTest extends PHPUnit_Framework_TestCase
         $_POST['subIncident'] =1;
         $upTitle = 'incident controller test updated title';
         $_POST['title'] = $upTitle;
+        $_POST['desc'] = $upTitle;
+        $_POST['impact'] = $upTitle;
+        $_POST['revImpact'] = $upTitle;
+        $_POST['resolveSteps'] = $upTitle;
+
         $c->edit("5");
         $this->assertEquals($upTitle, $c->data['incidentTitle']);
+        $this->assertEquals($upTitle, $c->data['desc']);
+        $this->assertEquals($upTitle, $c->data['impact']);
+        $this->assertEquals($upTitle, $c->data['revImpact']);
+        $this->assertEquals($upTitle, $c->data['resolveSteps']);
         //print_r($c->data);
     }
     
