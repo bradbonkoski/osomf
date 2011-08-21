@@ -19,6 +19,7 @@ class DB extends \PDO
     const TYPE_PROBLEM = "problem";
     const TYPE_INCIDENT = "omf_incident";
     const TYPE_ASSET = "omf_assets";
+    const TYPE_TAGGING = 'omf_tagging';
     
     private $_validTypes = array(
         self::TYPE_CHANGE,
@@ -26,6 +27,7 @@ class DB extends \PDO
         self::TYPE_INCIDENT,
         self::TYPE_ASSET,
         self::TYPE_USER,
+        self::TYPE_TAGGING,
     );
 
     /**
@@ -102,6 +104,16 @@ class DB extends \PDO
                     //print_r($conf);
                 $dsn = $this->_buildDSN(
                     $conf['db_name'], 
+                    $conf[$hostIdx],
+                    $conf[$portIdx]
+                );
+                $user = $conf[$conn."_user"];
+                $pass = $conf[$conn."_pass"];
+                break;
+            case self::TYPE_TAGGING:
+                $conf = $c->getAllTagging();
+                $dsn = $this->_buildDSN(
+                    $conf['db_name'],
                     $conf[$hostIdx],
                     $conf[$portIdx]
                 );

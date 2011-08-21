@@ -94,6 +94,7 @@ fieldset {
     margin-top: 1.5em;
     width: 96%;
     border:  1px solid #b0c4de;
+    padding-bottom: 1em;
 }
 
 fieldset legend {
@@ -318,4 +319,54 @@ input.btnSearch {
 #simplemodal-container h3 {
     color:#84b8d9;
     padding-bottom: 2em;
+}
+
+/** User Contact Card/Box Styles */
+div.users {
+    margin-top: 1em;
+display: -moz-box;
+display: -o-box;
+display: -webkit-box;
+display: box;
+         -moz-box-orient: horizontal;
+         -o-box-orient: horizontal;
+         -webkit-box-orient: horizontal;
+         box-orient: horizontal;
+         -moz-box-lines: multiple;
+         box-lines: multiple
+}
+
+ul.contact {
+    width: 19em;
+    height: 5.5em;
+            margin-left: 1em;
+    background-color: lightgray;
+border: 1px solid gray;
+    font-family: "Lucida Grande", Veranda, Helvetica, Arial, sans-serif;
+    font-size: .85em;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    -moz-box-shadow: 6px 5px 3px hsla(0,0%,0%,.2);
+    -webkit-box-shadow: 6px 5px 3px hsla(0,0%,0%,.2);
+    box-shadow: 6px 5px 3px hsla(0,0%,0%,.2);
+}
+
+ul.admin {
+background-image: url('../img/user_red.png');
+background-repeat: no-repeat;
+background-position: 2% 2%;
+}
+
+ul.member {
+        background-image: url('../img/user.png');
+        background-repeat: no-repeat;
+        background-position: 2% 2%;
+}
+
+
+ul.contact li {
+        padding-top: 1px;
+        list-style-type: none;
+        padding-left: 2em;
 }

@@ -36,3 +36,11 @@ ownerId=1, projectId=2, statusId=4, ciTypeId=2, netParentId=3, ciSerialNum='1232
 
 insert into ci set ciid=5, ciName='virt.home.com', ciDesc='virtual',
 ownerId=2, projectId=2, statusId=4, ciTypeId=3, netParentId=3, phyParentId=4, ciSerialNum='11232232', locId=1;
+
+
+-- Attributes Preload
+insert into Attributes values(1, 'OS');
+insert into Attributes values(2, 'CPU');
+insert into Attributes values(3, 'RAM');
+insert into Attributes values(4, 'Disk Usage');
+insert into Attributes values(5, 'Disk Free');

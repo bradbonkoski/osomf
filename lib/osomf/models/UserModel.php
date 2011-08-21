@@ -100,6 +100,7 @@ class UserModel extends DB
             $v = new Validator($val);
             $v->validate($this->$key);
             if ($v->errNo > 0 ) {
+                error_log("Error for $key - $val");
                 $errs = $v->getErrors();
                 throw new \Exception($errs[0]);
             }

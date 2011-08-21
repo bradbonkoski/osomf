@@ -38,73 +38,76 @@ class asset extends ControllerBase
     private function _pullAssetInfo()
     {
         try {
-        $a = new AssetModel(AssetModel::RO);
-        $a->loadAsset($this->_ciid);
-        $this->data['ciid'] = $a->getAssetId();
-        $this->data['title'] = "Asset information for: ".$a->ciName;
-        $this->data['ciName'] = $a->ciName;
-        $this->data['ciDesc'] = $a->ciDesc;
-        $this->data['status'] = $a->ciStatus->statusName;
-        $this->data['statusId'] = $a->ciStatus->getStatusId();
-        $this->data['ownerId'] = $a->getOwnerId();
-        $this->data['ownerType'] = $a->getOwnerType();
-        if ($a->getOwnerType() == AssetModel::OWNER_USER) {
-            $ownerCont = 'user';
-            $this->data['ownerName'] = $a->owner->uname;
-        } else {
-            $this->data['ownerName'] = $a->owner->groupName;
-            $ownerCont = 'group';
-        }
-        $this->data['ownerLink'] = "/osomf/$ownerCont/view/".$a->getOwnerId();
-        $times = $a->getAssetTimes();
-        $this->data['ctime'] = $times['created'];
-        $this->data['mtime'] = $times['modified'];
-        $this->data['type'] = $a->ciType->typeName;
-        $this->data['typeId'] = $a->ciType->getTypeId();
-        $this->data['serial'] = $a->ciSerialNum;
-        $this->data['acquired'] = $a->acquiredDate;
-        $this->data['retired'] = $a->isRetired;
-        $this->data['disposed'] = $a->disposalDate;
+            $a = new AssetModel(AssetModel::RO);
+            $a->loadAsset($this->_ciid);
+            $this->data['ciid'] = $a->getAssetId();
+            $this->data['title'] = "Asset information for: ".$a->ciName;
+            $this->data['ciName'] = $a->ciName;
+            $this->data['ciDesc'] = $a->ciDesc;
+            $this->data['status'] = $a->ciStatus->statusName;
+            $this->data['statusId'] = $a->ciStatus->getStatusId();
+            $this->data['ownerId'] = $a->getOwnerId();
+            $this->data['ownerType'] = $a->getOwnerType();
+            if ($a->getOwnerType() == AssetModel::OWNER_USER) {
+                $ownerCont = 'user';
+                $this->data['ownerName'] = $a->owner->uname;
+            } else {
+                $this->data['ownerName'] = $a->owner->groupName;
+                $ownerCont = 'group';
+            }
+            $this->data['ownerLink'] = "/osomf/$ownerCont/view/".$a->getOwnerId();
+            $times = $a->getAssetTimes();
+            $this->data['ctime'] = $times['created'];
+            $this->data['mtime'] = $times['modified'];
+            $this->data['type'] = $a->ciType->typeName;
+            $this->data['typeId'] = $a->ciType->getTypeId();
+            $this->data['serial'] = $a->ciSerialNum;
+            $this->data['acquired'] = $a->acquiredDate;
+            $this->data['retired'] = $a->isRetired;
+            $this->data['disposed'] = $a->disposalDate;
 
-        // relations
-        if ($a->netParent instanceof AssetModel) {
-            $this->data['netParent'] = $a->netParent->getAssetId();
-            $this->data['netParentName'] = $a->netParent->ciName;
-            $this->data['netParentLink'] =
-                "/osomf/asset/view/".$a->netParent->getAssetId();
-        } else {
-            $this->data['netParent'] = 0;
-        }
+            // relations
+            if ($a->netParent instanceof AssetModel) {
+                $this->data['netParent'] = $a->netParent->getAssetId();
+                $this->data['netParentName'] = $a->netParent->ciName;
+                $this->data['netParentLink'] =
+                        "/osomf/asset/view/".$a->netParent->getAssetId();
+            } else {
+                $this->data['netParent'] = 0;
+            }
 
-        if ($a->phyParent instanceof AssetModel) {
-            $this->data['phyParent'] = $a->phyParent->getAssetId();
-            $this->data['phyParentName'] = $a->phyParent->ciName;
-            $this->data['phyParentLink'] =
-                "/osomf/asset/view/".$a->phyParent->getAssetId();
-        } else {
-            $this->data['phyParent'] = 0;
-        }
+            if ($a->phyParent instanceof AssetModel) {
+                $this->data['phyParent'] = $a->phyParent->getAssetId();
+                $this->data['phyParentName'] = $a->phyParent->ciName;
+                $this->data['phyParentLink'] =
+                        "/osomf/asset/view/".$a->phyParent->getAssetId();
+            } else {
+                $this->data['phyParent'] = 0;
+            }
 
-        // project info
-        if ($a->project instanceof \osomf\models\ProjectModel) {
-            $this->data['proj'] = $a->project->getProjId();
-            $this->data['projName'] = $a->project->projName;
-            $this->data['projLink'] =
-                "/osomf/project/view/".$a->project->getProjId();
-        } else {
-            error_log("No Project Defined?");
-            $this->data['proj'] = 0;
-        }
+            // project info
+            if ($a->project instanceof \osomf\models\ProjectModel) {
+                $this->data['proj'] = $a->project->getProjId();
+                $this->data['projName'] = $a->project->projName;
+                $this->data['projLink'] =
+                        "/osomf/project/view/".$a->project->getProjId();
+            } else {
+                error_log("No Project Defined?");
+                $this->data['proj'] = 0;
+            }
 
-        //location info
-        if ($a->loc instanceof \osomf\models\LocationModel) {
-            $this->data['loc'] = $a->loc->getLocId();
-            $this->data['locName'] = $a->loc->getLocName();
-            $this->data['locLink'] =
-                "/osomf/location/view/".$a->loc->getLocId();
-        } else {
-            $this->data['loc'] = 0;
-        }
+            //location info
+            if ($a->loc instanceof \osomf\models\LocationModel) {
+                $this->data['loc'] = $a->loc->getLocId();
+                $this->data['locName'] = $a->loc->getLocName();
+                $this->data['locLink'] =
+                        "/osomf/location/view/".$a->loc->getLocId();
+            } else {
+                $this->data['loc'] = 0;
+            }
+
+            // Asset Attributes
+            $this->data['attributes'] = $a->getAssetAttributes();
         } catch (Exception $e) {
             $this->_addError($e->getMessage());
         }
@@ -114,6 +117,7 @@ class asset extends ControllerBase
     {
         $this->setAction("view");
         $params = $this->parseParams($params);
+
 
         if (!array_key_exists(0, $params) || !is_numeric($params[0])) {
             error_log("Sending to display");
@@ -239,5 +243,22 @@ class asset extends ControllerBase
         error_log(print_r($params, true));
         $ci = new AssetModel(AssetModel::RO);
         echo json_encode($ci->autocomplete("ciName", $str[1]));
+    }
+
+    public function addAttribute($params)
+    {
+        $this->ac = true;
+        $data = $this->parseGetParams($params);
+        $userId = $_COOKIE['userId'];
+        $a = new AssetModel(AssetModel::RW);
+        $a->loadAsset($data['asset']);
+        $res = $a->addAssetAttribute(
+            $data['attrId'],
+            $data['attrVal'],
+            $userId
+        );
+        $ret = "<dl><dt><label>$res</label></dt>
+            <dd>{$data['attrVal']}</dd></dl>";
+        echo $ret;
     }
 }

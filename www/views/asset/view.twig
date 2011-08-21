@@ -1,10 +1,13 @@
 {% extends 'layout.twig' %}
-
+{% block css %}
+        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
+{% endblock %}
 {% block content %}
 <div id="pageTitle">
     <h2 class="pageHeading">{{ title }}</h2>
     <a class="editLink" href="/osomf/asset/edit/{{ ciid }}">Edit</a>
 </div>
+<input type="hidden" id="ciid" value="{{ ciid }}"/>
 
     <fieldset class="container">
     <div class="colLeft">
@@ -109,7 +112,38 @@
     </div>
     </fieldset>
 
+    <fieldset class="container">
+    <div class="colLeft">
+    <fieldset>
+        <legend>Asset Attributes <a id="attributeModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
+        <div id="assetAttributes">
+        {% for attrName, attrVal in attributes %}
+        <dl>
+            <dt><label>{{ attrName }}</label></dt>
+            <dd>{{ attrVal }}</dd>
+        </dl>
+        {% endfor %}
+        </div>
+    </fieldset>
+    </div>
+    <div class="colRight">
+    <fieldset>
+        <legend>Asset Tags</legend>
+    </fieldset>
+    </div>
+    </fieldset>
+
     <fieldset>
         <legend>Known Errors/Incidents</legend>
     </fieldset>
+    {% include 'modals/AssetAttributes.twig' %}
     {% endblock %}
+
+    {% block js %}
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/jquery.simplemodal.1.4.1.min.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/asset.js"></script>
+{% endblock %}

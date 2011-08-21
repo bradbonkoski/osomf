@@ -59,6 +59,8 @@ class AssetModel extends DB
     public $acquiredDate;
     public $disposalDate;
 
+    private $_attributes;
+
     public function __construct($conn = self::RO)
     {
         if (!in_array($conn, $this->_validConn)) {
@@ -90,10 +92,16 @@ class AssetModel extends DB
         $this->loc = null;
         $this->acquiredDate = '';
         $this->disposalDate = '';
+        $this->_attributes = array();
 
         $this->_table = "ci";
         $this->_tableKey = "ciid";
         
+    }
+
+    public function getAssetAttributes()
+    {
+        return $this->_attributes;
     }
 
     public function getAssetName()
@@ -381,6 +389,20 @@ class AssetModel extends DB
         $this->loc->fetchLocInfo($this->_locId);
         $this->acquiredDate = $row['acquiredDate'];
         $this->disposalDate = $row['disposalDate'];
+        $this->_loadAssetAttributes();
+    }
+
+    private function _loadAssetAttributes()
+    {
+        $sql = "select a.attrName as attrName, ca.value as attrValue
+            from ciAttributes ca join Attributes a on a.attrId = ca.attrId
+            where ca.ciid = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($this->_ciid));
+        $res = $stmt->fetchAll();
+        foreach ($res as $r) {
+            $this->_attributes[$r['attrName']] = $r['attrValue'];
+        }
     }
 
     public function setOwner($ownerId)
@@ -461,6 +483,28 @@ class AssetModel extends DB
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
+    }
+
+    public function addAssetAttribute($attrId, $attrVal, $userId)
+    {
+        //TODO Verify AttrID and User
+        $sql = "insert into ciAttributes
+            values(?,?,?,NOW(),?)";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(
+            array(
+                $this->_ciid,
+                $attrId,
+                $attrVal,
+                $userId
+            )
+        );
+        $sql = "select attrName from Attributes where attrId = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($attrId));
+        $res = $stmt->fetch();
+        return $res['attrName'];
+        
     }
 
     public function search($cols, $crit)

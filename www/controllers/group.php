@@ -55,6 +55,8 @@ class group extends ControllerBase
         }
 
         $ug = new UserGroup(UserGroup::RO);
+        $isAdmin = $ug->isGroupAdmin($this->loggedInUserId, $groupId);
+        $this->data['isGroupAdmin'] = $isAdmin;
         $ug->fetchUserGroup($groupId);
         //echo "User: $u\n";
         $this->data['title'] = "User Group Info for: {$ug->groupName}";
@@ -63,6 +65,7 @@ class group extends ControllerBase
         $this->data['phone'] = $ug->phone;
         $this->data['pager'] = $ug->pager;
 
+        $cnt = 0;
         foreach ($ug->users as $u) {
             $arr = array(
                 'uid' => $u->getUserId(),
@@ -74,8 +77,9 @@ class group extends ControllerBase
                 'status' => $u->status,
             );
             $this->data['users'][] = $arr;
+            $cnt++;
         }
-
+        $this->data['numUsers'] = $cnt;
 
     }
 

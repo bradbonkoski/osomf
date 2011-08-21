@@ -40,7 +40,7 @@ if (file_exists(PATH."/{$prefix}{$cont}.php")) {
         );
     } else {
         //some error handling here
-        echo "ERROR!<br/>";
+        echo "ERROR! (".__FILE__.":".__LINE__."<br/>\n";
     }
 } else {
     //echo "PATH: ".PATH."{$prefix}{$cont}.php\n";

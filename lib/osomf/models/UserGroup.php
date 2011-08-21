@@ -105,6 +105,24 @@ class UserGroup extends DB
         }
     }
 
+    public function isGroupAdmin($userId, $groupId)
+    {
+        $sql = "select count(*) as cnt from
+            users_groups where userId = ? and ugid = ? and status = 'admin'";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(
+            array(
+                $userId,
+                $groupId
+            )
+        );
+        $res = $stmt->fetch();
+        if ($res['cnt'] > 0 ) {
+            return true;
+        }
+        return false;
+    }
+
     public function verifyUserGroup($groupId)
     {
         if ($groupId <= 0 || !is_numeric($groupId)) {

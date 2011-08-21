@@ -35,7 +35,7 @@ class Navigation
         'search' => array(
             'label' => 'Search',
             'controller' => 'search',
-            'action' => 'search',
+            'action' => 'incident',
             'submenu' => array(
                 'searchIncident' => array(
                     'label' => 'Incident Search',

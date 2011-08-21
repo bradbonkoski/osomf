@@ -12,6 +12,8 @@ class ControllerBase
     public $baseuri;
     public $data = array();
     public $ac;
+    protected $loggedInUserId;
+
 
     public function __construct($controller, $action = "") 
     {
@@ -21,6 +23,7 @@ class ControllerBase
         $this->data = array();
         if (isset($_COOKIE['username'])) {
             $this->data['loggedinUsername'] = $_COOKIE['username'];
+            $this->loggedInUserId = $_COOKIE['userId'];
         }
         // needed for CI testing
         if (isset($_SERVER['HTTP_HOST'])) {

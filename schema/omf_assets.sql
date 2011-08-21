@@ -27,6 +27,21 @@ CREATE TABLE `Attributes` (
   `attrName` varchar(32) NOT NULL,
   PRIMARY KEY (`attrId`),
   UNIQUE KEY `attrName` (`attrName`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `asset_tags`
+--
+
+DROP TABLE IF EXISTS `asset_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asset_tags` (
+  `assetId` int(11) NOT NULL,
+  `tagId` int(11) NOT NULL,
+  `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`assetId`,`tagId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,7 +71,7 @@ CREATE TABLE `ci` (
   `acquiredDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `disposalDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ciid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +85,8 @@ CREATE TABLE `ciAttributes` (
   `ciid` int(11) NOT NULL,
   `attrId` int(11) NOT NULL,
   `value` text NOT NULL,
+  `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastChangedBy` int not null,
   PRIMARY KEY (`ciid`,`attrId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -183,7 +200,7 @@ CREATE TABLE `location` (
   `locOwner` int(11) NOT NULL,
   `locAddr` text,
   PRIMARY KEY (`locId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +232,7 @@ CREATE TABLE `projects` (
   `projOwner` int(11) NOT NULL,
   `projOwnerType` enum('USER','GROUP') NOT NULL DEFAULT 'USER',
   PRIMARY KEY (`projId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,4 +259,4 @@ CREATE TABLE `services` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-05 12:59:33
+-- Dump completed on 2011-08-16 13:12:46

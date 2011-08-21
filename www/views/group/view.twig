@@ -3,7 +3,12 @@
         {% block title %} {{ title }} {% endblock %}
 {% block content %}
         <a href="javascript:history.go(-1)">Go Back</a>
-<h2 class="pageHeading">{{ title }}</h2>
+<h2 class="pageHeading">
+    {{ title }}
+    {% if isGroupAdmin == 1 %}
+    [ADMIN]
+    {% endif %}
+</h2>
 
     <fieldset>
         <legend>user group data</legend>
@@ -33,29 +38,28 @@
     
     <fieldset>
         <legend>Group Members</legend>
-        <table class="baseTable">
-            <tr>
-                <th>User Name</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Pager</th>
-                <th>status</th>
-            </tr>
-            {% for u in users %}
-            <tr>
-                <td><a href="/osomf/user/view/{{ u.uid }}">{{ u.uname }}</a></td>
-                <td>{{ u.name }}</td>
-                <td>{{ u.email }}</td>
-                <td>{{ u.phone }}</td>
-                <td>{{ u.pager }}</td>
-                <td>{{ u.status }}</td>
-            </tr>
+        {% for u in users %}
+            {% if loop.index0 % 4 == 0 %}
+                <div class="users">
+            {% endif %}
+            <ul class="contact {{u.status }}" onclick="javascript:userView({{ u.uid }})">
+            <li>{{ u.name }}</li>
+            <li>e: <a href="mailto:{{ u.email }}">{{ u.email }}</a></li>
+            <li>ph: {{ u.phone }}</li>
+            <li>pa: {{ u.pager }}</li>
+            </ul>
+            {% if loop.index0 % 4 == 3 or loop.last %}
+                </div>
+            {% endif %}
             {% endfor %}
-        </table>
-
 
     </fieldset>
 
+<script type="text/javascript">
+    function userView(uid)
+    {
+        window.location = "/osomf/user/view/"+uid;
+    }
+</script>
 {% endblock %}
 

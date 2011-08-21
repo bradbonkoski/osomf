@@ -50,6 +50,11 @@ class ConfDB extends Conf
         return $this->_data['omf_incident'];
     }
 
+    public function getAllTagging()
+    {
+        return $this->_data['omf_tagging'];
+    }
+
     public function getChangeValue($key)
     {
         return $this->_data['change'][$key];

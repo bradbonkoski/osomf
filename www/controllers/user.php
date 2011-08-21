@@ -46,6 +46,43 @@ class user extends ControllerBase
         }
     }
 
+    public function edit ( $params )
+    {
+
+    }
+
+    public function load ( $params )
+    {
+        $this->ac = true;
+        $user = new UserModel(UserModel::RW);
+        $data = $_POST['data'];
+        echo "Data is:\n";
+        print_r($data);
+        $xml = simplexml_load_string($data);
+        foreach ($xml->user as $u) {
+            print_r($u);
+            try {
+                $user->fetchUserByUserName((string)$u->uname);
+                $user->fname = (string) $u->fname;
+                $user->lname = (string) $u->lname;
+                $user->phone = (string) $u->phone;
+                $user->email = (string) $u->email;
+                $user->pager = (string) $u->pager;
+                $user->save();
+            } catch (\Exception $e) {
+                //must be a new user...
+                $newUser = new UserModel(UserModel::RW);
+                $newUser->uname = (string)$u->uname;
+                $newUser->fname = (string) $u->fname;
+                $newUser->lname = (string) $u->lname;
+                $newUser->phone = (string) $u->phone;
+                $newUser->email = (string) $u->email;
+                $newUser->pager = (string) $u->pager;
+                $newUser->save();
+            }
+        }
+    }
+
     public function view( $params )
     {
         //echo "<pre>".print_r($_COOKIE, true)."</pre>";
