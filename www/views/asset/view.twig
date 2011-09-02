@@ -1,116 +1,137 @@
 {% extends 'layout.twig' %}
 {% block css %}
-        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
+    <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
 {% endblock %}
+
 {% block content %}
-<div id="pageTitle">
-    <h2 class="pageHeading">{{ title }}</h2>
+    <div class="page-header">
+    <h2>{{ title }}</h2>
     <a class="editLink" href="/osomf/asset/edit/{{ ciid }}">Edit</a>
 </div>
 <input type="hidden" id="ciid" value="{{ ciid }}"/>
 
-    <fieldset class="container">
-    <div class="colLeft">
-    <fieldset>
-        <legend>general info</legend>
+    <div class="row">
+        <div class="span8 columns">
+            <h4>general info</h4>
 
-        <dl>
-            <dt><label>Asset Name</label></dt>
-            <dd>{{ ciName }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>Asset Name</label>
+                <div class="input">
+                <span class="view-input">{{ ciName }}</span>
+                </div>
+            </div>
 
-        <dl>
-            <dt><label>Asset Description</label></dt>
-            <dd>{{ ciDesc }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>Asset Description</label>
+                <div class="input">
+                <span class="view-input">{{ ciDesc }}</span>
+                </div>
+            </div>
 
-        <dl>
-            <dt><label>status</label></dt>
-            <dd>{{ status }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>status</label>
+                <div class="input">
+                <span class="view-input">{{ status }}</span>
+                </div>
+            </div>
 
-        <dl>
-            <dt><label>created</label></dt>
-            <dd>{{ ctime }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>created</label>
+                <div class="input">
+                <span class="view-input">{{ ctime }}</span>
+                </div>
+            </div>
 
-        <dl>
-            <dt><label>last modified</label></dt>
-            <dd>{{ mtime }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>last modified</label>
+                <div class="input">
+                <span class="view-input">{{ mtime }}</span>
+                </div>
+            </div>
 
-        <dl>
-            <dt><label>type</label></dt>
-            <dd>{{ type }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>type</label>
+                <div class="input">
+                <span class="view-input">{{ type }}</span>
+                </div>
+            </div>
 
-        <dl>
-            <dt><label>serial #</label></dt>
-            <dd>{{ serial }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>serial #</label>
+                <div class="input">
+                <span class="view-input">{{ serial }}</span>
+                </div>
+            </div>
 
-        <dl>
-            <dt><label>acquired</label></dt>
-            <dd>{{ acquired }}</dd>
-        </dl>
+            <div class="clearfix">
+                <label>acquired</label>
+                <div class="input">
+                <span class="view-input">{{ acquired }}</span>
+                </div>
+            </div>
 
-        {% if retired == 1 %}
-        <dl>
-            <dt><label>disposed</label></dt>
-            <dd>{{ disposed }}</dd>
-        </dl>
-        {% endif %}
-    </fieldset>
+            {% if retired == 1 %}
+            <div class="clearfix">
+                <label>disposed</label>
+                <div class="input">
+                <span class="view-input">{{ disposed }}</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="span6 columns">
+        <h4>associations</h4>
+
+             <div class="clearfix">
+                <label>Owner</label>
+                <div class="input">
+                <a class="link-input" href="{{ ownerLink }}">{{ ownerName }}</a>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <label>Project</label>
+                {% if proj >= 1 %}
+                    <div class="input">
+                    <a class="link-input" href="{{ projLink }}">{{ projName }}</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="clearfix">
+                <label>Location</label>
+                {% if loc >= 1 %}
+                    <div class="input">
+                    <a class="link-input" href="{{ locLink }}">{{ locName }}</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <h4>relations</h4>
+
+
+            <div class="clearfix">
+                <label>Network Parent</label>
+                {% if netParent >= 1 %}
+                <div class="input">
+                    <a class="link-input" href="{{ netParentLink }}">{{ netParentName }}</a>
+                </div>
+                {% endif %}
+            </div>
+
+
+            <div class="clearfix">
+                <label>Physical Parent</label>
+                {% if phyParent >= 1 %}
+                <div class="input">
+                    <a class="link-input" href="{{ phyParentLink }}">{{ phyParentName }}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-
-    <div class="colRight">
-    <fieldset>
-        <legend>associations</legend>
-
-        <dl>
-            <dt><label>Owner</label></dt>
-            <dd><a href="{{ ownerLink }}">{{ ownerName }}</a></dd>
-        </dl>
-
-        <dl>
-            <dt><label>Project</label></dt>
-            {% if proj >= 1 %}
-                <dd><a href="{{ projLink }}">{{ projName }}</a></dd>
-            {% endif %}
-        </dl>
-
-        <dl>
-            <dt><label>Location</label></dt>
-            {% if loc >= 1 %}
-                <dd><a href="{{ locLink }}">{{ locName }}</a></dd>
-            {% endif %}
-        </dl>
-    </fieldset>
     </div>
-
-    <div class="colRight">
-    <fieldset>
-        <legend>relations</legend>
-
-
-        <dl>
-            <dt><label>Network Parent</label></dt>
-            {% if netParent >= 1 %}
-            <dd><a href="{{ netParentLink }}">{{ netParentName }}</a></dd>
-            {% endif %}
-        </dl>
-
-
-        <dl>
-            <dt><label>Physical Parent</label></dt>
-            {% if phyParent >= 1 %}
-            <dd><a href="{{ phyParentLink }}">{{ phyParentName }}</a></dd>
-            {% endif %}
-        </dl>
-
-    </fieldset>
-    </div>
-    </fieldset>
 
     <fieldset class="container">
     <div class="colLeft">
@@ -133,6 +154,7 @@
     </div>
     </fieldset>
 
+<!-- TODO Move to Tabbed view for known errors -->
     <fieldset>
         <legend>Known Errors/Incidents</legend>
     </fieldset>
@@ -144,6 +166,5 @@
     <script type="text/javascript" src="/osomf/www/js/jquery.ui.widget.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
-    <script type="text/javascript" src="/osomf/www/js/jquery.simplemodal.1.4.1.min.js"></script>
-    <script type="text/javascript" src="/osomf/www/js/asset.js"></script>
+    <script type="text/javascript" src="/osomf/www/js/asset_view.js"></script>
 {% endblock %}

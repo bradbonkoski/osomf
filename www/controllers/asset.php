@@ -44,8 +44,10 @@ class asset extends ControllerBase
             $this->data['title'] = "Asset information for: ".$a->ciName;
             $this->data['ciName'] = $a->ciName;
             $this->data['ciDesc'] = $a->ciDesc;
-            $this->data['status'] = $a->ciStatus->statusName;
-            $this->data['statusId'] = $a->ciStatus->getStatusId();
+            if($a->ciStatus instanceof \osomf\models\CiStatus) {
+                $this->data['status'] = $a->ciStatus->statusName;
+                $this->data['statusId'] = $a->ciStatus->getStatusId();
+            }
             $this->data['ownerId'] = $a->getOwnerId();
             $this->data['ownerType'] = $a->getOwnerType();
             if ($a->getOwnerType() == AssetModel::OWNER_USER) {
@@ -59,8 +61,10 @@ class asset extends ControllerBase
             $times = $a->getAssetTimes();
             $this->data['ctime'] = $times['created'];
             $this->data['mtime'] = $times['modified'];
-            $this->data['type'] = $a->ciType->typeName;
-            $this->data['typeId'] = $a->ciType->getTypeId();
+            if ($a->ciType instanceof \osomf\models\CiType) {
+                $this->data['type'] = $a->ciType->typeName;
+                $this->data['typeId'] = $a->ciType->getTypeId();
+            }
             $this->data['serial'] = $a->ciSerialNum;
             $this->data['acquired'] = $a->acquiredDate;
             $this->data['retired'] = $a->isRetired;
@@ -110,17 +114,20 @@ class asset extends ControllerBase
             $this->data['attributes'] = $a->getAssetAttributes();
         } catch (Exception $e) {
             $this->_addError($e->getMessage());
+            error_log($e->getMessage());
         }
     }
 
     public function view($params)
     {
         $this->setAction("view");
+        error_log($params);
+        
         $params = $this->parseParams($params);
-
 
         if (!array_key_exists(0, $params) || !is_numeric($params[0])) {
             error_log("Sending to display");
+            error_log(print_r($params, true));
             return $this->display();
         }
         
@@ -223,6 +230,40 @@ class asset extends ControllerBase
         $this->data['editAsset'] = true;
         $this->data['ciid'] = $assetId;
         //echo "<pre>".print_r($this->data, true)."</pre>";
+    }
+
+    public function register($params)
+    {
+        $this->ac = true;
+        $asset = new AssetModel(AssetModel::RW);
+        $data = $_POST['data'];
+        //echo "Data is:\n";
+        //print_r($data);
+        $xml = simplexml_load_string($data);
+        //need to add a check for the ciName, should be unique!
+        $xmlRet = new SimpleXmlElement("<asset></asset>");
+        $res = $xmlRet->addChild('result');
+
+        foreach ($xml->asset as $a) {
+            //print_r($a);
+            $ciName = (string)$a->name;
+            $ciExisting = $asset->uniqueCiName($ciName);
+            if (!is_numeric($ciExisting)) {
+                $asset->ciName = (string)$a->name;
+                $asset->ciDesc = "API Registered";
+                $ciid = $asset->save();
+                //echo "new Asset: $ciid\n";
+                $res->addChild('newasset', $ciid);
+            } else {
+                //echo "CIName Taken ($ciExisting)\n";
+                // error that the asset exists
+                // send ciid??
+                $res->addChild('Error', 'CIName Existing');
+                $res->addChild('ciid', $ciExisting);
+            }
+        }
+        //return the CIID of the newly minted CI
+        echo $xmlRet->asXML();
     }
 
     public function add( $params )

@@ -21,35 +21,40 @@ function removeImpact(impactId) {
 }
 
 $(function() {
+
+    $("#AddImpactModal").hide();
+    $("#StatusChangeModal").hide();
+    $("#AddWorklogModal").hide();
+
+    $("#AddWorklogModalClose").click(function() {
+        $("#AddWorklogModal").hide();
+        return false;
+    });
+
+    $("#AddStatusModalClose").click(function() {
+        $("#StatusChangeModal").hide();
+        return false;
+    });
+
+    $("#AddImactModalClose").click(function() {
+       $("#AddImpactModal").hide()
+        return false;
+    });
+
     // Load dialog on click
 	$('#impactAddModal').click(function (e) {
-	    $('#AddImpactModal').modal();
+	    $('#AddImpactModal').show();
 		return false;
 	});
 
     $('#worklogAddModal').click(function(e) {
-        $('#AddWorklogModal').modal();
+        $('#AddWorklogModal').show();
         return false;
     });
 
     $('#changeIncidentStatus').click(function(e) {
-        $('#StatusChangeModal').modal();
+        $('#StatusChangeModal').show();
         return false;   
-    });
-
-    $('#btnEdit').click(function(e) {
-        var incident =  $("#incidentId").val();
-        window.location = "/osomf/incident/edit/"+incident;
-    });
-
-     $('#btnAudit').click(function(e) {
-        var incident =  $("#incidentId").val();
-        window.location = "/osomf/incident/hist/"+incident;
-    });
-
-    $('#btnView').click(function(e) {
-        var incident =  $("#incidentId").val();
-        window.location = "/osomf/incident/view/"+incident;
     });
 
     $('#btnChangeStatus').click(function (e) {
@@ -64,9 +69,11 @@ $(function() {
             data: params,
             success: function(html) {
                 $('#incidentStatus').text(html);
-                $.modal.close();
+                $("#StatusChangeModal").hide();
+                $('#reason').val('');
             }
-        })
+        });
+        return false;
     });
 
     $('#addWorklogButton').click(function(e) {
@@ -79,9 +86,11 @@ $(function() {
             data: "id="+incident+"&text="+txt,
             success: function(html) {
                 $('#incidentWorklogTable > tbody:last').append(html);
-                $.modal.close();
+                $("#AddWorkglogText").val('');
+                $("#AddWorklogModal").hide();
             }
         });
+        return false;
     });
 
     $('#newImpact').change(function() {
@@ -123,7 +132,7 @@ $(function() {
             data: data,
             success: function(html) {
                 $('#incidentImpactsTable > tbody:last').append(html);
-                $.modal.close();
+                $('#AddImpactModal').hide();
             }
         });
     });

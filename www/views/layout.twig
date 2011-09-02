@@ -4,38 +4,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="author" content="Brad Bonkoski">
     {# Default CSS to be loaded for all #}
-    <link rel="stylesheet" href="/osomf/www/css/main.css" />
+    <link rel="stylesheet" href="/osomf/www/css/bootstrap.css" />
+    <link rel="stylesheet" href="/osomf/www/css/omf.css" />
+    
     {% block css %}
     {% endblock %}
 
     <title>OSOMF - {% block title %}Default Title{% endblock %}</title>
 </head>
-<body>
-<div id="wrapper">
-{% block pageHeading %}
-    <div class="heading">
-        <img class="appIcon" src="/osomf/www/img/omf-textlogo-1.png"/>
-        <h4 class="appHeading">[OS] Operations Management Framework</h4>
+<body style="padding-top: 40px;">
 
-        <div class="userInfo">
-            username: {{ loggedinUsername }}<br/>
-            <a href="#">logout</a>
-        </div>
-
-{% endblock %}
-
-    <div id="mainNav">
+<div class="topbar-wrapper" style="z-index:5">
     {% include "navigation.twig" %}
-    {% include "topSearch.twig" %}
-        <div id="subnav">
-    {% block subnav %}
-
-    {% endblock %}
-            </div>
-    </div>
 </div>
 
-  <div id="content">{% block content %}Default Content{% endblock %}</div>
+  <div class="container">
+    {% block content %}
+        Default Content
+    {% endblock %}
+  </div>
+  
   <div id="footer">
     {% include "footer.twig" %}
   </div>
@@ -50,7 +38,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         //alert("Date: "+new Date().getTime());
-        checkForLogin();
+        //checkForLogin();
     });
     </script>
 </div>

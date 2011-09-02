@@ -359,17 +359,25 @@ class AssetModel extends DB
         $this->ciDesc = $row['ciDesc'];
         $this->_ownerType = $row['ownerType'];
         $this->_ownerId = $row['ownerId'];
-        $this->_loadOwner($this->_ownerId, $this->_ownerType, 'owner');
+        if ($this->_ownerId > 0 ) {
+            $this->_loadOwner($this->_ownerId, $this->_ownerType, 'owner');
+        }
         $this->_projectId = $row['projectId'];
-        $this->project = new ProjectModel(ProjectModel::RO);
-        $this->project->fetchProjInfo($this->_projectId);
-        //var_dump($this->project);
+        if ($this->_projectId > 0 ) {
+            $this->project = new ProjectModel(ProjectModel::RO);
+            $this->project->fetchProjInfo($this->_projectId);
+            //var_dump($this->project);
+        }
         $this->_ciStatusId = $row['statusId'];
-        $this->ciStatus = new CiStatus(CiStatus::RO);
-        $this->ciStatus->loadStatus($this->_ciStatusId);
-        $this->_ciTypeId = $row['ciTypeId'];
-        $this->ciType = new CiType(CiType::RO);
-        $this->ciType->loadType($this->_ciTypeId);
+        if ($this->_ciStatusId > 0 ) {
+            $this->ciStatus = new CiStatus(CiStatus::RO);
+            $this->ciStatus->loadStatus($this->_ciStatusId);
+        }
+        if ($this->_ciTypeId > 0 ) {
+            $this->_ciTypeId = $row['ciTypeId'];
+            $this->ciType = new CiType(CiType::RO);
+            $this->ciType->loadType($this->_ciTypeId);
+        }
         $this->_ctime = $row['ctime'];
         $this->_mtime = $row['mtime'];
         $this->_phyParentId = $row['phyParentId'];
@@ -385,8 +393,10 @@ class AssetModel extends DB
         $this->isRetired = $row['isRetired'];
         $this->ciSerialNum = $row['ciSerialNum'];
         $this->_locId = $row['locId'];
-        $this->loc = new LocationModel(LocationModel::RO);
-        $this->loc->fetchLocInfo($this->_locId);
+        if ($this->_locId > 0 ) {
+            $this->loc = new LocationModel(LocationModel::RO);
+            $this->loc->fetchLocInfo($this->_locId);
+        }
         $this->acquiredDate = $row['acquiredDate'];
         $this->disposalDate = $row['disposalDate'];
         $this->_loadAssetAttributes();
@@ -419,7 +429,7 @@ class AssetModel extends DB
             throw $e;
         }
 
-        if ($this->_ciid < 0 ) {
+        if ($this->_ciid < 0 && $this->uniqueCiName() === true) {
             // new record
             $sql = "insert into ci (ciName, ciDesc, ownerType, ownerId,
                 projectId, statusId, phyParentId, netParentId, ciTypeId,
@@ -441,6 +451,7 @@ class AssetModel extends DB
                     $this->_locId
                 )
             );
+            return $this->_db->lastInsertId();
         } else {
             // Update to an existing Asset
             $sql = "update ci set ciName = :ciName, ciDesc = :ciDesc,
@@ -473,6 +484,7 @@ class AssetModel extends DB
                 error_log(print_r($arr, true));
             }
 
+
         }
     }
 
@@ -483,6 +495,26 @@ class AssetModel extends DB
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
+    }
+
+    public function uniqueCiName($name = '')
+    {
+        if (strlen($name) <= 0 ) {
+            $name = $this->ciName;
+        }
+        if (strlen($name) <= 0 ) {
+            throw new \Exception("name Not set");
+        }
+        $sql = "select ciid from ci
+            where ciName = ?";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute(array($name));
+        $row = $stmt->fetch();
+        if ($row === FALSE) {
+            return true;
+        } else {
+            return $row['ciid'];
+        }
     }
 
     public function addAssetAttribute($attrId, $attrVal, $userId)

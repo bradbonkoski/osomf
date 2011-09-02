@@ -7,17 +7,14 @@
     {{ pageTitle }}
 {% endblock %}
 {% block content %}
-        <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
 
-
-    <input class="btnView" id="btnView" type="button" value="Incident View" />
-    <input class="btnEdit" id="btnEdit" type="button" value="Edit"/>
-
-    <div id="pageTitle">
-        <h1>{{ pageTitle }}</h1>
+    <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
+    {% include 'incident/nav.twig' %}
+    <div class="page-header">
+        <h3>Incident History</h3>
     </div>
 
-    <table class="baseTable">
+    <table class="zebra-striped">
         <tr>
             <th>user</th>
             <th>time</th>
@@ -50,5 +47,10 @@
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="/osomf/www/js/incident.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#incidentHistPill").addClass('active');
+        });
+    </script>
+
 {% endblock %}

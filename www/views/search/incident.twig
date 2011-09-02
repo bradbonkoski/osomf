@@ -8,33 +8,35 @@
 
 {% include 'search/searchNav.twig' %}
 
-    <div id="pageTitle">
-        <h1>Incident Search</h1>
+    <div class="page-header">
+        <h2>Incident Search</h2>
     </div>
 
     <form action="" method="POST" name="frmIncidentSearch">
 
-    <fieldset>
-        <legend>incident search</legend>
-        <dl>
-            <dt><label>incident title</label></dt>
-            <dd><input type="text" name="title"/></dd>
-        </dl>
+        <div class="clearfix">
+            <label>incident title</label>
+            <div class="input">
+                <input class="large" type="text" name="title"/>
+            </div>
+        </div>
 
-        <dl>
-            <dt><input type="submit" class="btnSearch" name="btnSearch" value="Search"/></dt>
-        </dl>
+        <input type="hidden" name="btnSearch" value=1/>
+        <div class="actions">
+        &nbsp;
+        <button type="submit" class="btn primary">Search</button>
+        </div>
         
-    </fieldset>
     </form>
 
     {% if results >= 0 %}
-    <fieldset>
-        <legend>Search Results</legend>
+    <div class="page-header">
+        <h2>Search Results</h2>
+    </div>
         {% if results == 0 %}
         No Results Found
         {% else %}
-        <table class="baseTable">
+        <table class="zebra-striped">
         <tr>
             {% for col in cols %}
                 <th>{{ col }}</th>
@@ -53,13 +55,18 @@
         {% endfor %}
         </table>
         {% endif %}
-    </fieldset>
     {% endif %}
 
 {% endblock %}
 
 {% block js %}
+<script type="text/javascript">
+$(function() {
+    $('#incidentSearchPill').addClass('active');
+})
+</script>
 <script type="text/javascript" src="/osomf/www/js/search.js"></script>
+
 {% endblock %}
 
 

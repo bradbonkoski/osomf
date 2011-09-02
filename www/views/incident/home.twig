@@ -1,13 +1,14 @@
 {% extends 'layout.twig' %}
 
-        {% block content %}
-        <div id="pageTitle">
-   <h1>Current Listing of Ongoing Incidents</h1>
+{% block content %}
+<div class="page-header">
+    <h2>Current Listing of Ongoing Incidents</h2>
+    <!-- TODO Swap this out for a button -->
     <a class="editLink" href="/osomf/incident/add">New Incident</a>
 </div>
 
 
-    <table class="baseTable" id="incidentHome">
+    <table class="zebra-striped" id="incidentHome">
         <tr>
             <th>Incident</th>
             <th>Title</th>

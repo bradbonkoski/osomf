@@ -1,13 +1,13 @@
 {% extends 'layout.twig' %}
 
-        {% block content %}
-        <div id="pageTitle">
-   <h1>Current Listing of Known Assets</h1>
+{% block content %}
+<div class="page-header">
+       <h2>Current Listing of Known Assets</h2>
     <a class="editLink" href="/osomf/asset/edit">Add Asset</a>
 </div>
 
     
-    <table class="baseTable" id="assetHome">
+    <table class="zebra-striped" id="assetHome">
         <tr><th>CI</th><th>ci name</th><th>Serial #</th></tr>
         {% for ciid, ci in assets %}
             <tr>

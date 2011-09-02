@@ -1,9 +1,22 @@
 
-<nav>
+<div class="topbar">
+<div class="fill">
+<div class="container">
+<h3>
+<a href="#">Operations Management Framework</a>
+</h3>
 <ul>
-    {% for topLevel in nav %}
-    <li id="{{ topLevel.controller }}"><a href="http://{{ baseuri }}/osomf/{{ topLevel.controller }}/{{ topLevel.action }}">{{ topLevel.label }}</a></li>
+{% for topLevel in nav %}
+    <li>
+    <a href="http://{{ baseuri }}/osomf/{{ topLevel.controller }}/{{ topLevel.action }}">{{ topLevel.label }}</a>
+    </li>
     {% endfor %}
 </ul>
-</nav>
+<form id="topSearch" action="/osomf/search/quick" method="GET">
+    <input type="text" name="topSearchBox" placeholder="search"/>
+</form>
+</div>
+</div>
+
+</div>
     

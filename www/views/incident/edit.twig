@@ -1,29 +1,38 @@
 {% extends "layout.twig" %}
 
-        {% block css %}
-        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
+{% block css %}
+        <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css" />
 {% endblock %}
+
 {% block content %}
 
+    {% include 'incident/nav.twig' %}
+    <div class="page-header">
+        <h3>Incident Edit</h3>
+    </div>
+
         <form method="POST" name="frmIncident" action=''>
-        <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
-        <fieldset>
-            <legend>incident information</legend>
+            <input type="hidden" id="incidentId" value="{{ incidentId }}" />
 
-            <dl>
-                <dt><label>title</label></dt>
-                <dd><input type="text" name="title" required value="{{ incidentTitle }}"/></dd>
-            </dl>
+        <div class="row">
+            <div class="clearfix">
+                <label>title</label>
+                <div class="input">
+                    <input class="medium" type="text" name="title" required value="{{ incidentTitle }}" />
+                </div>
+            </div>
 
-            <dl>
-                <dt><label>status</label></dt>
-                <dd>{{ status }}</dd>
-            </dl>
+            <div class="clearfix">
+                <label>status</label>
+                <div class="input">
+                    <span class="view-input">{{ status }}</span>
+                </div>
+            </div>
 
-            <dl>
-                <dt><label>Severity</label></dt>
-                <dd>
-                    <select name="severity">
+            <div class="clearfix">
+                <label>Severity</label>
+                <div class="input">
+                    <select class="medium" name="severity">
                     {% for id, val in sevValues %}
                     {% if val == severity %}
                     <option SELECTED value="{{ id }}">{{ val }}</option>
@@ -32,72 +41,88 @@
                     {% endif %}
                     {% endfor %}
                     </select>
-                </dd>
-            </dl>
-            <dl>
-                <dt><label>Description</label></dt>
-                <dd><textarea name="desc">{{ desc }}</textarea></dd>
-            </dl>
+                </div>
+            </div>
+            
+            <div class="clearfix">
+                <label>Description</label>
+                <div class="input">
+                    <textarea name="desc">{{ desc }}</textarea>
+                </div>
+            </div>
 
-            <dl>
-                <dt><label>Impact</label></dt>
-                <dd><textarea name="impact">{{ impact }}</textarea></dd>
-            </dl>
+            <div class="clearfix">
+                <label>Impact</label>
+                <div class="input">
+                    <textarea name="impact">{{ impact }}</textarea>
+                </div>
+            </div>
 
-            <dl>
-                <dt><label>Revenue Impact</label></dt>
-                <dd><textarea name="revImpact">{{ revImpact }}</textarea></dd>
-            </dl>
-        </fieldset>
+            <div class="clearfix">
+                <label>Revenue Impact</label>
+                <div class="input">
+                    <textarea name="revImpact">{{ revImpact }}</textarea>
+                </div>
+            </div>
+        </div>
 
-    <fieldset class="container">
-    <div class="colLeft">
-        <fieldset>
-            <legend>timeline</legend>
-            <dl>
-                <dt><label>Detect Time</label></dt>
-                <dd><input type="text" name="detectTime" value="{{ detectTime }}"/></dd>
-            </dl>
-            <dl>
-                <dt><label>start time</label></dt>
-                <dd><input type="text" name="startTime" value="{{ startTime }}"/></dd>
-            </dl>
-            <dl>
-                <dt><label>create time</label></dt>
-                <dd>{{ ctime }}</dd>
-            </dl>
-            <dl>
-                <dt><label>last modified</label></dt>
-                <dd>{{ mtime }}</dd>
-            </dl>
-        </fieldset>
-    </div>
-    <div class="colRight">
-        <fieldset>
-            <legend>Resolution</legend>
-            <dl>
-                <dt><label>Resolve Time</label></dt>
-                <dd><input type="text" name="resolveTime" value="{{ resolveTime }}"/></dd>
-            </dl>
-            <dl>
-                <dt><label>Resolve Steps</label></dt>
-                <dd><textarea name="resolveSteps">{{ resolveSteps }}</textarea></dd>
-            </dl>
-            <dl>
-                <dt><label>Responsible Project</label></dt>
-                <dd>
-                    <input id="respProj" type="text" value="{{ respProjName }}" size=15/>
-                    <span style="display:none" id="clearProjBox"><img src="/osomf/www/img/cross.png"/></span>
-                </dd>
-                    <input type="hidden" name="projId" id="projId" value="{{ proj }}"/>
-                
-            </dl>
-        </fieldset>
-    </div>
-    </fieldset>
+        <div class="row">
+        <div class="span8 columns">
+            <h4>Timeline</h4>
+            <div class="clearfix">
+                <label>Detect Time</label>
+                <div class="input">
+                    <input class="medium" type="text" name="detectTime" value="{{ detectTime }}"/>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>start time</label>
+                <div class="input">
+                    <input class="medium" type="text" name="startTime" value="{{ startTime }}"/>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>create time</label>
+                <div class="input">
+                    <span class="view-input">{{ ctime }}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>last modified</label>
+                <div class="input">
+                    <span class="view-input">{{ mtime }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="span8 columns">
+            <h4>Resolution</h4>
+            <div class="clearfix">
+                <label>Resolve Time</label>
+                <div class="input">
+                    <input class="medium" type="text" name="resolveTime" value="{{ resolveTime }}"/>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>Resolve Steps</label>
+                <div class="input">
+                    <textarea name="resolveSteps">{{ resolveSteps }}</textarea>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>Responsible Project</label>
+                <div class="input">
+                        <input class="medium" id="respProj" type="text" value="{{ respProjName }}" size=15/>
+                        <span style="display:none" id="clearProjBox"><img src="/osomf/www/img/cross.png"/></span>
+                </div>
+                <input type="hidden" name="projId" id="projId" value="{{ proj }}"/>
+            </div>
+        </div>
+        </div>
 
-    <input class="btnUpdate" type="submit" name="subIncident" value="update"/>
-    <input id="incidentEditRevert" class="btnRevert" type="button" value="Cancel"/>
+        <div class="actions">
+            <button type="submit" class="btn primary">Update</button>
+            <button type="reset" class="btn">Cancel</button>
+        </div>
     </form>
 
 {% endblock %}
@@ -110,5 +135,10 @@
         <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
         <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/incidentEdit.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#incidentEditPill").addClass('active');
+        })
+    </script>
 {% endblock %}
 

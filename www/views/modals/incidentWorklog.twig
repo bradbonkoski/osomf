@@ -1,13 +1,18 @@
 <div id="AddWorklogModal" class="modal">
+    <div class="modal-header">
     <h3>Add Worklog for Incident</h3>
+    <a href="#" id="AddWorklogModalClose" class="close">x</a>
+    </div>
 
-    <dl>
-        <dt><label>Worklog Entry</label></dt>
-        <dd>
+    <div class="modal-body">
+    <div class="clearfix">
+        <label>Worklog Entry</label>
+        <div class="input">
             <textarea id="AddWorkglogText"></textarea>
-        </dd>
-    </dl>
-    <dl>
-        <dt><input id="addWorklogButton" type="button" value="Add"/></dt>
-    </dl>
+        </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <a id="addWorklogButton" href="#" class="btn primary">Add</a>
+    </div>
 </div>

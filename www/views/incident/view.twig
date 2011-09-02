@@ -3,95 +3,123 @@
         <link rel="stylesheet" href="/osomf/www/css/jquery.ui.all.css">
 {% endblock %}
 {% block content %}
-        <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
-    <!--
-    <a href="/osomf/incident/edit/{{ incidentId }}">edit</a>
-    -->
-    <input class="btnEdit" id="btnEdit" type="button" value="Edit"/>
-    <input class="btnAudit" id="btnAudit" type="button" value="History" />
-        <fieldset>
-            <legend>incident information</legend>
 
-            <dl>
-                <dt><label>title</label></dt>
-                <dd>{{ incidentTitle }}</dd>
-            </dl>
+    <input type="hidden" id="incidentId" value="{{ incidentId }}"/>
 
-            <dl>
-                <dt><label>status</label></dt>
-                <dd>
-                    <span id="incidentStatus">{{ status }}</span>
+    {% include 'incident/nav.twig' %}
+    <div class="page-header">
+        <h3>Incident View</h3>
+    </div>
+
+    <div class="row">
+        <div class="span8 columns">
+
+            <div class="clearfix">
+                <label>title</label>
+                <div class="input">
+                    <span class="view-input">{{ incidentTitle }}</span>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <label>status</label>
+                <div class="input">
+                    <span class="view-input">
+                        <span id="incidentStatus">{{ status }}</span>
+
                     <a id="changeIncidentStatus" href="#">
                         <img src="/osomf/www/img/arrow_switch.png"/>
                     </a>
-                </dd>
-            </dl>
+                    </span>
+                </div>
+            </div>
 
-            <dl>
-                <dt><label>severity</label></dt>
-                <dd>{{ severity }}</dd>
-            </dl>
+            <div class="clearfix">
+                <label>severity</label>
+                <div class="input">
+                    <span class="view-input">{{ severity }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="span8 columns">
+            <div class="clearfix">
+                <label>Description</label>
+                <div class="input">
+                    <span class="view-input">{{ desc }}</span>
+                </div>
+            </div>
 
-            <dl>
-                <dt><label>Description</label></dt>
-                <dd>{{ desc }}</dd>
-            </dl>
+            <div class="clearfix">
+                <label>Impact</label>
+                <div class="input">
+                    <span class="view-input">{{ impact }}</span>
+                </div>
+            </div>
 
-            <dl>
-                <dt><label>Impact</label></dt>
-                <dd>{{ impact }}</dd>
-            </dl>
-
-            <dl>
-                <dt><label>Revenue Impact</label></dt>
-                <dd>{{ revImpact }}</dd>
-            </dl>
-        </fieldset>
-
-    <fieldset class="container">
-    <div class="colLeft">
-        <fieldset>
-            <legend>timeline</legend>
-            <dl>
-                <dt><label>Detect Time</label></dt>
-                <dd>{{ detectTime }}</dd>
-            </dl>
-            <dl>
-                <dt><label>start time</label></dt>
-                <dd>{{ startTime }}</dd>
-            </dl>
-            <dl>
-                <dt><label>create time</label></dt>
-                <dd>{{ ctime }}</dd>
-            </dl>
-            <dl>
-                <dt><label>last modified</label></dt>
-                <dd>{{ mtime }}</dd>
-            </dl>
-        </fieldset>
+            <div class="clearfix">
+                <label>Revenue Impact</label>
+                <div class="input">
+                    <span class="view-input">{{ revImpact }}</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="colRight">
-        <fieldset>
-            <legend>Resolution</legend>
-            <dl>
-                <dt><label>Resolve Time</label></dt>
-                <dd>{{ resolveTime }}</dd>
-            </dl>
-            <dl>
-                <dt><label>Resolve Steps</label></dt>
-                <dd>{{ resolveSteps }}</dd>
-            </dl>
-            <dl>
-                <dt><label>Responsible Project</label></dt>
-                <dd><a href="{{ respProjLink }}">{{ respProjName }}</a></dd>
-            </dl>
-        </fieldset>
-    </div>
-    </fieldset>
 
+    <div class="row">
+        <div class="span8 columns">
+        <h4>Timeline</h4>
+            <div class="clearfix">
+                <label>Detect Time</label>
+                <div class="input">
+                    <span class="view-input">{{ detectTime }}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>start time</label>
+                <div class="input">
+                    <span class="view-input">{{ startTime }}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>create time</label>
+                <div class="input">
+                    <span class="view-input">{{ ctime }}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>last modified</label>
+                <div class="input">
+                    <span class="view-input">{{ mtime }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="span8 columns">
+        <h4>Resolution</h4>
+            <div class="clearfix">
+                <label>Resolve Time</label>
+                <div class="input">
+                    <span class="view-input">{{ resolveTime }}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>Resolve Steps</label>
+                <div class="input">
+                    <span class="view-input">{{ resolveSteps }}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <label>Responsible Project</label>
+                <div class="input">
+                    <a class="link-input" href="{{ respProjLink }}">{{ respProjName }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
     <fieldset>
         <legend>impacts <a id="impactAddModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
-        <table class="baseTable" id="incidentImpactsTable">
+        <table class="zebra-striped" id="incidentImpactsTable">
             <tr>
                 <th>type</th>
                 <th>impact</th>
@@ -110,10 +138,12 @@
             {% endfor %}
         </table>
     </fieldset>
+    </div>
 
+    <div class="row">
     <fieldset>
         <legend>Worklog <a id="worklogAddModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
-        <table class="baseTable" id="incidentWorklogTable">
+        <table class="zebra-striped" id="incidentWorklogTable">
             <tr>
                 <th>user</th>
                 <th>time</th>
@@ -134,6 +164,7 @@
             {% endfor %}
         </table>
     </fieldset>
+    </div>
 
      {% include 'modals/incidentImpact.twig' %}
      {% include 'modals/incidentWorklog.twig' %}
@@ -149,5 +180,11 @@
     <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/jquery.simplemodal.1.4.1.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/incident.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#incidentViewPill").addClass('active');
+        })
+    </script>
 {% endblock %}
 
