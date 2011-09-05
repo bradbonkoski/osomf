@@ -61,6 +61,8 @@ class asset extends ControllerBase
             $times = $a->getAssetTimes();
             $this->data['ctime'] = $times['created'];
             $this->data['mtime'] = $times['modified'];
+
+            //var_dump($a->ciType);
             if ($a->ciType instanceof \osomf\models\CiType) {
                 $this->data['type'] = $a->ciType->typeName;
                 $this->data['typeId'] = $a->ciType->getTypeId();
@@ -183,13 +185,18 @@ class asset extends ControllerBase
         );
         $a->updateProject($this->_postedData['projId']);
         $a->updateStatus($this->_postedData['statusId']);
-        $a->updateType($this->_postedData['typeId']);
+        if (is_numeric($this->_postedData['typeId'])) {
+            $a->updateType($this->_postedData['typeId']);
+            error_log("Trying to set asset type from the controller");
+        }
+
         if (
             is_numeric($this->_postedData['phyId'])
             && $this->_postedData['phyId'] > 0
         ) {
             $a->updatePhyParent($this->_postedData['phyId']);
         }
+
         if (
             is_numeric($this->_postedData['netId'])
             && $this->_postedData['netId'] > 0
@@ -209,7 +216,7 @@ class asset extends ControllerBase
             $assetId = $params[0];
         }
 
-        if ($_POST['assetSubmit']) {
+        if ($_POST['assetSubmit'] == 1) {
             //echo "<pre>".print_r($_POST, true)."</pre>";
             $this->_postedData = $_POST;
             if ($assetId <= 0 ) {
@@ -255,9 +262,6 @@ class asset extends ControllerBase
                 //echo "new Asset: $ciid\n";
                 $res->addChild('newasset', $ciid);
             } else {
-                //echo "CIName Taken ($ciExisting)\n";
-                // error that the asset exists
-                // send ciid??
                 $res->addChild('Error', 'CIName Existing');
                 $res->addChild('ciid', $ciExisting);
             }

@@ -6,9 +6,10 @@
 {% block content %}
     <div class="page-header">
     <h2>{{ title }}</h2>
-    <a class="editLink" href="/osomf/asset/edit/{{ ciid }}">Edit</a>
+    
 </div>
 <input type="hidden" id="ciid" value="{{ ciid }}"/>
+{% include 'asset/nav.twig' %}
 
     <div class="row">
         <div class="span8 columns">
@@ -131,12 +132,11 @@
             </div>
         </div>
     </div>
-    </div>
+    
 
-    <fieldset class="container">
-    <div class="colLeft">
-    <fieldset>
-        <legend>Asset Attributes <a id="attributeModal" href="#"><img src="/osomf/www/img/add.png"/></a></legend>
+    <div class="row">
+    <div class="span8 columns">
+        <h4>Asset Attributes <a id="attributeModal" href="#"><img src="/osomf/www/img/add.png"/></a></h4>
         <div id="assetAttributes">
         {% for attrName, attrVal in attributes %}
         <dl>
@@ -145,19 +145,12 @@
         </dl>
         {% endfor %}
         </div>
-    </fieldset>
     </div>
-    <div class="colRight">
-    <fieldset>
-        <legend>Asset Tags</legend>
-    </fieldset>
+    <div class="span8 columns">
+        <h4>Asset Tags</h4>
     </div>
-    </fieldset>
+    </div>
 
-<!-- TODO Move to Tabbed view for known errors -->
-    <fieldset>
-        <legend>Known Errors/Incidents</legend>
-    </fieldset>
     {% include 'modals/AssetAttributes.twig' %}
     {% endblock %}
 
@@ -167,4 +160,9 @@
     <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
     <script type="text/javascript" src="/osomf/www/js/asset_view.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#assetViewPill").addClass('active');
+        })
+    </script>
 {% endblock %}

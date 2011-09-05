@@ -373,8 +373,8 @@ class AssetModel extends DB
             $this->ciStatus = new CiStatus(CiStatus::RO);
             $this->ciStatus->loadStatus($this->_ciStatusId);
         }
+        $this->_ciTypeId = $row['ciTypeId'];
         if ($this->_ciTypeId > 0 ) {
-            $this->_ciTypeId = $row['ciTypeId'];
             $this->ciType = new CiType(CiType::RO);
             $this->ciType->loadType($this->_ciTypeId);
         }

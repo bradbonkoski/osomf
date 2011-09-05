@@ -9,69 +9,75 @@
                 <h2>{{ e }}</h2>
             {% endfor %}
         {% else %}
+<div class="page-header">
+    <h2>{{ pageTitle }}</h2>
+</div>
+{% include 'asset/nav.twig' %}
 
-<h1>{{ pageTitle }}</h1>
 
-    {% if editAsset %}
-        <a href="/osomf/asset/view/{{ ciid }}">cancel edit</a>
-    {% endif %}
     <form id="frmAsset" action="" method="post">
-    <fieldset>
-        <legend>CI Attributes</legend>
 
-        <dl>
-            <dt><label>CI Name</label></dt>
-            <dd><input name=" ciName" type="text" required value="{{ ciName }}"/></dd>
-        </dl>
+    <h4>CI Attributes</h4>
 
-        <dl>
-            <dt><label>Asset Description</label></dt>
-            <dd><textarea name="ciDesc">{{ ciDesc }}</textarea></dd>
-        </dl>
+        <div class="clearfix">
+            <label>CI Name</label>
+            <div class="input">
+                <input class="medium" name=" ciName" type="text" required value="{{ ciName }}"/>
+            </div>
+        </div>
 
-        <dl>
-            <dt><label>CI Status</label></dt>
-            <dd id="statusBox">
+        <div class="clearfix">
+            <label>Asset Description</label>
+            <div class="input">
+                <textarea name="ciDesc">{{ ciDesc }}</textarea>
+            </div>
+        </div>
+
+        <div class="clearfix">
+            <label>CI Status</label>
+            <div class="input">
                 <input id="ciStatus" value="{{ status }}"/>
                 <span style="display:none" id="clearStatusBox"><img src="/osomf/www/img/cross.png"/></span>
                 <input type="hidden" name="statusId" id="statusId" value="{{ statusId }}"/>
-            </dd>
-            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-        </dl>
+                 <div class="ui-widget" style="margin-top:2em; font-family:Arial"></div>
+            </div>
+        </div>
 
-        <dl>
-            <dt><label>CI Type</label></dt>
-            <dd>
+        <div class="clearfix">
+            <label>CI Type</label>
+            <div class="input">
                 <input id="ciType" type="text" value="{{ type }}"/>
                 <span style="display:none" id="clearTypeBox"><img src="/osomf/www/img/cross.png"/></span></dd>
                 <input type="hidden" name="typeId" id="typeId" value="{{ typeId }}"/>
-            </dd>
-            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-        </dl>
 
-        <dl>
-            <dt><label>Serial Number</label></dt>
-            <dd><input name="ciSerial" type="text" required value="{{ serial }}"/></dd>
-        </dl>
+                <div class="ui-widget" style="margin-top:2em; font-family:Arial"></div>
+            </div>
+        </div>
 
-        <dl>
-            <dt><label>CI Location</label></dt>
-            <dd>
-                    <input id="ciLoc" name='ciLoc' type="text" value="{{ locName }}"/>
-                    <span style="display:none" id="clearLocBox"><img src="/osomf/www/img/cross.png"/></span></dd>
-                    <input type="hidden" name="locId" id="locId" value="{{ loc }}"/>
-            </dd>
-            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+        <div class="clearfix">
+            <label>Serial Number</label>
+            <div class="input">
+                <input name="ciSerial" type="text" required value="{{ serial }}"/>
+            </div>
+        </div>
 
-        </dl>
-        </fieldset>
+        <div class="clearfix">
+            <label>CI Location</label>
+            <div class="input">
+                <input id="ciLoc" name='ciLoc' type="text" value="{{ locName }}"/>
+                <span style="display:none" id="clearLocBox"><img src="/osomf/www/img/cross.png"/></span></dd>
+                <input type="hidden" name="locId" id="locId" value="{{ loc }}"/>
 
-        <fieldset>
-            <legend>CI Associations</legend>
-            <dl>
-                <dt><label>Asset Owner</label></dt>
-                <dd>
-                    <select name="ownerType" id="ownerType">
+                <div class="ui-widget" style="margin-top:2em; font-family:Arial"></div>
+            </div>
+        </div>
+
+        <h4>CI Associations</h4>
+
+            <div class="clearfix">
+                <label>Asset Owner</label>
+                <div class="input">
+                    <select class="medium" name="ownerType" id="ownerType">
                         <option {% if ownerType == 'USER' %} selected=true {% endif %} value="USER" >user</option>
                         <option {% if ownerType == 'GROUP' %} selected=true {% endif %} value="GROUP" >group</option>
                     </select>
@@ -79,45 +85,49 @@
                     <span style="display:none" id="clearOwnerBox"><img src="/osomf/www/img/cross.png"/></span></dd>
                     <input type="hidden" name="ownerId" id="ownerId" value="{{ ownerId }}"/>
                     <input type="hidden" name="ownerTypeVal" id="ownerTypeVal" value="{{ ownerType }}"/>
-                </dd>
-                <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-            </dl>
+
+                    <div class="ui-widget" style="margin-top:2em; font-family:Arial"></div>
+                </div>
+            </div>
             
-            <dl>
-                <dt><label>Asset Project</label></dt>
-                <dd>
+            <div class="clearfix">
+                <label>Asset Project</label>
+                <div class="input">
                     <input id="ciProj" type="text" value="{{ projName }}"/>
                     <span style="display:none" id="clearProjBox"><img src="/osomf/www/img/cross.png"/></span></dd>
                     <input type="hidden" name="projId" id="projId" value="{{ proj }}"/>
-                </dd>
-                <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-            </dl>
 
-            <dl>
-                <dt><label>CI Physical Parent</label></dt>
-                <dd>
+                    <div class="ui-widget" style="margin-top:2em; font-family:Arial"></div>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <label>CI Physical Parent</label>
+                <div class="input">
                     <input name="ciPhy" id="ciPhy" type="text" value="{{ phyParentName }}"/>
                     <span style="display:none" id="clearPhyBox"><img src="/osomf/www/img/cross.png"/></span></dd>
                     <input type="hidden" name="phyId" id="phyId" value="{{ phyParent }}"/>
-                </dd>
-                <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-            </dl>
 
-            <dl>
-                <dt><label>CI Net Parent</label></dt>
-                <dd>
+                    <div class="ui-widget" style="margin-top:2em; font-family:Arial"></div>
+                 </div>
+            </div>
+
+            <div class="clearfix">
+                <label>CI Net Parent</label>
+                <div class="input">
                     <input id="ciNet" type="text" value="{{ netParentName }}"/>
                     <span style="display:none" id="clearNetBox"><img src="/osomf/www/img/cross.png"/></span></dd>
                     <input type="hidden" name="netId" id="netId" value="{{ netParent }}"/>
-                </dd>
-                <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-            </dl>
-        </fieldset>
-        <dl>
-            <dt></dt>
-            <dd><input name="assetSubmit" type="submit" value="{{ submitButtonText }}"/></dd>
-        </dl>
 
+                    <div class="ui-widget" style="margin-top:2em; font-family:Arial"></div>
+                </div>
+            </div>
+        <input type="hidden" name="assetSubmit" value="1" />
+        <div class="actions">
+        &nbsp;
+        <button type="submit" class="btn primary">{{ submitButtonText }}</button>
+        <button type="reset" class="btn">Cancel</button>
+        </div>
 
     </form>
 
@@ -131,4 +141,10 @@
         <script type="text/javascript" src="/osomf/www/js/jquery.ui.position.min.js"></script>
         <script type="text/javascript" src="/osomf/www/js/jquery.ui.autocomplete.min.js"></script>
         <script type="text/javascript" src="/osomf/www/js/asset.js"></script>
+
+        <script type="text/javascript">
+        $(function() {
+            $("#assetEditPill").addClass('active');
+        })
+    </script>
 {% endblock %}

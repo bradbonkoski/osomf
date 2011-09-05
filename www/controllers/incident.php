@@ -53,6 +53,10 @@ class incident extends ControllerBase
         $i->setRevImpact($this->_postedData['revImpact']);
         $i->setDetectTime($this->_postedData['detectTime']);
         $i->setStartTime($this->_postedData['startTime']);
+        //TODO Tie in AUTH here
+        if(!isset($_COOKIE['userId'])) {
+            $_COOKIE['userId'] = 1;
+        }
         $i->setCreatedBy($_COOKIE['userId']);
         $i->save();
         $incidentId = $i->getIncidentId();
@@ -165,8 +169,9 @@ class incident extends ControllerBase
         
         if (isset($_POST['subIncident'])) {
             $this->_postedData = $_POST;
-            $this->_IncidentUpdate();
             //echo "<pre>".print_r($_POST, true)."</pre>";
+            $this->_IncidentUpdate();
+
 
         }
 
@@ -223,6 +228,10 @@ class incident extends ControllerBase
         $this->ac = true;
         $data = $this->parseGetParams($params);
         error_log(print_r($data, true));
+        //TODO Tie in AUTH here
+        if(!isset($_COOKIE['userId'])) {
+            $_COOKIE['userId'] = 1;
+        }
         $userId = $_COOKIE['userId'];
         error_log("User id: $userId");
         $wl = new Worklog(Worklog::RW);
@@ -245,6 +254,10 @@ class incident extends ControllerBase
     {
         $this->ac = true;
         $data = $this->parseGetParams($params);
+        //TODO Tie in AUTH here
+        if(!isset($_COOKIE['userId'])) {
+            $_COOKIE['userId'] = 1;
+        }
         $userId = $_COOKIE['userId'];
         $i = new IncidentModel(IncidentModel::RW);
         $i->loadIncident($data['incident']);
@@ -274,6 +287,10 @@ class incident extends ControllerBase
     {
         $this->ac = true;
         $data = $this->parseGetParams($params);
+        //TODO Tie in AUTH here
+        if(!isset($_COOKIE['userId'])) {
+            $_COOKIE['userId'] = 1;
+        }
         $userId = $_COOKIE['userId'];
         $i = new IncidentModel(IncidentModel::RW);
         try {
@@ -288,6 +305,10 @@ class incident extends ControllerBase
     {
         $this->ac = true;
         $data = $this->parseGetParams($params);
+        //TODO Tie in AUTH here
+        if(!isset($_COOKIE['userId'])) {
+            $_COOKIE['userId'] = 1;
+        }
         $userId = $_COOKIE['userId'];
         $i = new \osomf\models\IncidentModel(IncidentModel::RW);
         $i->loadIncident($data['id']);
