@@ -1,0 +1,16 @@
+{
+    "name": "bradbonkoski/osomf",
+    "description": "Light weight, pragmatic application for managing operations infrastructure",
+    "minimum-stability": "dev",
+    "license": "Apache License 2.0",
+    "authors": [
+        {
+            "name": "Brad Bonksoki",
+            "email": "brad.bonkoski@gmail.com"
+        }
+    ],
+    "require": {
+        "silex/silex": "2.0.x-dev",
+        "twig/twig": "1.6.5"
+    }
+}
