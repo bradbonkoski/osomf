@@ -1,8 +1,3 @@
--- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (i686)
---
--- Host: localhost    Database: omf_tagging
--- ------------------------------------------------------
--- Server version	5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,5 +34,3 @@ CREATE TABLE `tags` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2011-08-16 13:12:37

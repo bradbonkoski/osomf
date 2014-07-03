@@ -15,7 +15,7 @@
             url="jdbc:mysql://localhost:3306/omf_users"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar"
+		classpath="/usr/share/java/mysql-connector-java.jar"
             src="${schemaDir}/omf_users.sql"
         />
     </target>
@@ -26,7 +26,7 @@
             url="jdbc:mysql://localhost:3306/omf_tagging"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar"
+            classpath="/usr/share/java/mysql-connector-java.jar"
             src="${schemaDir}/omf_tagging.sql"
         />
     </target>
@@ -37,7 +37,7 @@
             url="jdbc:mysql://localhost:3306/omf_assets"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar"
+            classpath="/usr/share/java/mysql-connector-java.jar"
             src="${schemaDir}/omf_assets.sql"
         />
     </target>
@@ -48,7 +48,7 @@
             url="jdbc:mysql://localhost:3306/omf_incident"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar"
+            classpath="/usr/share/java/mysql-connector-java.jar"
             src="${schemaDir}/omf_incident.sql"
         />
     </target>
@@ -59,7 +59,7 @@
             url="jdbc:mysql://localhost:3306/omf_assets"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar">
+            classpath="/usr/share/java/mysql-connector-java.jar">
             <transaction src="${seedDir}/ciStatus.sql"/>
 
         </sql>
@@ -71,7 +71,7 @@
             url="jdbc:mysql://localhost:3306/omf_incident"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar">
+            classpath="/usr/share/java/mysql-connector-java.jar">
             <transaction src="${seedDir}/rootCauses.sql"/>
 
         </sql>
@@ -83,7 +83,7 @@
             url="jdbc:mysql://localhost:3306/omf_users"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar">
+            classpath="/usr/share/java/mysql-connector-java.jar">
             <transaction src="${seedDir}/users.sql" />
         </sql>
     </target>
@@ -94,7 +94,7 @@
             url="jdbc:mysql://localhost:3306/omf_assets"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar">
+            classpath="/usr/share/java/mysql-connector-java.jar">
             <transaction src="${seedDir}/assets.sql" />
         </sql>
     </target>
@@ -105,7 +105,7 @@
             url="jdbc:mysql://localhost:3306/omf_incident"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar">
+            classpath="/usr/share/java/mysql-connector-java.jar">
             <transaction src="${seedDir}/incident.sql" />
         </sql>
     </target>
@@ -116,7 +116,7 @@
             url="jdbc:mysql://localhost:3306/omf_tagging"
             userid="test"
             password=""
-            classpath="/usr/share/java/mysql-connector-java-5.1.10.jar">
+            classpath="/usr/share/java/mysql-connector-java.jar">
             <transaction src="${seedDir}/tagging.sql" />
         </sql>
     </target>
